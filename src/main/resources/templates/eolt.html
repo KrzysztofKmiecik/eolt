@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>EOLT</title>
+</head>
+<body>
+
+<table>
+    <tr th:each="eoltDto:${eoltDtoList}">
+        <td th:text="${eoltDto.getEoltName()}"></td>
+        <td th:text="${eoltDto.getLocation()}"></td>
+    </tr>
+</table>
+
+
+<form action="/eolt" method="post" th:object="${eoltDtoForm}">
+    eoltName <input id="eoltName" type="text" th:field="*{eoltName}">
+    location <input id="location" type="text" th:field="*{location}">
+    <input type="submit" value="submit">
+
+</form>
+
+
+</body>
+</html>
