@@ -6,14 +6,6 @@
 </head>
 <body>
 
-<table>
-    <tr th:each="eoltDto:${eoltDtoList}">
-        <td th:text="${eoltDto.getEoltName()}"></td>
-        <td th:text="${eoltDto.getLocation()}"></td>
-    </tr>
-</table>
-
-
 <form action="/eolt" method="post" th:object="${eoltDtoForm}">
     eoltName <input id="eoltName" type="text" th:field="*{eoltName}">
     location <input id="location" type="text" th:field="*{location}">
@@ -21,6 +13,18 @@
 
 </form>
 
+<table>
+    <tr th:each="eoltDto:${eoltDtoList}">
+        <td th:text="${eoltDto.getEoltName()}"></td>
+        <td th:text="${eoltDto.getLocation()}"></td>
+        <td>
+            <form action="/eolt" method="post" th:object="${eoltDtoForm}">
+               <input type="hidden" name="deleteEolt" th:value="${eoltDto.getEoltName()}"}/><button name="action" value="delete">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
 
 </body>
 </html>
+

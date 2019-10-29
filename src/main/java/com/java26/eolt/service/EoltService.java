@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,26 @@ public class EoltService {
         eoltEntity.setEoltName(eoltDto.getEoltName());
         eoltEntity.setLocation(eoltDto.getLocation());
         eoltRepository.save(eoltEntity);
+    }
+
+    public void delete(Long id) {
+        log.info("EoltService:delete");
+
+        EoltEntity eoltEntity = eoltRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(id.toString()));
+
+        eoltRepository.deleteById(id);
+
+    }
+
+    public void delete(String eoltName) {
+        log.info("EoltService:delete eoltNAme");
+
+        EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
+                .orElseThrow(() -> new EntityNotFoundException(eoltName));
+
+        eoltRepository.deleteById(eoltEntity.getId());
+
     }
 
 }

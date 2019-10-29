@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,15 +27,25 @@ public class EoltController {
         log.info("GetMapping: showEolt");
         List<EoltDto> eoltDtoList = eoltService.findAll();
         model.addAttribute("eoltDtoList", eoltDtoList);
-        model.addAttribute("eoltDtoForm",new EoltDto());
+        model.addAttribute("eoltDtoForm", new EoltDto());
         return "eolt";
     }
 
 
     @PostMapping
-    public String addEolt(@Valid EoltDto eoltDtoForm) {
+    public String postEolt(@Valid EoltDto eoltDtoForm, @RequestParam(required = false) String deleteEolt) {
         log.info("PostMapping:addEolt");
-        eoltService.create(eoltDtoForm);
+        boolean flag = false;
+        if (deleteEolt != null) {
+            flag = true;
+            eoltService.delete(deleteEolt);
+        }
+        if ((eoltDtoForm != null) && (!flag)) {
+            eoltService.create(eoltDtoForm);
+        }
         return "redirect:eolt";
     }
+
+
 }
+
