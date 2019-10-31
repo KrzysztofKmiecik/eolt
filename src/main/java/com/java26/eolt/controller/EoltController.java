@@ -34,7 +34,7 @@ public class EoltController {
 
     @PostMapping
     public String postEolt(@Valid EoltDto eoltDtoForm, @RequestParam(required = false) String deleteEolt) {
-        log.info("PostMapping:addEolt");
+        log.info("PostMapping:postEolt");
         boolean flag = false;
         if (deleteEolt != null) {
             flag = true;
@@ -45,6 +45,14 @@ public class EoltController {
         }
         return "redirect:eolt";
     }
+
+    @GetMapping("/detailed")
+    public String showEoltDetailed(Model model,@RequestParam String eoltName2 ) {
+        model.addAttribute("myChoosenEoltName",eoltName2);
+        log.info("get_detailed");
+        return "eolt_detailed";
+    }
+
 
 
 }
