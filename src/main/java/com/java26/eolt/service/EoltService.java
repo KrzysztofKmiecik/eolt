@@ -31,6 +31,16 @@ public class EoltService {
         return eoltDtos;
     }
 
+    public EoltDto findByName(String eoltName) {
+
+        EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
+                .orElseThrow(() -> new EntityNotFoundException(eoltName));
+        EoltDto eoltDto = new EoltDto();
+        eoltDto.setEoltName(eoltEntity.getEoltName());
+        eoltDto.setLocation(eoltEntity.getLocation());
+        return eoltDto;
+    }
+
     public void create(EoltDto eoltDto) {
         log.info("EoltService:create");
         EoltEntity eoltEntity = new EoltEntity();
