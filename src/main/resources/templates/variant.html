@@ -6,6 +6,7 @@
 </head>
 <body>
 
+<h1 th:text="${dpn}">dpn</h1>
 <form action="/variant" method="post" th:object="${variantDtoForm}">
     dpn <input id="dpn" type="text" th:field="*{dpn}">
 

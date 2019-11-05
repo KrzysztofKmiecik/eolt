@@ -23,9 +23,10 @@ public class VariantController {
     private final VariantService variantService;
 
     @GetMapping
-    public String showVariant(Model model) {
+    public String showVariant(Model model, @RequestParam String dpn) {
         log.info("GetMapping: showVariant");
         List<VariantDto> variantDtoList = variantService.findAllVariants();
+        model.addAttribute("dpn",dpn);
         model.addAttribute("variantDtoList", variantDtoList);
         model.addAttribute("variantDtoForm", new VariantDto());
         return "variant";
