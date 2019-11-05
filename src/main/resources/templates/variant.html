@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>VARIANT</title>
+</head>
+<body>
+
+<form action="/variant" method="post" th:object="${variantDtoForm}">
+    dpn <input id="dpn" type="text" th:field="*{dpn}">
+
+    <input type="submit" value="submit">
+
+</form>
+
+<table>
+    <tr th:each="variantDto:${variantDtoList}">
+        <td th:text="${variantDto.getDpn()}"></td>
+        <td><a href="#" th:href="@{/variant/detailed(variantName2=${variantDto.getDpn()})}" th:text="${variantDto.getDpn()}"> Link 1</a> </td>
+
+        <td>
+            <form action="/variant" method="post" th:object="${variantDtoForm}">
+               <input type="hidden" name="deleteEolt" th:value="${variantDto.getDpn()}"}/><button name="action" value="delete">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
+
