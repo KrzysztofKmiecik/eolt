@@ -22,11 +22,12 @@ public class VariantController {
 
     private final VariantService variantService;
 
+
     @GetMapping
-    public String showVariant(Model model, @RequestParam String dpn) {
+    public String showVariant(Model model, @RequestParam String eoltName) {
         log.info("GetMapping: showVariant");
         List<VariantDto> variantDtoList = variantService.findAllVariants();
-        model.addAttribute("dpn",dpn);
+        model.addAttribute("eoltName", eoltName);
         model.addAttribute("variantDtoList", variantDtoList);
         model.addAttribute("variantDtoForm", new VariantDto());
         return "variant";
@@ -34,7 +35,7 @@ public class VariantController {
 
 
     @PostMapping
-    public String postVariant(@Valid VariantDto variantDtoForm, @RequestParam(required = false) String deleteVariant) {
+    public String postVariant(@Valid VariantDto variantDtoForm, @RequestParam String eoltName, @RequestParam(required = false) String deleteVariant) {
         log.info("PostMapping:postVariant");
         boolean flag = false;
         if (deleteVariant != null) {
@@ -42,12 +43,12 @@ public class VariantController {
             variantService.delete(deleteVariant);
         }
         if ((variantDtoForm != null) && (!flag)) {
-            variantService.create(variantDtoForm);
+            variantService.create(variantDtoForm, eoltName);
         }
-        return "redirect:variant";
+        return "redirect:variant?eoltName="+eoltName;
     }
 
-    @GetMapping("/detailedVariant")
+    @GetMapping("/detailed")
     public String showVariantDetailed(Model model, @RequestParam String variantName2) {
         model.addAttribute("myChoosenVariant", variantName2);
         log.info("get_detailedVariant");

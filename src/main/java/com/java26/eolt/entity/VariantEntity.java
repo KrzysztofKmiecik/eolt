@@ -15,5 +15,8 @@ public class VariantEntity {
     @Column(nullable = false, unique = true)
     private String dpn;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "eolt_id")
+    private EoltEntity eolt;
 
 }
