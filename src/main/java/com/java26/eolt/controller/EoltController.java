@@ -2,6 +2,7 @@ package com.java26.eolt.controller;
 
 import com.java26.eolt.dto.EoltDto;
 import com.java26.eolt.service.EoltService;
+import com.java26.eolt.service.VariantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import java.util.List;
 public class EoltController {
 
     private final EoltService eoltService;
+    private final VariantService variantService;
 
     @GetMapping
     public String showEolt(Model model) {
@@ -38,6 +40,7 @@ public class EoltController {
         boolean flag = false;
         if (deleteEolt != null) {
             flag = true;
+            variantService.deleteAllDpn(deleteEolt);
             eoltService.delete(deleteEolt);
         }
         if ((eoltDtoForm != null) && (!flag)) {

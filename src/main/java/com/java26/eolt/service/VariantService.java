@@ -1,5 +1,6 @@
 package com.java26.eolt.service;
 
+import com.java26.eolt.dto.EoltDto;
 import com.java26.eolt.dto.VariantDto;
 import com.java26.eolt.entity.EoltEntity;
 import com.java26.eolt.entity.VariantEntity;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,19 @@ public class VariantService {
         return variantDtos;
     }
 
+
+    public List<VariantDto> findAllVariants(String eoltName) {
+        log.info("VariantService:findAllVariants");
+
+        List<VariantEntity> variantEntities = variantRepository.findByEolt(eoltRepository.findByEoltName(eoltName).orElseThrow(()->new EntityNotFoundException(eoltName)));
+        List<VariantDto> variantDtos = new ArrayList<>();
+        for (VariantEntity variantEnt : variantEntities) {
+            VariantDto variantDto = new VariantDto();
+            variantDto.setDpn(variantEnt.getDpn());
+            variantDtos.add(variantDto);
+        }
+        return variantDtos;
+    }
     
     public VariantDto findByDpn(String dpn) {
 
@@ -63,13 +78,21 @@ public class VariantService {
 
     }
 
-    public void delete(String dpn) {
-        log.info("VariantService:delete dpn");
+    public void delete(String dpn,String eoltName) {
+        log.info("VariantService:delete dpn_eoltName");
 
-        VariantEntity variantEntity = variantRepository.findByDpn(dpn)
+        VariantEntity variantEntity = variantRepository.findByDpnAndEolt(dpn,eoltRepository.findByEoltName(eoltName).orElseThrow(()->new EntityNotFoundException(eoltName)))
                 .orElseThrow(() -> new EntityNotFoundException(dpn));
 
         variantRepository.deleteById(variantEntity.getId());
+
+    }
+
+    public void deleteAllDpn(String eoltName) {
+        log.info("VariantService:deleteALLdpn_eoltName");
+        List<VariantEntity> variantEntities = variantRepository.findByEolt(eoltRepository.findByEoltName(eoltName).orElseThrow(()->new EntityNotFoundException(eoltName)));
+
+        variantRepository.deleteAll(variantEntities);
 
     }
 

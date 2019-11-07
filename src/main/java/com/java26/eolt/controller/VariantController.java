@@ -1,6 +1,7 @@
 package com.java26.eolt.controller;
 
 import com.java26.eolt.dto.VariantDto;
+import com.java26.eolt.service.EoltService;
 import com.java26.eolt.service.VariantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +22,13 @@ import java.util.List;
 public class VariantController {
 
     private final VariantService variantService;
+    private final EoltService eoltService;
 
 
     @GetMapping
     public String showVariant(Model model, @RequestParam String eoltName) {
         log.info("GetMapping: showVariant");
-        List<VariantDto> variantDtoList = variantService.findAllVariants();
+        List<VariantDto> variantDtoList = variantService.findAllVariants(eoltName);
         model.addAttribute("eoltName", eoltName);
         model.addAttribute("variantDtoList", variantDtoList);
         model.addAttribute("variantDtoForm", new VariantDto());
@@ -40,12 +42,15 @@ public class VariantController {
         boolean flag = false;
         if (deleteVariant != null) {
             flag = true;
-            variantService.delete(deleteVariant);
+            log.info("PostMapping:postVariant:delete");
+            variantService.delete(deleteVariant,eoltName);
         }
         if ((variantDtoForm != null) && (!flag)) {
+            log.info("PostMapping:postVariant:create");
             variantService.create(variantDtoForm, eoltName);
+
         }
-        return "redirect:variant?eoltName="+eoltName;
+        return "redirect:variant?eoltName=" + eoltName;
     }
 
     @GetMapping("/detailed")

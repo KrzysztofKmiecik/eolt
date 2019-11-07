@@ -20,8 +20,11 @@
                th:text="${variantDto.getDpn()}"> Link 1</a></td>
 
         <td>
-            <form th:action="@{/variant(eoltName=${eoltName})}" method="post" th:object="${variantDtoForm}">
-                <input type="hidden" name="deleteEolt" th:value="${variantDto.getDpn()}" }/>
+            <form th:action="@{/variant}" method="post" th:object="${variantDtoForm}">
+
+                <input type="hidden" name="eoltName" th:value="${eoltName}" }/>
+                <input type="hidden" name="deleteVariant" th:value="${variantDto.getDpn()}" }/>
+
                 <button name="action" value="delete">Delete</button>
             </form>
         </td>
