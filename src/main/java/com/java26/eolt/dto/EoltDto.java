@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class EoltDto {
-
     private String eoltName;
     private String location;
 }

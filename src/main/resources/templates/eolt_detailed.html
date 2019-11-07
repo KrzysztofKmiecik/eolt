@@ -6,9 +6,7 @@
 </head>
 <body>
 <h1 th:text="${myChoosenEoltName}">Tester details</h1>
-<img th:src="@{/photos/eolt.jpg}" height="100"  width="100" alt="foto" />
+<img src="#" th:src="@{/photos/eolt.jpg}" height="100" width="100" alt="foto"/>
 <a th:href="@{/variant(eoltName=${myChoosenEoltName})}">Variant</a>
-
-
 </body>
 </html>

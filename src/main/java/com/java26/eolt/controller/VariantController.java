@@ -1,7 +1,6 @@
 package com.java26.eolt.controller;
 
 import com.java26.eolt.dto.VariantDto;
-import com.java26.eolt.service.EoltService;
 import com.java26.eolt.service.VariantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +21,10 @@ import java.util.List;
 public class VariantController {
 
     private final VariantService variantService;
-    private final EoltService eoltService;
-
 
     @GetMapping
-    public String showVariant(Model model, @RequestParam String eoltName) {
+    public String showVariant(Model model,
+                              @RequestParam String eoltName) {
         log.info("GetMapping: showVariant");
         List<VariantDto> variantDtoList = variantService.findAllVariants(eoltName);
         model.addAttribute("eoltName", eoltName);
@@ -37,29 +35,30 @@ public class VariantController {
 
 
     @PostMapping
-    public String postVariant(@Valid VariantDto variantDtoForm, @RequestParam String eoltName, @RequestParam(required = false) String deleteVariant) {
+    public String postVariant(@Valid VariantDto variantDtoForm,
+                              @RequestParam String eoltName,
+                              @RequestParam(required = false) String deleteVariant) {
         log.info("PostMapping:postVariant");
         boolean flag = false;
         if (deleteVariant != null) {
             flag = true;
             log.info("PostMapping:postVariant:delete");
-            variantService.delete(deleteVariant,eoltName);
+            variantService.delete(deleteVariant, eoltName);
         }
         if ((variantDtoForm != null) && (!flag)) {
             log.info("PostMapping:postVariant:create");
             variantService.create(variantDtoForm, eoltName);
-
         }
         return "redirect:variant?eoltName=" + eoltName;
     }
 
     @GetMapping("/detailed")
-    public String showVariantDetailed(Model model, @RequestParam String variantName2) {
+    public String showVariantDetailed(Model model,
+                                      @RequestParam String variantName2) {
         model.addAttribute("myChoosenVariant", variantName2);
         log.info("get_detailedVariant");
         return "variant_detailed";
     }
-
 
 }
 

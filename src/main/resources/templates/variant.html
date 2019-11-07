@@ -5,32 +5,26 @@
     <title>VARIANT</title>
 </head>
 <body>
-
 <h1 th:text="${eoltName}">eoltName</h1>
 <form th:action="@{/variant(eoltName=${eoltName})}" method="post" th:object="${variantDtoForm}">
-    dpn <input id="dpn" type="text" th:field="*{dpn}">
+    <label for="dpn">dpn</label>
+    <input id="dpn" type="text" th:field="*{dpn}">
     <input type="submit" value="submit">
-
 </form>
-
 <table>
     <tr th:each="variantDto:${variantDtoList}">
         <td th:text="${variantDto.getDpn()}"></td>
         <td><a href="#" th:href="@{/variant/detailed(variantName2=${variantDto.getDpn()})}"
                th:text="${variantDto.getDpn()}"> Link 1</a></td>
-
         <td>
             <form th:action="@{/variant}" method="post" th:object="${variantDtoForm}">
-
-                <input type="hidden" name="eoltName" th:value="${eoltName}" }/>
-                <input type="hidden" name="deleteVariant" th:value="${variantDto.getDpn()}" }/>
-
+                <input type="hidden" name="eoltName" th:value="${eoltName}"/>
+                <input type="hidden" name="deleteVariant" th:value="${variantDto.getDpn()}"/>
                 <button name="action" value="delete">Delete</button>
             </form>
         </td>
     </tr>
 </table>
-
 </body>
 </html>
 

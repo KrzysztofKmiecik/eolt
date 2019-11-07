@@ -5,28 +5,27 @@
     <title>EOLT</title>
 </head>
 <body>
-
 <form action="/eolt" method="post" th:object="${eoltDtoForm}">
-    eoltName <input id="eoltName" type="text" th:field="*{eoltName}">
-    location <input id="location" type="text" th:field="*{location}">
+    <label for="eoltName">eoltName</label>
+    <input id="eoltName" type="text" th:field="*{eoltName}">
+    <label for="location">location</label>
+    <input id="location" type="text" th:field="*{location}">
     <input type="submit" value="submit">
-
 </form>
-
 <table>
     <tr th:each="eoltDto:${eoltDtoList}">
         <td th:text="${eoltDto.getEoltName()}"></td>
         <td th:text="${eoltDto.getLocation()}"></td>
-       <td><a href="#" th:href="@{/eolt/detailed(eoltName2=${eoltDto.getEoltName()})}" th:text="${eoltDto.getEoltName()}"> Link 1</a> </td>
-
+        <td><a href="#" th:href="@{/eolt/detailed(eoltName2=${eoltDto.getEoltName()})}"
+               th:text="${eoltDto.getEoltName()}"> Link 1</a></td>
         <td>
             <form action="/eolt" method="post" th:object="${eoltDtoForm}">
-               <input type="hidden" name="deleteEolt" th:value="${eoltDto.getEoltName()}"}/><button name="action" value="delete">Delete</button>
+                <input type="hidden" name="deleteEolt" th:value="${eoltDto.getEoltName()}"/>
+                <button name="action" value="delete">Delete</button>
             </form>
         </td>
     </tr>
 </table>
-
 </body>
 </html>
 

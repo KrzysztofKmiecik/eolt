@@ -32,7 +32,6 @@ public class EoltService {
     }
 
     public EoltDto findByName(String eoltName) {
-
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
                 .orElseThrow(() -> new EntityNotFoundException(eoltName));
         EoltDto eoltDto = new EoltDto();
@@ -49,24 +48,10 @@ public class EoltService {
         eoltRepository.save(eoltEntity);
     }
 
-    public void delete(Long id) {
-        log.info("EoltService:delete");
-
-        EoltEntity eoltEntity = eoltRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(id.toString()));
-
-        eoltRepository.deleteById(id);
-
-    }
-
     public void delete(String eoltName) {
         log.info("EoltService:delete eoltNAme");
-
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
                 .orElseThrow(() -> new EntityNotFoundException(eoltName));
-
         eoltRepository.deleteById(eoltEntity.getId());
-
     }
-
 }

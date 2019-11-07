@@ -35,12 +35,13 @@ public class EoltController {
 
 
     @PostMapping
-    public String postEolt(@Valid EoltDto eoltDtoForm, @RequestParam(required = false) String deleteEolt) {
+    public String postEolt(@Valid EoltDto eoltDtoForm,
+                           @RequestParam(required = false) String deleteEolt) {
         log.info("PostMapping:postEolt");
         boolean flag = false;
         if (deleteEolt != null) {
             flag = true;
-            variantService.deleteAllDpn(deleteEolt);
+            variantService.deleteAllVariantsFromEoltName(deleteEolt);
             eoltService.delete(deleteEolt);
         }
         if ((eoltDtoForm != null) && (!flag)) {

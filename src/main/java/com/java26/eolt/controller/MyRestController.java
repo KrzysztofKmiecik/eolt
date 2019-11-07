@@ -22,7 +22,6 @@ public class MyRestController {
 
     @RequestMapping("/api/eolt/{eoltName}")
     public EoltDto getEolts(@PathVariable String eoltName) {
-        EoltDto eoltDto=eoltService.findByName(eoltName);
-        return eoltDto;
+        return eoltService.findByName(eoltName);
     }
 }
