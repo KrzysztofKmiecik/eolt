@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface VariantRepository extends JpaRepository<VariantEntity, Long> {
 
-  //  Optional<VariantEntity> findByDpn(String dpn);
+    List<VariantEntity> findByDpn(String dpn);
     Optional<VariantEntity> findByDpnAndEolt(String dpn,EoltEntity eolt);
     List<VariantEntity> findByEolt(EoltEntity eolt);
 

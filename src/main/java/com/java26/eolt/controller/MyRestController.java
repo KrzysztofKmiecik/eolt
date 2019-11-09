@@ -31,4 +31,10 @@ public class MyRestController {
         return eoltService.findAllVariants(eoltName);
     }
 
+    @RequestMapping("/api/eolts/{variant}")
+    public List<EoltDto> getEoltsWithVariant(@PathVariable String variant) {
+        return eoltService.findAllEoltForVariant(variant);
+    }
+
+
 }
