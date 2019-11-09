@@ -1,6 +1,7 @@
 package com.java26.eolt.controller;
 
 import com.java26.eolt.dto.EoltDto;
+import com.java26.eolt.dto.VariantDto;
 import com.java26.eolt.service.EoltService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,4 +25,10 @@ public class MyRestController {
     public EoltDto getEolts(@PathVariable String eoltName) {
         return eoltService.findByName(eoltName);
     }
+
+    @RequestMapping("/api/{eoltName}/variants")
+    public List<VariantDto> getVariants(@PathVariable String eoltName) {
+        return eoltService.findAllVariants(eoltName);
+    }
+
 }

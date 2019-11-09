@@ -1,8 +1,11 @@
 package com.java26.eolt.service;
 
 import com.java26.eolt.dto.EoltDto;
+import com.java26.eolt.dto.VariantDto;
 import com.java26.eolt.entity.EoltEntity;
+import com.java26.eolt.entity.VariantEntity;
 import com.java26.eolt.repository.EoltRepository;
+import com.java26.eolt.repository.VariantRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import java.util.List;
 public class EoltService {
 
     final EoltRepository eoltRepository;
+    final VariantRepository variantRepository;
 
     public List<EoltDto> findAll() {
         log.info("EoltService:findAll");
@@ -53,5 +57,24 @@ public class EoltService {
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
                 .orElseThrow(() -> new EntityNotFoundException(eoltName));
         eoltRepository.deleteById(eoltEntity.getId());
+    }
+
+    public List<VariantDto> findAllVariants(String eoltName) {
+        log.info("EoltService:findAllVariants");
+
+        VariantDto variantDto=new VariantDto();
+        List<VariantDto> variantDtos=new ArrayList<>();
+        EoltEntity eoltEntity=eoltRepository.findByEoltName(eoltName)
+                .orElseThrow(()->new EntityNotFoundException(eoltName));
+
+        List<VariantEntity> variantEntities=variantRepository.findByEolt(eoltEntity);
+
+        for(VariantEntity variantEntity:variantEntities){
+            variantDto.setDpn(variantEntity.getDpn());
+        variantDtos.add(variantDto);
+        }
+
+        return variantDtos;
+
     }
 }
