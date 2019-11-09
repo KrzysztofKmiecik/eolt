@@ -49,10 +49,21 @@ public class VariantService {
         log.info("VariantService:create");
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
                 .orElseThrow(() -> new EntityNotFoundException(eoltName));
+
+
         VariantEntity variantEntity = new VariantEntity();
-        variantEntity.setDpn(variantDto.getDpn());
-        variantEntity.setEolt(eoltEntity);
-        variantRepository.save(variantEntity);
+
+        if (!variantRepository.findByDpnAndEolt(variantDto.getDpn(), eoltEntity)
+                .isPresent()) {
+            variantEntity.setDpn(variantDto.getDpn());
+            variantEntity.setEolt(eoltEntity);
+            variantRepository.save(variantEntity);
+
+        } else {
+            throw new IllegalArgumentException("variant " + variantDto.getDpn() + " has already exist");
+        }
+
+
     }
 
    /* public void delete(Long id) {

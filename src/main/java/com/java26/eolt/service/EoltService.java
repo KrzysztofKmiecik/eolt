@@ -61,45 +61,34 @@ public class EoltService {
 
     public List<VariantDto> findAllVariants(String eoltName) {
         log.info("EoltService:findAllVariants");
-
-
         List<VariantDto> variantDtos = new ArrayList<>();
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
                 .orElseThrow(() -> new EntityNotFoundException(eoltName));
 
         List<VariantEntity> variantEntities = variantRepository.findByEolt(eoltEntity);
-
         for (VariantEntity variantEntity : variantEntities) {
             VariantDto variantDto = new VariantDto();
             variantDto.setDpn(variantEntity.getDpn());
             variantDtos.add(variantDto);
         }
-
         return variantDtos;
-
     }
 
     public List<EoltDto> findAllEoltForVariant(String variant) {
-
         List<EoltDto> eoltDtos = new ArrayList<>();
-
-        EoltEntity eoltEntity=new EoltEntity();
-        List<EoltEntity> eoltEntities=new ArrayList<>();
-
+        EoltEntity eoltEntity;
+        List<EoltEntity> eoltEntities = new ArrayList<>();
         List<VariantEntity> variantEntities = variantRepository.findByDpn(variant);
-
-        for(VariantEntity variantEntity:variantEntities){
-          eoltEntity= variantEntity.getEolt();
-          eoltEntities.add(eoltEntity);
+        for (VariantEntity variantEntity : variantEntities) {
+            eoltEntity = variantEntity.getEolt();
+            eoltEntities.add(eoltEntity);
         }
-
-        for (EoltEntity eoltEntity1:eoltEntities){
-            EoltDto eoltDto=new EoltDto();
+        for (EoltEntity eoltEntity1 : eoltEntities) {
+            EoltDto eoltDto = new EoltDto();
             eoltDto.setLocation(eoltEntity1.getLocation());
             eoltDto.setEoltName(eoltEntity1.getEoltName());
             eoltDtos.add(eoltDto);
         }
-
         return eoltDtos;
     }
 }
