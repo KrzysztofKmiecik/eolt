@@ -2,9 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <title>EOLT</title>
 </head>
 <body>
+<div class ="navigator">
+    <img src="#" th:src="@{/photos/aptiv.svg}" height="48"  alt="aptiv"/>
+
+</div>
+
+<div class="bg">
+    <h1>EOLT</h1>
+</div>
 <form action="/eolt" method="post" th:object="${eoltDtoForm}">
     <label for="eoltName">eoltName</label>
     <input id="eoltName" type="text" th:field="*{eoltName}">
@@ -12,7 +21,14 @@
     <input id="location" type="text" th:field="*{location}">
     <input type="submit" value="submit">
 </form>
-<table>
+<br/>
+<table id="eolt-table">
+    <tr>
+        <th>EoltName</th>
+        <th>Location</th>
+        <th>Link</th>
+        <th>Delete</th>
+    </tr>
     <tr th:each="eoltDto:${eoltDtoList}">
         <td th:text="${eoltDto.getEoltName()}"></td>
         <td th:text="${eoltDto.getLocation()}"></td>
