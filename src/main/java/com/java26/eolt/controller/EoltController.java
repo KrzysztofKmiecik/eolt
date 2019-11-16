@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,13 +27,15 @@ public class EoltController {
 
     @GetMapping
     public String showEolt(Model model) {
+
+        EoltDto dtoToCopy = (EoltDto) model.getAttribute("eoltToCopy");
+
         log.info("GetMapping: showEolt");
         List<EoltDto> eoltDtoList = eoltService.findAll();
         model.addAttribute("eoltDtoList", eoltDtoList);
-        model.addAttribute("eoltDtoForm", new EoltDto());
+        model.addAttribute("eoltDtoForm", dtoToCopy == null ? new EoltDto() : dtoToCopy);
         return "eolt";
     }
-
 
     @PostMapping("/add")
     public String createEolt(@Valid EoltDto eoltDtoForm) {
@@ -43,9 +46,17 @@ public class EoltController {
         return "redirect:/eolt";
     }
 
+    @PostMapping("/copy")
+    public String copyEolt(RedirectAttributes redirectAttributes,
+                           @RequestParam(required = false) String copyEolt) {
+        log.info("PostMapping:postEolt:copy");
+        EoltDto eoltDto = eoltService.findByName(copyEolt);
+        redirectAttributes.addFlashAttribute("eoltToCopy", eoltDto);
+        return "redirect:/eolt";
+    }
+
     @PostMapping("/delete")
-    public String deleteEolt(@Valid EoltDto eoltDtoForm,
-                           @RequestParam(required = false) String deleteEolt) {
+    public String deleteEolt(@RequestParam(required = false) String deleteEolt) {
         log.info("PostMapping:postEolt:delete");
 
         if (deleteEolt != null) {
@@ -58,7 +69,7 @@ public class EoltController {
 
     @PostMapping("/update")
     public String updateEolt(@Valid EoltDto eoltDtoForm,
-                           @RequestParam(required = false) String updateEolt) {
+                             @RequestParam(required = false) String updateEolt) {
         log.info("PostMapping:update");
 
         if (updateEolt != null) {
@@ -74,7 +85,6 @@ public class EoltController {
         log.info("get_detailed");
         return "eolt_detailed";
     }
-
 
 }
 

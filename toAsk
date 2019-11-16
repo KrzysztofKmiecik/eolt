@@ -5,7 +5,7 @@ done -time_zone -> zmienic na bazie
 done-obrazek -> jedne mi wgrywa jedne nie-> jak trzeba go przygotowac
 -wysylanie email-> da przyklad
 done -gromadzenie plikow (binarnych) pdf w bazie danych BLOB, mangoDB , BigData
--detached head problem
+done -detached head problem robic merge
 
 
 

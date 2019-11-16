@@ -16,9 +16,9 @@
 </div>
 <form action="/eolt/add" method="post" th:object="${eoltDtoForm}">
     <label for="eoltName">eoltName</label>
-    <input id="eoltName" type="text" th:field="*{eoltName}">
+    <input id="eoltName" type="text" th:field="*{eoltName}" >
     <label for="location">location</label>
-    <input id="location" type="text" th:field="*{location}">
+    <input id="location" type="text" th:field="*{location}" >
     <input type="submit" value="Add">
 </form>
 <br/>
@@ -28,6 +28,8 @@
         <th>Location</th>
         <th>Link</th>
         <th>Delete</th>
+        <th>Copy</th>
+
     </tr>
     <tr th:each="eoltDto:${eoltDtoList}">
         <td th:text="${eoltDto.getEoltName()}"></td>
@@ -38,6 +40,12 @@
             <form action="/eolt/delete" method="post" th:object="${eoltDtoForm}">
                 <input type="hidden" name="deleteEolt" th:value="${eoltDto.getEoltName()}"/>
                 <button name="action" value="delete">Delete</button>
+            </form>
+        </td>
+        <td>
+            <form action="/eolt/copy" method="post" th:object="${eoltDtoForm}">
+                <input type="hidden" name="copyEolt" th:value="${eoltDto.getEoltName()}"/>
+                <button name="action" value="copy">Copy</button>
             </form>
         </td>
     </tr>
