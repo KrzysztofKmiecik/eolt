@@ -54,7 +54,7 @@ public class EoltService {
         eoltRepository.save(eoltEntity);
     }
 
-    @Transactional
+    //@Transactional
     public void update(EoltDto eoltDto) {
         log.info("EoltService:update");
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltDto.getEoltName())

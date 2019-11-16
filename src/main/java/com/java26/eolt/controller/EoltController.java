@@ -47,11 +47,12 @@ public class EoltController {
     }
 
     @PostMapping("/copy")
-    public String copyEolt(RedirectAttributes redirectAttributes,
+    public String copyEolt(RedirectAttributes redirectAttributes,Model model,
                            @RequestParam(required = false) String copyEolt) {
         log.info("PostMapping:postEolt:copy");
         EoltDto eoltDto = eoltService.findByName(copyEolt);
         redirectAttributes.addFlashAttribute("eoltToCopy", eoltDto);
+     //   model.addAttribute("eoltToCopy",eoltDto);
         return "redirect:/eolt";
     }
 
