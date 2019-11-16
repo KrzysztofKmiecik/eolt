@@ -9,33 +9,28 @@
 <img src="#" th:src="@{/photos/eolt.jpg}" height="100" width="100" alt="foto"/>
 <a th:href="@{/variant(eoltName=${eoltDtoForm.getEoltName()})}">Variant</a>
 
-<form action="/eolt" method="post" th:object="${eoltDtoForm}">
-</br>
+<form action="/eolt/update" method="post" th:object="${eoltDtoForm}">
+    <br>
     <table id="eolt-detailed">
+       <tr>
+           <th>Param</th>
+           <th>Value</th>
 
-        <th>Param</th>
-        <th>Value</th>
+       </tr>
+
         <tr>
-
             <td><label for="eoltName">eoltName</label></td>
             <td>
-
                 <input id="eoltName" type="text" th:field="*{eoltName}">
-
             </td>
         </tr>
         <tr>
             <td><label for="location">location</label></td>
             <td>
-
                 <input id="location" type="text" th:field="*{location}">
             </td>
-
         </tr>
-
-
     </table>
-
 
     <input type="hidden" name="updateEolt" th:value="*{location}"/>
     <input type="submit" value="Update">

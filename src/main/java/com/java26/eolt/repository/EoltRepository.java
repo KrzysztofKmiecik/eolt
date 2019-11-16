@@ -19,7 +19,6 @@ public interface EoltRepository extends JpaRepository<EoltEntity, Long> {
 //    int setLocationForEoltEntity( String location, Long id);
 
     @Modifying
-    @Transactional
     @Query("update EoltEntity eoltEntity set eoltEntity.location = :location where eoltEntity.id = :id")
     int setLocationForEoltEntity(@Param("location") String location, @Param("id") Long id);
 

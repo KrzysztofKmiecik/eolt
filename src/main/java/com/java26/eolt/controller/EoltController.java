@@ -34,27 +34,37 @@ public class EoltController {
     }
 
 
-    @PostMapping
-    public String postEolt(@Valid EoltDto eoltDtoForm,
-                           @RequestParam(required = false) String deleteEolt,
-                           @RequestParam(required = false) String updateEolt) {
-        log.info("PostMapping:postEolt");
-        boolean flag = false;
+    @PostMapping("/add")
+    public String createEolt(@Valid EoltDto eoltDtoForm) {
+        log.info("PostMapping:postEolt:add");
+        if ((eoltDtoForm != null)) {
+            eoltService.create(eoltDtoForm);
+        }
+        return "redirect:/eolt";
+    }
+
+    @PostMapping("/delete")
+    public String deleteEolt(@Valid EoltDto eoltDtoForm,
+                           @RequestParam(required = false) String deleteEolt) {
+        log.info("PostMapping:postEolt:delete");
+
         if (deleteEolt != null) {
-            flag = true;
             variantService.deleteAllVariantsFromEoltName(deleteEolt);
             eoltService.delete(deleteEolt);
         }
 
-        if(updateEolt!=null){
-            flag=true;
+        return "redirect:/eolt";
+    }
+
+    @PostMapping("/update")
+    public String updateEolt(@Valid EoltDto eoltDtoForm,
+                           @RequestParam(required = false) String updateEolt) {
+        log.info("PostMapping:update");
+
+        if (updateEolt != null) {
             eoltService.update(eoltDtoForm);
         }
-
-        if ((eoltDtoForm != null) && (!flag)) {
-            eoltService.create(eoltDtoForm);
-        }
-        return "redirect:eolt";
+        return "redirect:/eolt";
     }
 
     @GetMapping("/detailed")

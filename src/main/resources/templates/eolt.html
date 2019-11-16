@@ -7,14 +7,14 @@
 </head>
 <body>
 <div class ="navigator">
-    <img src="#" th:src="@{/photos/aptiv.svg}" height="48"  alt="aptiv"/>
+    <img src="#" th:src="@{/photos/aptiv.jpg}" height="48"  alt="aptiv"/>
 
 </div>
 
 <div class="bg">
     <h1>EOLT</h1>
 </div>
-<form action="/eolt" method="post" th:object="${eoltDtoForm}">
+<form action="/eolt/add" method="post" th:object="${eoltDtoForm}">
     <label for="eoltName">eoltName</label>
     <input id="eoltName" type="text" th:field="*{eoltName}">
     <label for="location">location</label>
@@ -35,7 +35,7 @@
         <td><a href="#" th:href="@{/eolt/detailed(eoltName2=${eoltDto.getEoltName()})}"
                th:text="${eoltDto.getEoltName()}"> Link 1</a></td>
         <td>
-            <form action="/eolt" method="post" th:object="${eoltDtoForm}">
+            <form action="/eolt/delete" method="post" th:object="${eoltDtoForm}">
                 <input type="hidden" name="deleteEolt" th:value="${eoltDto.getEoltName()}"/>
                 <button name="action" value="delete">Delete</button>
             </form>

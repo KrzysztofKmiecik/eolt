@@ -9,11 +9,13 @@ import com.java26.eolt.repository.VariantRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -52,16 +54,9 @@ public class EoltService {
         eoltRepository.save(eoltEntity);
     }
 
+    @Transactional
     public void update(EoltDto eoltDto) {
         log.info("EoltService:update");
-
-        // this.create(eoltDto);
-
-//        EoltEntity eoltEntity = new EoltEntity();
-//       eoltEntity.setEoltName(eoltDto.getEoltName());
-//        eoltEntity.setLocation(eoltDto.getLocation());
-//        eoltRepository.save(eoltEntity);
-
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltDto.getEoltName())
                 .orElseThrow(() -> new EntityNotFoundException(eoltDto.getEoltName()));
         eoltRepository.setLocationForEoltEntity(eoltDto.getLocation(), eoltEntity.getId());
@@ -81,7 +76,6 @@ public class EoltService {
         List<VariantDto> variantDtos = new ArrayList<>();
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
                 .orElseThrow(() -> new EntityNotFoundException(eoltName));
-
         List<VariantEntity> variantEntities = variantRepository.findByEolt(eoltEntity);
         for (VariantEntity variantEntity : variantEntities) {
             VariantDto variantDto = new VariantDto();
