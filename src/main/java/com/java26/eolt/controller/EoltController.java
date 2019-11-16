@@ -86,6 +86,5 @@ public class EoltController {
         log.info("get_detailed");
         return "eolt_detailed";
     }
-
 }
 
