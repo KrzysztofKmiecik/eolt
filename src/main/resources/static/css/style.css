@@ -25,6 +25,15 @@ table, td, th {
 
 }
 
+#eolt-detailed {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+
+#eolt-detailed th {
+    background-color: #a5a9ff;
+}
 .navigator {
     width: 100%;
     height: 50px;

@@ -36,7 +36,8 @@ public class EoltController {
 
     @PostMapping
     public String postEolt(@Valid EoltDto eoltDtoForm,
-                           @RequestParam(required = false) String deleteEolt) {
+                           @RequestParam(required = false) String deleteEolt,
+                           @RequestParam(required = false) String updateEolt) {
         log.info("PostMapping:postEolt");
         boolean flag = false;
         if (deleteEolt != null) {
@@ -44,6 +45,12 @@ public class EoltController {
             variantService.deleteAllVariantsFromEoltName(deleteEolt);
             eoltService.delete(deleteEolt);
         }
+
+        if(updateEolt!=null){
+            flag=true;
+            eoltService.update(eoltDtoForm);
+        }
+
         if ((eoltDtoForm != null) && (!flag)) {
             eoltService.create(eoltDtoForm);
         }
@@ -51,12 +58,12 @@ public class EoltController {
     }
 
     @GetMapping("/detailed")
-    public String showEoltDetailed(Model model,@RequestParam String eoltName2 ) {
-        model.addAttribute("myChoosenEoltName",eoltName2);
+    public String showEoltDetailed(Model model, @RequestParam String eoltName2) {
+        EoltDto eoltDto = eoltService.findByName(eoltName2);
+        model.addAttribute("eoltDtoForm", eoltDto);
         log.info("get_detailed");
         return "eolt_detailed";
     }
-
 
 
 }

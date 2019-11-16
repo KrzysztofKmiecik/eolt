@@ -52,12 +52,29 @@ public class EoltService {
         eoltRepository.save(eoltEntity);
     }
 
+    public void update(EoltDto eoltDto) {
+        log.info("EoltService:update");
+
+        // this.create(eoltDto);
+
+//        EoltEntity eoltEntity = new EoltEntity();
+//       eoltEntity.setEoltName(eoltDto.getEoltName());
+//        eoltEntity.setLocation(eoltDto.getLocation());
+//        eoltRepository.save(eoltEntity);
+
+        EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltDto.getEoltName())
+                .orElseThrow(() -> new EntityNotFoundException(eoltDto.getEoltName()));
+        eoltRepository.setLocationForEoltEntity(eoltDto.getLocation(), eoltEntity.getId());
+        log.info("");
+    }
+
     public void delete(String eoltName) {
         log.info("EoltService:delete eoltNAme");
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
                 .orElseThrow(() -> new EntityNotFoundException(eoltName));
         eoltRepository.deleteById(eoltEntity.getId());
     }
+
 
     public List<VariantDto> findAllVariants(String eoltName) {
         log.info("EoltService:findAllVariants");
