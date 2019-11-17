@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -47,12 +44,12 @@ public class EoltController {
     }
 
     @PostMapping("/copy")
-    public String copyEolt(RedirectAttributes redirectAttributes,Model model,
+    public String copyEolt(RedirectAttributes redirectAttributes, Model model,
                            @RequestParam(required = false) String copyEolt) {
         log.info("PostMapping:postEolt:copy");
         EoltDto eoltDto = eoltService.findByName(copyEolt);
         redirectAttributes.addFlashAttribute("eoltToCopy", eoltDto);
-     //   model.addAttribute("eoltToCopy",eoltDto);
+        //   model.addAttribute("eoltToCopy",eoltDto);
         return "redirect:/eolt";
     }
 
@@ -85,6 +82,25 @@ public class EoltController {
         model.addAttribute("eoltDtoForm", eoltDto);
         log.info("get_detailed");
         return "eolt_detailed";
+    }
+
+
+    @GetMapping("/search")
+    public String showSearchEolt(Model model) {
+        log.info("GetMapping: showSearchEolt");
+//        EoltDto dtoToCopy = (EoltDto) model.getAttribute("eoltToCopy");
+//        List<EoltDto> eoltDtoSearchList = eoltService.findAll();
+//        model.addAttribute("eoltDtoSearchList", eoltDtoSearchList);
+        return "eolt_search";
+    }
+
+
+    @PostMapping("/search")
+    public String FindEolt(Model model) {
+        log.info("post_search");
+//        List<EoltDto> eoltDtoSearchList = eoltService.findAll();
+//        model.addAttribute("eoltDtoSearchList", eoltDtoSearchList);
+        return "redirect:/eolt/search";
     }
 }
 
