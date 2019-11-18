@@ -92,6 +92,7 @@ public class EoltController {
         model.addAttribute("searchStringForm", searchDto);
         model.addAttribute("searchStringListForm", eoltDtos);
         log.info("GetMapping: showSearchEolt {}", searchDto.getSearchString());
+
         return "eolt_search";
     }
 
