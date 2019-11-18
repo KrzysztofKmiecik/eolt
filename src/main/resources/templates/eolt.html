@@ -6,8 +6,8 @@
     <title>EOLT</title>
 </head>
 <body>
-<div class ="navigator">
-    <img src="#" th:src="@{/photos/aptiv.jpg}" height="48"  alt="aptiv"/>
+<div class="navigator">
+    <img src="#" th:src="@{/photos/aptiv.jpg}" height="48" alt="aptiv"/>
 
 </div>
 
@@ -16,16 +16,16 @@
 </div>
 <form action="/eolt/add" method="post" th:object="${eoltDtoForm}">
     <label for="eoltName">eoltName</label>
-    <input id="eoltName" type="text" th:field="*{eoltName}" >
+    <input id="eoltName" type="text" th:field="*{eoltName}">
     <label for="location">location</label>
-    <input id="location" type="text" th:field="*{location}" >
+    <input id="location" type="text" th:field="*{location}">
     <input type="submit" value="Add">
 </form>
 <br/>
 
-<form action="/eolt/search" method="post">
+<form action="/eolt/search" method="post" th:object="${searchDto}">
     <label for="searchString">searchString</label>
-    <input id="searchString" type="text">
+    <input type="text" id="searchString" name="searchString" th:field="*{searchString}">
     <input type="submit" value="Search">
 
 </form>

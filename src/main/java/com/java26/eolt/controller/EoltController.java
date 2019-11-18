@@ -1,6 +1,7 @@
 package com.java26.eolt.controller;
 
 import com.java26.eolt.dto.EoltDto;
+import com.java26.eolt.dto.SearchDto;
 import com.java26.eolt.service.EoltService;
 import com.java26.eolt.service.VariantService;
 import lombok.RequiredArgsConstructor;
@@ -87,20 +88,33 @@ public class EoltController {
 
     @GetMapping("/search")
     public String showSearchEolt(Model model) {
-        log.info("GetMapping: showSearchEolt");
+
+        SearchDto searchDto = (SearchDto) model.getAttribute("searchStringAtribute");
+        model.addAttribute("searchStringForm", searchDto==null ? new SearchDto():searchDto);
 //        EoltDto dtoToCopy = (EoltDto) model.getAttribute("eoltToCopy");
 //        List<EoltDto> eoltDtoSearchList = eoltService.findAll();
 //        model.addAttribute("eoltDtoSearchList", eoltDtoSearchList);
+        log.info("GetMapping: showSearchEolt {}",searchDto.getSearchString());
         return "eolt_search";
     }
 
 
     @PostMapping("/search")
-    public String FindEolt(Model model) {
+    public String FindEolt(RedirectAttributes redirectAttributes, @ModelAttribute("searchDto") SearchDto searchDto) {
         log.info("post_search");
-//        List<EoltDto> eoltDtoSearchList = eoltService.findAll();
-//        model.addAttribute("eoltDtoSearchList", eoltDtoSearchList);
+
+        redirectAttributes.addFlashAttribute("searchStringAtribute", searchDto);
+
+        // List<EoltDto> eoltDtoSearchList = eoltService.findAll();
+        // model.addAttribute("eoltDtoSearchList", eoltDtoSearchList);
         return "redirect:/eolt/search";
     }
+
+    @ModelAttribute
+    public SearchDto searchDto() {
+        return new SearchDto();
+    }
+
+
 }
 
