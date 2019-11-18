@@ -102,4 +102,17 @@ public class EoltService {
         }
         return eoltDtos;
     }
+
+    public List<EoltDto> findEoltContaining(String searchString) {
+        List<EoltDto> eoltDtos = new ArrayList<>();
+        List<EoltEntity> eoltEntities = eoltRepository.findByEoltNameContaining(searchString);
+        for (EoltEntity eoltEntity : eoltEntities) {
+            EoltDto eoltDto = new EoltDto();
+            eoltDto.setEoltName(eoltEntity.getEoltName());
+            eoltDto.setLocation(eoltEntity.getLocation());
+            eoltDtos.add(eoltDto);
+        }
+
+        return eoltDtos;
+    }
 }

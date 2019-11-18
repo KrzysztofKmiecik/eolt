@@ -7,12 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface EoltRepository extends JpaRepository<EoltEntity, Long> {
 
     Optional<EoltEntity> findByEoltName(String eoltName);
 
+    List<EoltEntity> findByEoltNameContaining(String eoltName);
 
 //    @Modifying
 //    @Query("update EoltEntity eoltEntity set eoltEntity.location = ?1 where eoltEntity.id = ?2")

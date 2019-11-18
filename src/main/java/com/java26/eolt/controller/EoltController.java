@@ -25,9 +25,7 @@ public class EoltController {
 
     @GetMapping
     public String showEolt(Model model) {
-
         EoltDto dtoToCopy = (EoltDto) model.getAttribute("eoltToCopy");
-
         log.info("GetMapping: showEolt");
         List<EoltDto> eoltDtoList = eoltService.findAll();
         model.addAttribute("eoltDtoList", eoltDtoList);
@@ -45,7 +43,7 @@ public class EoltController {
     }
 
     @PostMapping("/copy")
-    public String copyEolt(RedirectAttributes redirectAttributes, Model model,
+    public String copyEolt(RedirectAttributes redirectAttributes,
                            @RequestParam(required = false) String copyEolt) {
         log.info("PostMapping:postEolt:copy");
         EoltDto eoltDto = eoltService.findByName(copyEolt);
@@ -62,7 +60,6 @@ public class EoltController {
             variantService.deleteAllVariantsFromEoltName(deleteEolt);
             eoltService.delete(deleteEolt);
         }
-
         return "redirect:/eolt";
     }
 
@@ -70,7 +67,6 @@ public class EoltController {
     public String updateEolt(@Valid EoltDto eoltDtoForm,
                              @RequestParam(required = false) String updateEolt) {
         log.info("PostMapping:update");
-
         if (updateEolt != null) {
             eoltService.update(eoltDtoForm);
         }
@@ -88,13 +84,14 @@ public class EoltController {
 
     @GetMapping("/search")
     public String showSearchEolt(Model model) {
-
         SearchDto searchDto = (SearchDto) model.getAttribute("searchStringAtribute");
-        model.addAttribute("searchStringForm", searchDto==null ? new SearchDto():searchDto);
-//        EoltDto dtoToCopy = (EoltDto) model.getAttribute("eoltToCopy");
-//        List<EoltDto> eoltDtoSearchList = eoltService.findAll();
-//        model.addAttribute("eoltDtoSearchList", eoltDtoSearchList);
-        log.info("GetMapping: showSearchEolt {}",searchDto.getSearchString());
+        if (searchDto == null) {
+            searchDto = new SearchDto();
+        }
+        List<EoltDto> eoltDtos = eoltService.findEoltContaining(searchDto.getSearchString());
+        model.addAttribute("searchStringForm", searchDto);
+        model.addAttribute("searchStringListForm", eoltDtos);
+        log.info("GetMapping: showSearchEolt {}", searchDto.getSearchString());
         return "eolt_search";
     }
 
@@ -102,11 +99,7 @@ public class EoltController {
     @PostMapping("/search")
     public String FindEolt(RedirectAttributes redirectAttributes, @ModelAttribute("searchDto") SearchDto searchDto) {
         log.info("post_search");
-
-        redirectAttributes.addFlashAttribute("searchStringAtribute", searchDto);
-
-        // List<EoltDto> eoltDtoSearchList = eoltService.findAll();
-        // model.addAttribute("eoltDtoSearchList", eoltDtoSearchList);
+        redirectAttributes.addFlashAttribute("searchStringAtribute", searchDto == null ? new SearchDto() : searchDto);
         return "redirect:/eolt/search";
     }
 

@@ -7,24 +7,21 @@
 </head>
 <body>
 
-
 <h1>SEARCH RESULTS</h1>
 <h1 th:text="${searchStringForm.getSearchString()}"></h1>
-<!--<table>-->
-<!--    <tr>-->
-<!--        <th>EoltName</th>-->
-<!--        <th>Location</th>-->
+<table>
+    <tr>
+        <th>EoltName</th>
+        <th>Location</th>
+    </tr>
+    <tr th:each="eoltDto:${searchStringListForm}">
+        <td th:text="${eoltDto.getEoltName()}"></td>
+        <td th:text="${eoltDto.getLocation()}"></td>
+        <td><a href="#" th:href="@{/eolt/detailed(eoltName2=${eoltDto.getEoltName()})}"
+               th:text="${eoltDto.getEoltName()}"> Link 1</a></td>
+    </tr>
+</table>
 
-<!--    </tr>-->
-<!--    <tr th:each="eoltDto:${eoltDtoSearchList}">-->
-<!--        <td th:text="${eoltDto.getEoltName()}"></td>-->
-<!--        <td th:text="${eoltDto.getLocation()}"></td>-->
-<!--        <td><a href="#" th:href="@{/eolt/detailed(eoltName2=${eoltDto.getEoltName()})}"-->
-<!--               th:text="${eoltDto.getEoltName()}"> Link 1</a></td>-->
-
-
-<!--    </tr>-->
-<!--</table>-->
 </body>
 </html>
 
