@@ -105,7 +105,7 @@ public class EoltService {
 
     public List<EoltDto> findEoltContaining(String searchString) {
         List<EoltDto> eoltDtos = new ArrayList<>();
-        List<EoltEntity> eoltEntities = eoltRepository.findByEoltNameContaining(searchString);
+        List<EoltEntity> eoltEntities = eoltRepository.findMyEoltInEoltNameORLocationWithSearchString(searchString);
         for (EoltEntity eoltEntity : eoltEntities) {
             EoltDto eoltDto = new EoltDto();
             eoltDto.setEoltName(eoltEntity.getEoltName());

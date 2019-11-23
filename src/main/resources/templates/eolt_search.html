@@ -6,7 +6,16 @@
     <title>EOLT</title>
 </head>
 <body>
+<div class="navigator">
+    <div class="nav-sec">
+        <img src="#" th:src="@{/photos/aptiv.png}" height="48" alt="aptiv"/>
 
+    </div>
+    <div class="nav-sec">
+        <a th:href="@{/eolt}">Eolt</a>
+    </div>
+
+</div>
 <h1>SEARCH RESULTS</h1>
 <h1 th:text="${searchStringForm.getSearchString()}"></h1>
 <table>

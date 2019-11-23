@@ -1,6 +1,6 @@
 done -.variant jest jeden dla testera ale moze byc ten sam wariant na wielu testerach
 done -DynmicUpdate nie do tego -> ty Modyfying i transactional na servisie
--metoda Post dla EoltController->rozbic
+done-metoda Post dla EoltController->rozbic
 done -time_zone -> zmienic na bazie
 done-obrazek -> jedne mi wgrywa jedne nie-> jak trzeba go przygotowac
 -wysylanie email-> da przyklad

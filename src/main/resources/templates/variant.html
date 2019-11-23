@@ -2,9 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <title>VARIANT</title>
 </head>
 <body>
+<div class="navigator">
+    <div class="nav-sec">
+        <img src="#" th:src="@{/photos/aptiv.png}" height="48" alt="aptiv"/>
+
+    </div>
+    <div class="nav-sec">
+        <a th:href="@{/eolt}">Eolt</a>
+    </div>
+
+</div>
+
 <h1 th:text="${eoltName}">eoltName</h1>
 <form th:action="@{/variant(eoltName=${eoltName})}" method="post" th:object="${variantDtoForm}">
     <label for="dpn">dpn</label>

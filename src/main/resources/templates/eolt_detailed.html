@@ -2,14 +2,28 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>TESTER details</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/eolt-detailed.css}">
+    <title>EOLT detailed</title>
 </head>
 <body>
+
+<div class="navigator">
+    <div class="nav-sec">
+        <img src="#" th:src="@{/photos/aptiv.png}" height="48" alt="aptiv"/>
+
+    </div>
+    <div class="nav-sec">
+        <a th:href="@{/eolt}">Eolt</a>
+    </div>
+
+</div>
+
 <h1 th:text="${eoltDtoForm.getEoltName()}">EoltName</h1>
 <img src="#" th:src="@{/photos/eolt.jpg}" height="100" width="100" alt="foto"/>
 <a th:href="@{/variant(eoltName=${eoltDtoForm.getEoltName()})}">Variant</a>
 
-<form action="/eolt/update" method="post" th:object="${eoltDtoForm}">
+<form class="eolt-form" action="/eolt/update" method="post" th:object="${eoltDtoForm}">
     <br>
     <table id="eolt-detailed">
        <tr>

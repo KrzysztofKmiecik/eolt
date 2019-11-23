@@ -7,29 +7,41 @@
 </head>
 <body>
 <div class="navigator">
-    <img src="#" th:src="@{/photos/aptiv.jpg}" height="48" alt="aptiv"/>
+    <div class="nav-sec">
+        <img src="#" th:src="@{/photos/aptiv.png}" height="48" alt="aptiv"/>
+
+    </div>
+    <div class="nav-sec">
+        <a th:href="@{/eolt}">Eolt</a>
+    </div>
 
 </div>
 
 <div class="bg">
-    <h1>EOLT</h1>
+    <br>
+
 </div>
-<form action="/eolt/add" method="post" th:object="${eoltDtoForm}">
-    <label for="eoltName">eoltName</label>
-    <input id="eoltName" type="text" th:field="*{eoltName}">
-    <label for="location">location</label>
-    <input id="location" type="text" th:field="*{location}">
-    <input type="submit" value="Add">
-</form>
-<br/>
+<div align="right">
+    <form action="/eolt/search" method="post" th:object="${searchDto}">
+        <label for="searchString"></label>
+        <input type="text" id="searchString" name="searchString" th:field="*{searchString}">
+        <input type="submit" value="Search">
 
-<form action="/eolt/search" method="post" th:object="${searchDto}">
-    <label for="searchString">searchString</label>
-    <input type="text" id="searchString" name="searchString" th:field="*{searchString}">
-    <input type="submit" value="Search">
+    </form>
+</div>
 
-</form>
+<div class="add-form">
+    <form action="/eolt/add" method="post" th:object="${eoltDtoForm}">
+        <label for="eoltName">eoltName</label>
+        <input id="eoltName" type="text" th:field="*{eoltName}">
+        <label for="location">location</label>
+        <input id="location" type="text" th:field="*{location}">
+        <input type="submit" value="Add">
+    </form>
+</div>
 
+
+<br>
 <table id="eolt-table">
     <tr>
         <th>EoltName</th>
