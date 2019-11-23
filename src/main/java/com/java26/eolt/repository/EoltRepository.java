@@ -19,7 +19,9 @@ public interface EoltRepository extends JpaRepository<EoltEntity, Long> {
 //    @Query("update EoltEntity eoltEntity set eoltEntity.location = ?1 where eoltEntity.id = ?2")
 //    int setLocationForEoltEntity( String location, Long id);
 
-    @Query("select e from EoltEntity e where e.eoltName like %:searchString% or e.location like %:searchString%")
+  //  @Query("select e from EoltEntity e where e.eoltName like %:searchString% or e.location like %:searchString%")
+
+    @Query("select e from EoltEntity e where (e.eoltName like %:searchString% or e.location like %:searchString%) or e.assetNumber like %:searchString%")
     List<EoltEntity> findMyEoltInEoltNameORLocationWithSearchString(@Param("searchString") String searchString);
 
     @Modifying

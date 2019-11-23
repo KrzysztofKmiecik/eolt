@@ -1,15 +1,14 @@
 .bg {
     /*background-color: black;*/
     /*color: white;*/
-    margin-top: 50px;
+    /*margin-top: 50px;*/
 }
 
 body {
     /*margin:0;*/
     /*margin-top: 50px;*/
-    margin: 50px 0 0 0;
+    margin-top: 50px;
 }
-
 table, td, th {
     border: 1px solid #ff9700;
 }
@@ -49,9 +48,10 @@ table, td, th {
 
 
 .nav-sec {
-    width: 18%;
-    margin: auto;
-    text-align: center;
+    margin:12px 10px 10px 10px;
+    width: 25%;
+    /*marginargin: auto;*/
+    text-align: left;
     vertical-align: middle;
     display: inline-block;
 }
@@ -64,8 +64,8 @@ table, td, th {
 }
 
 .nav-sec a:hover {
-    font-size: 28px;
-    color: #000;
+    font-size: 25px;
+    color: #FFF;
 }
 
 .add-form {
