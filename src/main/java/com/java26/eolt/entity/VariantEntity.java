@@ -1,6 +1,5 @@
 package com.java26.eolt.entity;
 
-import com.java26.eolt.dto.PersonDto;
 import com.java26.eolt.myEnum.Customer;
 import com.java26.eolt.myEnum.VariantStatus;
 import lombok.Data;
@@ -27,13 +26,11 @@ public class VariantEntity {
     @Column(nullable = false)
     private Integer fixture;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "testEng_id")
-    private PersonEntity testEng;
+    @Column(nullable = false)
+    private String testEng;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "qualityEng_id")
-    private PersonEntity qualityEng;
+    @Column(nullable = false)
+    private String qualityEng;
 
     @Column(nullable = false)
     private VariantStatus variantStatus;
@@ -41,7 +38,6 @@ public class VariantEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "eolt_id")
     private EoltEntity eolt;
-
 
 
 }

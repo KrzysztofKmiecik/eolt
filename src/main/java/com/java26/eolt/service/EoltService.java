@@ -24,19 +24,7 @@ public class EoltService {
     final EoltRepository eoltRepository;
     final VariantRepository variantRepository;
 
-    /*
-    * private String eoltName;
-        private String location;
-        private String assetNumber;
-        private String AR;
-        private String netName;
-        private String macAdress;
-        private Integer productionYear;
-        private SupplierName supplierName;
-        private SystemVersion systemVersion;
-        private String documentationLink;
-    *
-    * */
+
     public List<EoltDto> findAll() {
         log.info("EoltService:findAll");
         List<EoltEntity> eoltEntities = eoltRepository.findAll();
@@ -67,7 +55,15 @@ public class EoltService {
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltDto.getEoltName())
                 .orElseThrow(() -> new EntityNotFoundException(eoltDto.getEoltName()));
         eoltRepository.setLocationForEoltEntity(eoltDto.getLocation(), eoltEntity.getId());
-        log.info("");
+        eoltRepository.setAssetNumberForEoltEntity(eoltDto.getAssetNumber(), eoltEntity.getId());
+        eoltRepository.setARForEoltEntity(eoltDto.getAR(), eoltEntity.getId());
+        eoltRepository.setnetNameForEoltEntity(eoltDto.getNetName(), eoltEntity.getId());
+        eoltRepository.setmacAdressForEoltEntity(eoltDto.getMacAdress(), eoltEntity.getId());
+        eoltRepository.setproductionYearForEoltEntity(eoltDto.getProductionYear(), eoltEntity.getId());
+        eoltRepository.setsupplierNameForEoltEntity(eoltDto.getSupplierName(), eoltEntity.getId());
+        eoltRepository.setsystemVersionForEoltEntity(eoltDto.getSystemVersion(), eoltEntity.getId());
+        eoltRepository.setdocumentationLinkForEoltEntity(eoltDto.getDocumentationLink(), eoltEntity.getId());
+
     }
 
     public void delete(String eoltName) {

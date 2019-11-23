@@ -10,8 +10,8 @@ public class VariantDto {
     private Customer customer;
     private Integer machineCycleTime;
     private Integer fixture;
-    private PersonDto testEng;
-    private PersonDto qualityEng;
+    private String testEng;
+    private String qualityEng;
     private VariantStatus variantStatus;
 
 }

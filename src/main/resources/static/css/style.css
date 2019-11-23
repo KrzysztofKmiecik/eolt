@@ -67,9 +67,13 @@ table, td, th {
     font-size: 25px;
     color: #FFF;
 }
-
 .add-form {
     margin-bottom: 70px;
+    border-collapse: collapse;
+
     /*display: inline-block;*/
 }
 
+.add-form th {
+    background-color: #a5a9ff;
+}

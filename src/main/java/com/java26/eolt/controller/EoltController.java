@@ -49,7 +49,7 @@ public class EoltController {
         EoltDto eoltDto = eoltService.findByName(copyEolt);
         redirectAttributes.addFlashAttribute("eoltToCopy", eoltDto);
         //   model.addAttribute("eoltToCopy",eoltDto);
-        return "redirect:/eolt";
+        return "redirect:/eolt/addView";
     }
 
     @PostMapping("/delete")
@@ -79,6 +79,13 @@ public class EoltController {
         model.addAttribute("eoltDtoForm", eoltDto);
         log.info("get_detailed");
         return "eolt_detailed";
+    }
+
+    @GetMapping("/addView")
+    public String showAddView(Model model,@RequestParam(required = false) String eoltName2){
+        EoltDto dtoToCopy = (EoltDto) model.getAttribute("eoltToCopy");
+        model.addAttribute("eoltDtoForm", dtoToCopy == null ? new EoltDto() : dtoToCopy);
+        return "eolt_add";
     }
 
 

@@ -4,6 +4,5 @@ import lombok.Data;
 
 @Data
 public class SearchDto {
-
-    String searchString;
+    private String searchString;
 }

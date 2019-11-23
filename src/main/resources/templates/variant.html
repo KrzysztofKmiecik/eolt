@@ -19,9 +19,49 @@
 
 <h1 th:text="${eoltName}">eoltName</h1>
 <form th:action="@{/variant(eoltName=${eoltName})}" method="post" th:object="${variantDtoForm}">
-    <label for="dpn">dpn</label>
-    <input id="dpn" type="text" th:field="*{dpn}">
-    <input type="submit" value="submit">
+
+    <table>
+        <th>Parameter</th>
+        <th>Value</th>
+        <tr>
+            <td><label for="dpn">dpn</label></td>
+            <td> <input id="dpn" type="text" th:field="*{dpn}"></td>
+        </tr>
+        <tr>
+            <td><label for="customer">customer</label></td>
+            <td><input id="customer" type="text" th:field="*{customer}"></td>
+        </tr>
+        <tr>
+            <td><label for="machineCycleTime">machineCycleTime</label></td>
+            <td><input id="machineCycleTime" type="text" th:field="*{machineCycleTime}"></td>
+        </tr>
+        <tr>
+            <td><label for="fixture"> fixture</label></td>
+            <td><input id="fixture" type="text" th:field="*{fixture}"></td>
+        </tr>
+
+        <tr>
+            <td><label for="testEng">testEng</label></td>
+            <td><input id="testEng" type="text" th:field="*{testEng}"></td>
+        </tr>
+
+        <tr>
+            <td><label for="qualityEng">qualityEng</label></td>
+            <td><input id="qualityEng" type="text" th:field="*{qualityEng}"></td>
+        </tr>
+
+        <tr>
+            <td><label for="variantStatus">variantStatus</label></td>
+            <td><input id="variantStatus" type="text" th:field="*{variantStatus}"></td>
+        </tr>
+
+
+    </table>
+
+
+
+
+    <input type="submit" value="AddVariant">
 </form>
 <table>
     <tr th:each="variantDto:${variantDtoList}">

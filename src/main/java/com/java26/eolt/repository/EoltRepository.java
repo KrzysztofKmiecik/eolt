@@ -1,6 +1,8 @@
 package com.java26.eolt.repository;
 
 import com.java26.eolt.entity.EoltEntity;
+import com.java26.eolt.myEnum.SupplierName;
+import com.java26.eolt.myEnum.SystemVersion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -27,5 +29,37 @@ public interface EoltRepository extends JpaRepository<EoltEntity, Long> {
     @Modifying
     @Query("update EoltEntity eoltEntity set eoltEntity.location = :location where eoltEntity.id = :id")
     int setLocationForEoltEntity(@Param("location") String location, @Param("id") Long id);
+
+    @Modifying
+    @Query("update EoltEntity eoltEntity set eoltEntity.assetNumber = :assetNumber where eoltEntity.id = :id")
+    int setAssetNumberForEoltEntity(@Param("assetNumber") String assetNumber, @Param("id") Long id);
+
+    @Modifying
+    @Query("update EoltEntity eoltEntity set eoltEntity.AR = :AR where eoltEntity.id = :id")
+    int setARForEoltEntity(@Param("AR") String AR, @Param("id") Long id);
+
+    @Modifying
+    @Query("update EoltEntity eoltEntity set eoltEntity.netName = :netName where eoltEntity.id = :id")
+    int setnetNameForEoltEntity(@Param("netName") String netName, @Param("id") Long id);
+
+    @Modifying
+    @Query("update EoltEntity eoltEntity set eoltEntity.macAdress = :macAdress where eoltEntity.id = :id")
+    int setmacAdressForEoltEntity(@Param("macAdress") String macAdress, @Param("id") Long id);
+
+    @Modifying
+    @Query("update EoltEntity eoltEntity set eoltEntity.productionYear = :productionYear where eoltEntity.id = :id")
+    int setproductionYearForEoltEntity(@Param("productionYear") Integer productionYear, @Param("id") Long id);
+
+    @Modifying
+    @Query("update EoltEntity eoltEntity set eoltEntity.supplierName = :supplierName where eoltEntity.id = :id")
+    int setsupplierNameForEoltEntity(@Param("supplierName") SupplierName supplierName, @Param("id") Long id);
+
+    @Modifying
+    @Query("update EoltEntity eoltEntity set eoltEntity.systemVersion = :systemVersion where eoltEntity.id = :id")
+    int setsystemVersionForEoltEntity(@Param("systemVersion") SystemVersion systemVersion, @Param("id") Long id);
+
+    @Modifying
+    @Query("update EoltEntity eoltEntity set eoltEntity.documentationLink = :documentationLink where eoltEntity.id = :id")
+    int setdocumentationLinkForEoltEntity(@Param("documentationLink") String documentationLink, @Param("id") Long id);
 
 }

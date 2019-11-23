@@ -21,6 +21,7 @@ public class VariantService {
     final VariantRepository variantRepository;
     final EoltRepository eoltRepository;
 
+
     public List<VariantDto> findAllVariants(String eoltName) {
         log.info("VariantService:findAllVariants");
 
@@ -28,42 +29,59 @@ public class VariantService {
                 eoltRepository.findByEoltName(eoltName)
                         .orElseThrow(() -> new EntityNotFoundException(eoltName)));
         List<VariantDto> variantDtos = new ArrayList<>();
-        for (VariantEntity variantEnt : variantEntities) {
-            VariantDto variantDto = new VariantDto();
-            variantDto.setDpn(variantEnt.getDpn());
+        for (VariantEntity variantEntity : variantEntities) {
+            VariantDto variantDto = getVariantDto(variantEntity);
             variantDtos.add(variantDto);
         }
         return variantDtos;
     }
 
-  /*  public VariantDto findByDpn(String dpn) {
-
-        VariantEntity variantEntity = variantRepository.findByDpn(dpn)
-                .orElseThrow(() -> new EntityNotFoundException(dpn));
+    private VariantDto getVariantDto(VariantEntity variantEntity) {
         VariantDto variantDto = new VariantDto();
         variantDto.setDpn(variantEntity.getDpn());
+        variantDto.setCustomer(variantEntity.getCustomer());
+        variantDto.setMachineCycleTime(variantEntity.getMachineCycleTime());
+        variantDto.setFixture(variantEntity.getFixture());
+        variantDto.setTestEng(variantEntity.getTestEng());
+        variantDto.setQualityEng(variantEntity.getQualityEng());
+        variantDto.setVariantStatus(variantEntity.getVariantStatus());
         return variantDto;
-    }*/
+    }
+
+    /*  public VariantDto findByDpn(String dpn) {
+
+          VariantEntity variantEntity = variantRepository.findByDpn(dpn)
+                  .orElseThrow(() -> new EntityNotFoundException(dpn));
+          VariantDto variantDto = new VariantDto();
+          variantDto.setDpn(variantEntity.getDpn());
+          return variantDto;
+      }*/
 
     public void create(VariantDto variantDto, String eoltName) {
         log.info("VariantService:create");
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
                 .orElseThrow(() -> new EntityNotFoundException(eoltName));
-
-
-        VariantEntity variantEntity = new VariantEntity();
-
         if (!variantRepository.findByDpnAndEolt(variantDto.getDpn(), eoltEntity)
                 .isPresent()) {
-            variantEntity.setDpn(variantDto.getDpn());
-            variantEntity.setEolt(eoltEntity);
-            variantRepository.save(variantEntity);
+            VariantEntity variantEntity = getVariantEntity(variantDto, eoltEntity);
 
+            variantRepository.save(variantEntity);
         } else {
             throw new IllegalArgumentException("variant " + variantDto.getDpn() + " has already exist");
         }
+    }
 
-
+    private VariantEntity getVariantEntity(VariantDto variantDto, EoltEntity eoltEntity) {
+        VariantEntity variantEntity = new VariantEntity();
+        variantEntity.setDpn(variantDto.getDpn());
+        variantEntity.setCustomer(variantDto.getCustomer());
+        variantEntity.setMachineCycleTime(variantDto.getMachineCycleTime());
+        variantEntity.setFixture(variantDto.getFixture());
+        variantEntity.setTestEng(variantDto.getTestEng());
+        variantEntity.setQualityEng(variantDto.getQualityEng());
+        variantEntity.setVariantStatus(variantDto.getVariantStatus());
+        variantEntity.setEolt(eoltEntity);
+        return variantEntity;
     }
 
    /* public void delete(Long id) {
