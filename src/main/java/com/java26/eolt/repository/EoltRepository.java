@@ -7,10 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EoltRepository extends JpaRepository<EoltEntity, Long> {
 
-    // Optional<EoltEntity> findByEoltName(String eoltName);
+     Optional<EoltEntity> findByEoltName(String eoltName);
 
     // List<EoltEntity> findByEoltNameContaining(String searchString);
 
