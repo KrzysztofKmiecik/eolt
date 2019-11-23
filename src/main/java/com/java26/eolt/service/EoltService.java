@@ -24,14 +24,25 @@ public class EoltService {
     final EoltRepository eoltRepository;
     final VariantRepository variantRepository;
 
+    /*
+    * private String eoltName;
+        private String location;
+        private String assetNumber;
+        private String AR;
+        private String netName;
+        private String macAdress;
+        private Integer productionYear;
+        private SupplierName supplierName;
+        private SystemVersion systemVersion;
+        private String documentationLink;
+    *
+    * */
     public List<EoltDto> findAll() {
         log.info("EoltService:findAll");
         List<EoltEntity> eoltEntities = eoltRepository.findAll();
         List<EoltDto> eoltDtos = new ArrayList<>();
-        for (EoltEntity eoltEnt : eoltEntities) {
-            EoltDto eoltDto = new EoltDto();
-            eoltDto.setEoltName(eoltEnt.getEoltName());
-            eoltDto.setLocation(eoltEnt.getLocation());
+        for (EoltEntity eoltEntity : eoltEntities) {
+            EoltDto eoltDto = mapEoltEntityToEoltDto(eoltEntity);
             eoltDtos.add(eoltDto);
         }
         return eoltDtos;
@@ -40,17 +51,13 @@ public class EoltService {
     public EoltDto findByName(String eoltName) {
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
                 .orElseThrow(() -> new EntityNotFoundException(eoltName));
-        EoltDto eoltDto = new EoltDto();
-        eoltDto.setEoltName(eoltEntity.getEoltName());
-        eoltDto.setLocation(eoltEntity.getLocation());
+        EoltDto eoltDto = mapEoltEntityToEoltDto(eoltEntity);
         return eoltDto;
     }
 
     public void create(EoltDto eoltDto) {
         log.info("EoltService:create");
-        EoltEntity eoltEntity = new EoltEntity();
-        eoltEntity.setEoltName(eoltDto.getEoltName());
-        eoltEntity.setLocation(eoltDto.getLocation());
+        EoltEntity eoltEntity = mapEoltDtoToEoltEntity(eoltDto);
         eoltRepository.save(eoltEntity);
     }
 
@@ -95,9 +102,7 @@ public class EoltService {
             eoltEntities.add(eoltEntity);
         }
         for (EoltEntity eoltEntity1 : eoltEntities) {
-            EoltDto eoltDto = new EoltDto();
-            eoltDto.setLocation(eoltEntity1.getLocation());
-            eoltDto.setEoltName(eoltEntity1.getEoltName());
+            EoltDto eoltDto = mapEoltEntityToEoltDto(eoltEntity1);
             eoltDtos.add(eoltDto);
         }
         return eoltDtos;
@@ -107,12 +112,40 @@ public class EoltService {
         List<EoltDto> eoltDtos = new ArrayList<>();
         List<EoltEntity> eoltEntities = eoltRepository.findMyEoltInEoltNameORLocationWithSearchString(searchString);
         for (EoltEntity eoltEntity : eoltEntities) {
-            EoltDto eoltDto = new EoltDto();
-            eoltDto.setEoltName(eoltEntity.getEoltName());
-            eoltDto.setLocation(eoltEntity.getLocation());
+            EoltDto eoltDto =mapEoltEntityToEoltDto(eoltEntity);
             eoltDtos.add(eoltDto);
         }
 
         return eoltDtos;
+    }
+
+    private EoltDto mapEoltEntityToEoltDto(EoltEntity eoltEntity) {
+        EoltDto eoltDto = new EoltDto();
+        eoltDto.setEoltName(eoltEntity.getEoltName());
+        eoltDto.setLocation(eoltEntity.getLocation());
+        eoltDto.setAssetNumber(eoltEntity.getAssetNumber());
+        eoltDto.setAR(eoltEntity.getAR());
+        eoltDto.setNetName(eoltEntity.getNetName());
+        eoltDto.setMacAdress(eoltEntity.getMacAdress());
+        eoltDto.setProductionYear(eoltEntity.getProductionYear());
+        eoltDto.setSupplierName(eoltEntity.getSupplierName());
+        eoltDto.setSystemVersion(eoltEntity.getSystemVersion());
+        eoltDto.setDocumentationLink(eoltEntity.getDocumentationLink());
+        return eoltDto;
+    }
+
+    private EoltEntity mapEoltDtoToEoltEntity(EoltDto eoltDto) {
+        EoltEntity eoltEntity = new EoltEntity();
+        eoltEntity.setEoltName(eoltDto.getEoltName());
+        eoltEntity.setLocation(eoltDto.getLocation());
+        eoltEntity.setAssetNumber(eoltDto.getAssetNumber());
+        eoltEntity.setAR(eoltDto.getAR());
+        eoltEntity.setNetName(eoltDto.getNetName());
+        eoltEntity.setMacAdress(eoltDto.getMacAdress());
+        eoltEntity.setProductionYear(eoltDto.getProductionYear());
+        eoltEntity.setSupplierName(eoltDto.getSupplierName());
+        eoltEntity.setSystemVersion(eoltDto.getSystemVersion());
+        eoltEntity.setDocumentationLink(eoltDto.getDocumentationLink());
+        return eoltEntity;
     }
 }

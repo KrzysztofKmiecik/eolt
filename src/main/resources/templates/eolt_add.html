@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <title>EOLT</title>
+    <title>EOLT_add</title>
 </head>
 <body>
 <div class="navigator">
@@ -21,14 +21,7 @@
     <br>
 
 </div>
-<div align="right">
-    <form action="/eolt/search" method="post" th:object="${searchDto}">
-        <label for="searchString"></label>
-        <input type="text" id="searchString" name="searchString" th:field="*{searchString}">
-        <input type="submit" value="Search">
 
-    </form>
-</div>
 <!-- * private String eoltName;
         private String location;
         private String assetNumber;
@@ -40,61 +33,11 @@
         private SystemVersion systemVersion;
         private String documentationLink;-->
 
-
-
-
-<br>
-<table id="eolt-table">
-    <tr>
-        <th>EoltName</th>
-        <th>Location</th>
-        <th>Asset</th>
-        <th>AR</th>
-        <th>NetName</th>
-        <th>MAC</th>
-        <th>ProdYear</th>
-        <th>Supplier</th>
-        <th>SystemVer</th>
-        <th>Doc</th>
-        <th>Link</th>
-        <th>Delete</th>
-        <th>Copy</th>
-    </tr>
-    <tr th:each="eoltDto:${eoltDtoList}">
-        <td th:text="${eoltDto.getEoltName()}"></td>
-        <td th:text="${eoltDto.getLocation()}"></td>
-        <td th:text="${eoltDto.getAssetNumber()}"></td>
-        <td th:text="${eoltDto.getAR()}"></td>
-        <td th:text="${eoltDto.getNetName()}"></td>
-        <td th:text="${eoltDto.getMacAdress()}"></td>
-        <td th:text="${eoltDto.getProductionYear()}"></td>
-        <td th:text="${eoltDto.getSupplierName()}"></td>
-        <td th:text="${eoltDto.getSystemVersion()}"></td>
-        <td th:text="${eoltDto.getDocumentationLink()}"></td>
-        <td><a href="#" th:href="@{/eolt/detailed(eoltName2=${eoltDto.getEoltName()})}"
-               th:text="${eoltDto.getEoltName()}"> Link 1</a></td>
-        <td>
-            <form action="/eolt/delete" method="post" th:object="${eoltDtoForm}">
-                <input type="hidden" name="deleteEolt" th:value="${eoltDto.getEoltName()}"/>
-                <button name="action" value="delete">Delete</button>
-            </form>
-        </td>
-        <td>
-            <form action="/eolt/copy" method="post" th:object="${eoltDtoForm}">
-                <input type="hidden" name="copyEolt" th:value="${eoltDto.getEoltName()}"/>
-                <button name="action" value="copy">Copy</button>
-            </form>
-        </td>
-    </tr>
-</table>
-
-<br/>
-
 <div class="add-form">
     <form action="/eolt/add" method="post" th:object="${eoltDtoForm}">
         <label for="eoltName">eoltName</label>
         <input id="eoltName" type="text" th:field="*{eoltName}">
-        <br/>
+<br/>
         <label for="location">location</label>
         <input id="location" type="text" th:field="*{location}">
         <br/>
@@ -125,6 +68,7 @@
         <input type="submit" value="Add">
     </form>
 </div>
+
 </body>
 </html>
 
