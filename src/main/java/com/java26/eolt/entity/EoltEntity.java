@@ -1,15 +1,19 @@
 package com.java26.eolt.entity;
 
+import com.java26.eolt.myEnum.Eolt;
 import com.java26.eolt.myEnum.SupplierName;
 import com.java26.eolt.myEnum.SystemVersion;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
+
 @Entity
 @Table(name = "eolt")
-public class EoltEntity {
+@Getter
+@Setter
+public class EoltEntity extends Eolt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

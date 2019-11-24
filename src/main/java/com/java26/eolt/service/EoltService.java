@@ -4,6 +4,7 @@ import com.java26.eolt.dto.EoltDto;
 import com.java26.eolt.dto.VariantDto;
 import com.java26.eolt.entity.EoltEntity;
 import com.java26.eolt.entity.VariantEntity;
+import com.java26.eolt.myEnum.Eolt;
 import com.java26.eolt.repository.EoltRepository;
 import com.java26.eolt.repository.VariantRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,8 @@ public class EoltService {
         List<EoltEntity> eoltEntities = eoltRepository.findAll();
         List<EoltDto> eoltDtos = new ArrayList<>();
         for (EoltEntity eoltEntity : eoltEntities) {
-            EoltDto eoltDto = mapEoltEntityToEoltDto(eoltEntity);
+            EoltDto eoltDto = new EoltDto();
+            myMap(eoltEntity, eoltDto);
             eoltDtos.add(eoltDto);
         }
         return eoltDtos;
@@ -39,31 +41,24 @@ public class EoltService {
     public EoltDto findByName(String eoltName) {
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
                 .orElseThrow(() -> new EntityNotFoundException(eoltName));
-        EoltDto eoltDto = mapEoltEntityToEoltDto(eoltEntity);
+        EoltDto eoltDto = new EoltDto();
+        myMap(eoltEntity, eoltDto);
         return eoltDto;
     }
 
     public void create(EoltDto eoltDto) {
         log.info("EoltService:create");
-        EoltEntity eoltEntity = mapEoltDtoToEoltEntity(eoltDto);
+        EoltEntity eoltEntity = new EoltEntity();
+        //    mapEoltDtoToEoltEntity(eoltDto, eoltEntity);
+        myMap(eoltDto, eoltEntity);
         eoltRepository.save(eoltEntity);
     }
 
-    //@Transactional
     public void update(EoltDto eoltDto) {
         log.info("EoltService:update");
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltDto.getEoltName())
                 .orElseThrow(() -> new EntityNotFoundException(eoltDto.getEoltName()));
-        eoltRepository.setLocationForEoltEntity(eoltDto.getLocation(), eoltEntity.getId());
-        eoltRepository.setAssetNumberForEoltEntity(eoltDto.getAssetNumber(), eoltEntity.getId());
-        eoltRepository.setARForEoltEntity(eoltDto.getAR(), eoltEntity.getId());
-        eoltRepository.setnetNameForEoltEntity(eoltDto.getNetName(), eoltEntity.getId());
-        eoltRepository.setmacAdressForEoltEntity(eoltDto.getMacAdress(), eoltEntity.getId());
-        eoltRepository.setproductionYearForEoltEntity(eoltDto.getProductionYear(), eoltEntity.getId());
-        eoltRepository.setsupplierNameForEoltEntity(eoltDto.getSupplierName(), eoltEntity.getId());
-        eoltRepository.setsystemVersionForEoltEntity(eoltDto.getSystemVersion(), eoltEntity.getId());
-        eoltRepository.setdocumentationLinkForEoltEntity(eoltDto.getDocumentationLink(), eoltEntity.getId());
-
+        myMap(eoltDto, eoltEntity);
     }
 
     public void delete(String eoltName) {
@@ -98,7 +93,8 @@ public class EoltService {
             eoltEntities.add(eoltEntity);
         }
         for (EoltEntity eoltEntity1 : eoltEntities) {
-            EoltDto eoltDto = mapEoltEntityToEoltDto(eoltEntity1);
+            EoltDto eoltDto = new EoltDto();
+            myMap(eoltEntity1, eoltDto);
             eoltDtos.add(eoltDto);
         }
         return eoltDtos;
@@ -108,40 +104,26 @@ public class EoltService {
         List<EoltDto> eoltDtos = new ArrayList<>();
         List<EoltEntity> eoltEntities = eoltRepository.findMyEoltInEoltNameORLocationWithSearchString(searchString);
         for (EoltEntity eoltEntity : eoltEntities) {
-            EoltDto eoltDto =mapEoltEntityToEoltDto(eoltEntity);
+            EoltDto eoltDto = new EoltDto();
+            myMap(eoltEntity, eoltDto);
             eoltDtos.add(eoltDto);
         }
 
         return eoltDtos;
     }
 
-    private EoltDto mapEoltEntityToEoltDto(EoltEntity eoltEntity) {
-        EoltDto eoltDto = new EoltDto();
-        eoltDto.setEoltName(eoltEntity.getEoltName());
-        eoltDto.setLocation(eoltEntity.getLocation());
-        eoltDto.setAssetNumber(eoltEntity.getAssetNumber());
-        eoltDto.setAR(eoltEntity.getAR());
-        eoltDto.setNetName(eoltEntity.getNetName());
-        eoltDto.setMacAdress(eoltEntity.getMacAdress());
-        eoltDto.setProductionYear(eoltEntity.getProductionYear());
-        eoltDto.setSupplierName(eoltEntity.getSupplierName());
-        eoltDto.setSystemVersion(eoltEntity.getSystemVersion());
-        eoltDto.setDocumentationLink(eoltEntity.getDocumentationLink());
-        return eoltDto;
+    private <T extends Eolt, I extends Eolt> void myMap(T input, I output) {
+
+        output.setEoltName(input.getEoltName());
+        output.setLocation(input.getLocation());
+        output.setAssetNumber(input.getAssetNumber());
+        output.setAR(input.getAR());
+        output.setNetName(input.getNetName());
+        output.setMacAdress(input.getMacAdress());
+        output.setProductionYear(input.getProductionYear());
+        output.setSupplierName(input.getSupplierName());
+        output.setSystemVersion(input.getSystemVersion());
+        output.setDocumentationLink(input.getDocumentationLink());
     }
 
-    private EoltEntity mapEoltDtoToEoltEntity(EoltDto eoltDto) {
-        EoltEntity eoltEntity = new EoltEntity();
-        eoltEntity.setEoltName(eoltDto.getEoltName());
-        eoltEntity.setLocation(eoltDto.getLocation());
-        eoltEntity.setAssetNumber(eoltDto.getAssetNumber());
-        eoltEntity.setAR(eoltDto.getAR());
-        eoltEntity.setNetName(eoltDto.getNetName());
-        eoltEntity.setMacAdress(eoltDto.getMacAdress());
-        eoltEntity.setProductionYear(eoltDto.getProductionYear());
-        eoltEntity.setSupplierName(eoltDto.getSupplierName());
-        eoltEntity.setSystemVersion(eoltDto.getSystemVersion());
-        eoltEntity.setDocumentationLink(eoltDto.getDocumentationLink());
-        return eoltEntity;
-    }
 }

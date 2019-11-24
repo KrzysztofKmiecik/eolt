@@ -1,14 +1,9 @@
-package com.java26.eolt.dto;
+package com.java26.eolt.myEnum;
 
-import com.java26.eolt.myEnum.Eolt;
-import com.java26.eolt.myEnum.SupplierName;
-import com.java26.eolt.myEnum.SystemVersion;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-public class EoltDto extends Eolt {
+@Data
+public class Eolt {
     private String eoltName;
     private String location;
     private String assetNumber;
