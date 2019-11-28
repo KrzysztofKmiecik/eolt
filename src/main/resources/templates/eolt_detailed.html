@@ -20,6 +20,8 @@
 </div>
 
 <h1 th:text="${eoltDtoForm.getEoltName()}">EoltName</h1>
+
+
 <img src="#" th:src="@{/photos/eolt.jpg}" height="100" width="100" alt="foto"/>
 <a th:href="@{/variant(eoltName=${eoltDtoForm.getEoltName()})}">Variant</a>
 
@@ -92,7 +94,6 @@
         </tr>-->
     </table>
 
-    <input type="hidden" name="updateEolt" th:value="*{location}"/>
     <input type="submit" value="Update">
 </form>
 </body>

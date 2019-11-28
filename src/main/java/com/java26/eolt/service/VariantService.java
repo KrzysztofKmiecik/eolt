@@ -3,16 +3,20 @@ package com.java26.eolt.service;
 import com.java26.eolt.dto.VariantDto;
 import com.java26.eolt.entity.EoltEntity;
 import com.java26.eolt.entity.VariantEntity;
+import com.java26.eolt.myEnum.Variant;
+import com.java26.eolt.myEnum.VariantStatus;
 import com.java26.eolt.repository.EoltRepository;
 import com.java26.eolt.repository.VariantRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -36,15 +40,21 @@ public class VariantService {
         return variantDtos;
     }
 
+    public void setVariantStatus(VariantDto variantDto, VariantStatus variantStatus) {
+        variantDto.setVariantStatus(variantStatus);
+    }
+
+    public VariantDto findVariant(String dpn, String eoltName) {
+        VariantDto variantDto = new VariantDto();
+        EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName).orElseThrow(() -> new EntityNotFoundException(eoltName));
+        VariantEntity variantEntity = variantRepository.findByDpnAndEolt(dpn, eoltEntity).orElseThrow(() -> new EntityNotFoundException(dpn));
+        myMap(variantEntity, variantDto);
+        return variantDto;
+    }
+
     private VariantDto getVariantDto(VariantEntity variantEntity) {
         VariantDto variantDto = new VariantDto();
-        variantDto.setDpn(variantEntity.getDpn());
-        variantDto.setCustomer(variantEntity.getCustomer());
-        variantDto.setMachineCycleTime(variantEntity.getMachineCycleTime());
-        variantDto.setFixture(variantEntity.getFixture());
-        variantDto.setTestEng(variantEntity.getTestEng());
-        variantDto.setQualityEng(variantEntity.getQualityEng());
-        variantDto.setVariantStatus(variantEntity.getVariantStatus());
+        myMap(variantEntity, variantDto);
         return variantDto;
     }
 
@@ -64,6 +74,7 @@ public class VariantService {
         if (!variantRepository.findByDpnAndEolt(variantDto.getDpn(), eoltEntity)
                 .isPresent()) {
             VariantEntity variantEntity = getVariantEntity(variantDto, eoltEntity);
+            variantEntity.setEolt(eoltEntity);
 
             variantRepository.save(variantEntity);
         } else {
@@ -73,14 +84,7 @@ public class VariantService {
 
     private VariantEntity getVariantEntity(VariantDto variantDto, EoltEntity eoltEntity) {
         VariantEntity variantEntity = new VariantEntity();
-        variantEntity.setDpn(variantDto.getDpn());
-        variantEntity.setCustomer(variantDto.getCustomer());
-        variantEntity.setMachineCycleTime(variantDto.getMachineCycleTime());
-        variantEntity.setFixture(variantDto.getFixture());
-        variantEntity.setTestEng(variantDto.getTestEng());
-        variantEntity.setQualityEng(variantDto.getQualityEng());
-        variantEntity.setVariantStatus(variantDto.getVariantStatus());
-        variantEntity.setEolt(eoltEntity);
+        myMap(variantDto, variantEntity);
         return variantEntity;
     }
 
@@ -114,4 +118,22 @@ public class VariantService {
 
     }
 
+    public void update(VariantDto variantDto, String eoltName) {
+        log.info("VariantService:updateVariant");
+        EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
+                .orElseThrow(() -> new EntityNotFoundException(eoltName));
+        VariantEntity variantEntity = variantRepository.findByDpnAndEolt(variantDto.getDpn(), eoltEntity)
+                .orElseThrow(() -> new EntityNotFoundException(variantDto.getDpn()));
+        myMap(variantDto, variantEntity);
+    }
+
+    private <T extends Variant, I extends Variant> void myMap(T input, I output) {
+        output.setDpn(input.getDpn());
+        output.setCustomer(input.getCustomer());
+        output.setMachineCycleTime(input.getMachineCycleTime());
+        output.setFixture(input.getFixture());
+        output.setTestEng(input.getTestEng());
+        output.setQualityEng(input.getQualityEng());
+        output.setVariantStatus(input.getVariantStatus());
+    }
 }

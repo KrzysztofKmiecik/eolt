@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <title>Variant details</title>
+    <title>EOLT_add</title>
 </head>
 <body>
 <div class="navigator">
@@ -17,13 +17,11 @@
 
 </div>
 
-<h1 th:text="${myChoosenVariant}">Variant details</h1>
-
 
 
 
 <div class="add-form">
-    <form th:action="@{/variant/update(eoltName=${eoltName},updateVariant=${myChoosenVariant})}" method="post" th:object="${variantDtoForm}">
+    <form th:action="@{/variant/add(eoltName=${eoltName})}" method="post" th:object="${variantDtoForm}">
         <table>
             <th>Parameter</th>
             <th>Value</th>
@@ -60,15 +58,10 @@
                 <td><input id="variantStatus" type="text" th:field="*{variantStatus}"></td>
             </tr>
         </table>
-        <input type="submit" value="UpdateVariant">
+        <input type="submit" value="AddVariant">
     </form>
 </div>
 
-
-
-
-
-
-
 </body>
 </html>
+

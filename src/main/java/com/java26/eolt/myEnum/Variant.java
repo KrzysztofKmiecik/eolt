@@ -1,12 +1,9 @@
-package com.java26.eolt.dto;
+package com.java26.eolt.myEnum;
 
-import com.java26.eolt.myEnum.Customer;
-import com.java26.eolt.myEnum.Variant;
-import com.java26.eolt.myEnum.VariantStatus;
 import lombok.Data;
 
 @Data
-public class VariantDto extends Variant {
+public class Variant {
     private String dpn;
     private Customer customer;
     private Integer machineCycleTime;

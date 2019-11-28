@@ -1,6 +1,7 @@
 package com.java26.eolt.entity;
 
 import com.java26.eolt.myEnum.Customer;
+import com.java26.eolt.myEnum.Variant;
 import com.java26.eolt.myEnum.VariantStatus;
 import lombok.Data;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "variant")
-public class VariantEntity {
+public class VariantEntity extends Variant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
