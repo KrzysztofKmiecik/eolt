@@ -55,7 +55,6 @@ public class EoltController {
     @PostMapping("/delete")
     public String deleteEolt(@RequestParam(required = false) String deleteEolt) {
         log.info("PostMapping:postEolt:delete");
-
         if (deleteEolt != null) {
             variantService.deleteAllVariantsFromEoltName(deleteEolt);
             eoltService.delete(deleteEolt);
@@ -64,12 +63,9 @@ public class EoltController {
     }
 
     @PostMapping("/update")
-    public String updateEolt(@Valid EoltDto eoltDtoForm,
-                             @RequestParam(required = false) String updateEolt) {
+    public String updateEolt(@Valid EoltDto eoltDtoForm) {
         log.info("PostMapping:update");
-        if (updateEolt != null) {
-            eoltService.update(eoltDtoForm);
-        }
+        eoltService.update(eoltDtoForm);
         return "redirect:/eolt";
     }
 
@@ -82,7 +78,7 @@ public class EoltController {
     }
 
     @GetMapping("/addView")
-    public String showAddView(Model model,@RequestParam(required = false) String eoltName2){
+    public String showAddView(Model model, @RequestParam(required = false) String eoltName2) {
         EoltDto dtoToCopy = (EoltDto) model.getAttribute("eoltToCopy");
         model.addAttribute("eoltDtoForm", dtoToCopy == null ? new EoltDto() : dtoToCopy);
         return "eolt_add";
@@ -99,7 +95,6 @@ public class EoltController {
         model.addAttribute("searchStringForm", searchDto);
         model.addAttribute("searchStringListForm", eoltDtos);
         log.info("GetMapping: showSearchEolt {}", searchDto.getSearchString());
-
         return "eolt_search";
     }
 

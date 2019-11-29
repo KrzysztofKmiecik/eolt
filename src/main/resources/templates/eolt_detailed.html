@@ -25,7 +25,7 @@
 <img src="#" th:src="@{/photos/eolt.jpg}" height="100" width="100" alt="foto"/>
 <a th:href="@{/variant(eoltName=${eoltDtoForm.getEoltName()})}">Variant</a>
 
-<form class="eolt-form" action="/eolt/update" method="post" th:object="${eoltDtoForm}">
+<form class="eolt-form" th:action="@{/eolt/update}" method="post" th:object="${eoltDtoForm}">
     <br>
     <table id="eolt-detailed">
        <tr>

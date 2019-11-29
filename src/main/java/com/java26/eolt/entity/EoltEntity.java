@@ -39,9 +39,11 @@ public class EoltEntity extends Eolt {
     @Column(nullable = false)
     private Integer productionYear;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private SupplierName supplierName;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private SystemVersion systemVersion;
 

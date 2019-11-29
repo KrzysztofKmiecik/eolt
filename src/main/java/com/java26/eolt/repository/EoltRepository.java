@@ -20,8 +20,18 @@ public interface EoltRepository extends JpaRepository<EoltEntity, Long> {
 
     //  @Query("select e from EoltEntity e where e.eoltName like %:searchString% or e.location like %:searchString%")
 
-    @Query("select e from EoltEntity e where (e.eoltName like %:searchString% or e.location like %:searchString%) or e.assetNumber like %:searchString%")
+    @Query("select e from EoltEntity e where (  ((e.eoltName like %:searchString% or e.location like %:searchString%) or" +
+                                              " (e.assetNumber like %:searchString% or  e.AR like %:searchString%)) or  " +
+
+                                              "(((e.netName like %:searchString% or  e.macAdress like %:searchString%) or " +
+                                               "(e.productionYear like %:searchString% or  e.supplierName like %:searchString%)) or" +
+                                               "(e.systemVersion like %:searchString% or  e.documentationLink like %:searchString%))  )"   )
     List<EoltEntity> findMyEoltInEoltNameORLocationWithSearchString(@Param("searchString") String searchString);
 
 
+
+
+
 }
+
+
