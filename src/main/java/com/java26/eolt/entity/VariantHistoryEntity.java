@@ -1,23 +1,25 @@
 package com.java26.eolt.entity;
 
 import com.java26.eolt.myEnum.Customer;
+import com.java26.eolt.myEnum.ModificationReason;
 import com.java26.eolt.myEnum.Variant;
 import com.java26.eolt.myEnum.VariantStatus;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "variant")
-public class VariantEntity extends Variant {
+@Table(name = "variantHistory")
+public class VariantHistoryEntity extends Variant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String dpn;
 
     @Column(nullable = false)
@@ -43,5 +45,13 @@ public class VariantEntity extends Variant {
     @JoinColumn(name = "eolt_id")
     private EoltEntity eolt;
 
+/*
+    @Column(nullable = false)
+    private LocalDateTime modificationDateTime;
+
+    @Enumerated
+    @Column(nullable = false)
+    private ModificationReason modificationReason;
+*/
 
 }

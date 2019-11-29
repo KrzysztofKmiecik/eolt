@@ -20,17 +20,19 @@
 <h1 th:text="${myChoosenVariant}">Variant details</h1>
 
 
-
-
 <div class="add-form">
-    <form th:action="@{/variant/update(eoltName=${eoltName},updateVariant=${myChoosenVariant})}" method="post" th:object="${variantDtoForm}">
+    <form th:action="@{/variant/update(eoltName=${eoltName},updateVariant=${myChoosenVariant})}" method="post"
+          th:object="${variantDtoForm}">
         <table>
-            <th>Parameter</th>
-            <th>Value</th>
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+            </tr>
+
 
             <tr>
                 <td><label for="dpn">dpn</label></td>
-                <td> <input id="dpn" type="text" th:field="*{dpn}"></td>
+                <td><input id="dpn" type="text" th:field="*{dpn}"></td>
             </tr>
             <tr>
                 <td><label for="customer">customer</label></td>
@@ -62,12 +64,34 @@
         </table>
         <input type="submit" value="UpdateVariant">
     </form>
+
+
+    <h1>History</h1>
+
+    <table>
+        <tr>
+            <th>Dpn</th>
+            <th>Customer</th>
+            <th>MachineCycleTime</th>
+            <th>fixture</th>
+            <th>testEng</th>
+            <th>qualityEng</th>
+            <th>variantStatus</th>
+        </tr>
+
+        <tr th:each="variantDto:${variantDtoList}">
+            <td th:text="${variantDto.getDpn()}"> VariantName</td>
+            <td th:text="${variantDto.getCustomer()}">Customer</td>
+            <td th:text="${variantDto.getMachineCycleTime()}">MachineCycleTime</td>
+            <td th:text="${variantDto.getFixture()}">Fixture</td>
+            <td th:text="${variantDto.getTestEng()}">TestEng</td>
+            <td th:text="${variantDto.getQualityEng()}">QualityEng</td>
+            <td th:text="${variantDto.getVariantStatus()}">VariantStatus</td>
+        </tr>
+    </table>
+
+
 </div>
-
-
-
-
-
 
 
 </body>

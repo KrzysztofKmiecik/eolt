@@ -2,6 +2,7 @@ package com.java26.eolt.controller;
 
 import com.java26.eolt.dto.VariantDto;
 import com.java26.eolt.myEnum.VariantStatus;
+import com.java26.eolt.service.VariantHistoryService;
 import com.java26.eolt.service.VariantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,7 @@ import java.util.List;
 public class VariantController {
 
     private final VariantService variantService;
+    private final VariantHistoryService variantHistoryService;
 
     @GetMapping
     public String showVariant(Model model,
@@ -41,6 +43,7 @@ public class VariantController {
         if ((variantDtoForm != null)) {
             log.info("PostMapping:postVariant:createVariant");
             variantService.create(variantDtoForm, eoltName);
+            variantHistoryService.create(variantDtoForm, eoltName);
         }
         return "redirect:/variant?eoltName=" + eoltName;
     }
@@ -54,6 +57,7 @@ public class VariantController {
             VariantDto variantDto = variantService.findVariant(variant, eoltName);
             variantDto.setVariantStatus(VariantStatus.OK);
             variantService.update(variantDto, eoltName);
+            variantHistoryService.create(variantDto, eoltName);
         }
         return "redirect:/variant?eoltName=" + eoltName;
     }
@@ -67,6 +71,7 @@ public class VariantController {
             VariantDto variantDto = variantService.findVariant(variant, eoltName);
             variantDto.setVariantStatus(VariantStatus.NOK);
             variantService.update(variantDto, eoltName);
+            variantHistoryService.create(variantDto, eoltName);
         }
 
         return "redirect:/variant?eoltName=" + eoltName;
@@ -90,6 +95,7 @@ public class VariantController {
         log.info("PostMapping:updateVariant");
         if (updateVariant != null) {
             variantService.update(variantDtoForm, eoltName);
+            variantHistoryService.create(variantDtoForm,eoltName);
         }
         return "redirect:/variant?eoltName=" + eoltName;
     }
@@ -110,11 +116,12 @@ public class VariantController {
     public String showVariantDetailed(Model model,
                                       @RequestParam String variantName2,
                                       @RequestParam String eoltName) {
-
+        List<VariantDto> variantDtoList = variantHistoryService.findAllVariants(eoltName);
         VariantDto variantDto=variantService.findVariant(variantName2,eoltName);
         model.addAttribute("myChoosenVariant", variantName2);
         model.addAttribute("variantDtoForm",variantDto);
         model.addAttribute("eoltName",eoltName);
+        model.addAttribute("variantDtoList", variantDtoList);
         log.info("get_detailedVariant");
         return "variant_detailed";
     }
