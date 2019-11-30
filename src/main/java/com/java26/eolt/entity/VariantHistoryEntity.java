@@ -45,13 +45,11 @@ public class VariantHistoryEntity extends Variant {
     @JoinColumn(name = "eolt_id")
     private EoltEntity eolt;
 
-/*
     @Column(nullable = false)
     private LocalDateTime modificationDateTime;
 
     @Enumerated
     @Column(nullable = false)
     private ModificationReason modificationReason;
-*/
 
 }

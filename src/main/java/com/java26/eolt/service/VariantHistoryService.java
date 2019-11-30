@@ -2,19 +2,19 @@ package com.java26.eolt.service;
 
 import com.java26.eolt.dto.VariantDto;
 import com.java26.eolt.entity.EoltEntity;
-import com.java26.eolt.entity.VariantEntity;
 import com.java26.eolt.entity.VariantHistoryEntity;
+import com.java26.eolt.myEnum.ModificationReason;
 import com.java26.eolt.myEnum.Variant;
 import com.java26.eolt.myEnum.VariantStatus;
 import com.java26.eolt.repository.EoltRepository;
 import com.java26.eolt.repository.VariantHistoryRepository;
-import com.java26.eolt.repository.VariantRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,17 +46,9 @@ public class VariantHistoryService {
         variantDto.setVariantStatus(variantStatus);
     }
 
-    public VariantDto findVariant(String dpn, String eoltName) {
-        VariantDto variantDto = new VariantDto();
-        EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName).orElseThrow(() -> new EntityNotFoundException(eoltName));
-        VariantHistoryEntity variantHistoryEntity = variantHistoryRepository.findByDpnAndEolt(dpn, eoltEntity).orElseThrow(() -> new EntityNotFoundException(dpn));
-        myMap(variantHistoryEntity, variantDto);
-        return variantDto;
-    }
-
     private VariantDto getVariantDto(VariantHistoryEntity variantHistoryEntity) {
         VariantDto variantDto = new VariantDto();
-        myMap(variantHistoryEntity, variantDto);
+        myHistoryMap(variantHistoryEntity, variantDto);
         return variantDto;
     }
 
@@ -69,24 +61,22 @@ public class VariantHistoryService {
           return variantDto;
       }*/
 
-    public void create(VariantDto variantDto, String eoltName) {
+    public void create(VariantDto variantDto, String eoltName, ModificationReason modificationReason) {
         log.info("VariantService:create");
+        LocalDateTime localDateTime = LocalDateTime.now();
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
                 .orElseThrow(() -> new EntityNotFoundException(eoltName));
-        if (!variantHistoryRepository.findByDpnAndEolt(variantDto.getDpn(), eoltEntity)
-                .isPresent()) {
-            VariantHistoryEntity variantHistoryEntity = getVariantEntity(variantDto, eoltEntity);
-            variantHistoryEntity.setEolt(eoltEntity);
+        VariantHistoryEntity variantHistoryEntity = getVariantEntity(variantDto, eoltEntity);
+        variantHistoryEntity.setEolt(eoltEntity);
+        variantHistoryEntity.setModificationReason(modificationReason);
+        variantHistoryEntity.setModificationDateTime(localDateTime);
+        variantHistoryRepository.save(variantHistoryEntity);
 
-            variantHistoryRepository.save(variantHistoryEntity);
-        } else {
-            throw new IllegalArgumentException("variant " + variantDto.getDpn() + " has already exist");
-        }
     }
 
     private VariantHistoryEntity getVariantEntity(VariantDto variantDto, EoltEntity eoltEntity) {
         VariantHistoryEntity variantHistoryEntity = new VariantHistoryEntity();
-        myMap(variantDto, variantHistoryEntity);
+        myHistoryMap(variantDto, variantHistoryEntity);
         return variantHistoryEntity;
     }
 
@@ -129,7 +119,7 @@ public class VariantHistoryService {
         myMap(variantDto, variantHistoryEntity);
     }*/
 
-    private <T extends Variant, I extends Variant> void myMap(T input, I output) {
+    private <T extends Variant, I extends Variant> void myHistoryMap(T input, I output) {
         output.setDpn(input.getDpn());
         output.setCustomer(input.getCustomer());
         output.setMachineCycleTime(input.getMachineCycleTime());
@@ -137,5 +127,23 @@ public class VariantHistoryService {
         output.setTestEng(input.getTestEng());
         output.setQualityEng(input.getQualityEng());
         output.setVariantStatus(input.getVariantStatus());
+        output.setModificationDateTime(input.getModificationDateTime());
+        output.setModificationReason(input.getModificationReason());
+    }
+
+    public List<VariantDto> findAllModifications(String eoltName, String variantName2) {
+        log.info("VariantHistoryService:findAllModifications");
+
+        List<VariantHistoryEntity> variantHistoryEntities = variantHistoryRepository.findByDpnAndEolt(
+                variantName2, eoltRepository.findByEoltName(eoltName)
+                        .orElseThrow(() -> new EntityNotFoundException(eoltName)));
+
+        List<VariantDto> variantDtos = new ArrayList<>();
+        for (VariantHistoryEntity variantHistoryEntity : variantHistoryEntities) {
+            VariantDto variantDto = getVariantDto(variantHistoryEntity);
+            variantDtos.add(variantDto);
+        }
+        return variantDtos;
+
     }
 }

@@ -77,6 +77,9 @@
             <th>testEng</th>
             <th>qualityEng</th>
             <th>variantStatus</th>
+            <th>Date</th>
+            <th>Reason</th>
+
         </tr>
 
         <tr th:each="variantDto:${variantDtoList}">
@@ -87,6 +90,8 @@
             <td th:text="${variantDto.getTestEng()}">TestEng</td>
             <td th:text="${variantDto.getQualityEng()}">QualityEng</td>
             <td th:text="${variantDto.getVariantStatus()}">VariantStatus</td>
+            <td th:text="${variantDto.getModificationDateTime()}">ModificationDate</td>
+            <td th:text="${variantDto.getModificationReason()}">ModifcationReason</td>
         </tr>
     </table>
 

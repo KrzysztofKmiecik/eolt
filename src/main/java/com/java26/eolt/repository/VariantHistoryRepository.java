@@ -12,7 +12,7 @@ public interface VariantHistoryRepository extends JpaRepository<VariantHistoryEn
 
     List<VariantHistoryEntity> findByDpn(String dpn);
 
-    Optional<VariantHistoryEntity> findByDpnAndEolt(String dpn, EoltEntity eolt);
+    List<VariantHistoryEntity> findByDpnAndEolt(String dpn, EoltEntity eolt);
 
     List<VariantHistoryEntity> findByEolt(EoltEntity eolt);
 
