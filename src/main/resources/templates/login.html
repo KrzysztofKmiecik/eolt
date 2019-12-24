@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::content})}">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div th:fragment="content">
+    <div class="row justify-content-center mb-3">
+        <div class="col-6">
+<!--            <h1 th:text="#{user.security.login}"></h1>-->
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-6">
+<!--            <div th:if="${param.error}" class="alert alert-warning" th:text="#{user.security.login.error}"></div>-->
+<!--            <div th:if="${param.logout}" class="alert alert-success" th:text="#{user.security.login.confirm}"></div>-->
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+<!--                    <label for="username" th:text="#{user.security.username}"></label>-->
+                    <input id="username" type="text" th:class="form-control" name="username" autocomplete="off">
+                </div>
+                <div class="form-group">
+<!--                    <label for="password" th:text="#{user.security.password}"></label>-->
+                    <input id="password" type="password" th:class="form-control" name="password" autocomplete="off">
+                </div>
+                <div class="form-row float-right">
+<!--                    <a th:href="@{/register}" class="btn btn-link" th:text="#{user.security.noAccount}"></a>-->
+                    <a th:href="@{/register}" class="btn btn-link" th:text="aa"></a>
+<!--                    <input type="submit" class="btn btn-primary" th:value="#{user.security.login}">-->
+                    <input type="submit" class="btn btn-primary" th:value="bb">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
