@@ -8,13 +8,14 @@
 <div th:fragment="content">
     <div class="row justify-content-center mb-3">
         <div class="col-6">
-            <h1 th:text="#{user.security.register.title}"></h1>
+            <h1 th:text="#{account.title}"></h1>
         </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-3">
         <div class="col-6">
             <!--/*@thymesVar id="userForm" type="pl.sdacademy.todolist.dto.UserDto"*/-->
-            <form th:action="@{/register}" method="post" th:object="${userForm}">
+            <form th:action="@{/account}" method="post" th:object="${userForm}">
+                <input type="hidden" th:field="*{id}">
                 <div class="form-group">
                     <label for="firstName" th:text="#{user.firstName}"></label>
                     <input id="firstName" type="text" th:class="form-control" th:errorclass="is-invalid"
@@ -26,7 +27,8 @@
                     <label for="username" th:text="#{user.security.username}"></label>
                     <input id="username" type="text" th:class="form-control" th:errorclass="is-invalid"
                            th:field="*{username}"
-                           th:placeholder="#{user.username.hint}">
+                           th:placeholder="#{user.username.hint}"
+                           disabled>
                     <div class="invalid-feedback" th:text="${#fields.errors('username')}"></div>
                 </div>
                 <div class="form-group">
@@ -37,9 +39,26 @@
                     <div class="invalid-feedback" th:text="${#fields.errors('password')}"></div>
                 </div>
                 <div class="form-row float-right">
-                    <a th:href="@{/login}" class="btn btn-link" th:text="#{user.security.hasAccount}"></a>
-                    <input type="submit" class="btn btn-primary"
-                           th:value="#{user.security.register.button}">
+                    <a th:href="@{/tasks}" class="btn btn-link" th:text="#{action.cancel}"></a>
+                    <input type="submit" class="btn btn-primary" th:value="#{action.update}">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-6">
+            <h1 th:text="#{account.title.photo}"></h1>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <form method="post" enctype="multipart/form-data" th:action="@{/files/photo}">
+                <div class="custom-file mb-2">
+                    <input type="file" class="custom-file-input" id="photoFile" name="photo">
+                    <label class="custom-file-label" for="photoFile" th:text="#{action.choose.file}"></label>
+                </div>
+                <div class="form-row float-right">
+                    <input type="submit" class="btn btn-primary" th:value="#{action.upload}"/>
                 </div>
             </form>
         </div>

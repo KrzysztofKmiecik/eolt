@@ -43,5 +43,7 @@ public class VariantEntity extends Variant {
     @JoinColumn(name = "eolt_id")
     private EoltEntity eolt;
 
-
+   /* @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id")
+    private User user;*/
 }

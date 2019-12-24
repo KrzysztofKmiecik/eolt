@@ -22,7 +22,7 @@
 
 </div>
 <div align="right">
-    <form action="/eolt/search" method="post" th:object="${searchDto}">
+    <form th:action="@{/eolt/search}" method="post" th:object="${searchDto}">
         <label for="searchString"></label>
         <input type="text" id="searchString" name="searchString" th:field="*{searchString}">
         <input type="submit" value="Search">
@@ -60,13 +60,13 @@
         <td th:text="${eoltDto.getDocumentationLink()}"></td>
 
         <td>
-            <form action="/eolt/delete" method="post" th:object="${eoltDtoForm}">
+            <form th:action="@{/eolt/delete}" method="post" th:object="${eoltDtoForm}">
                 <input type="hidden" name="deleteEolt" th:value="${eoltDto.getEoltName()}"/>
                 <button name="action" value="delete">Delete</button>
             </form>
         </td>
         <td>
-            <form action="/eolt/copy" method="post" th:object="${eoltDtoForm}">
+            <form th:action="@{/eolt/copy}" method="post" th:object="${eoltDtoForm}">
                 <input type="hidden" name="copyEolt" th:value="${eoltDto.getEoltName()}"/>
                 <button name="action" value="copy">Copy</button>
             </form>

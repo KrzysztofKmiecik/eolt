@@ -18,10 +18,13 @@
 </div>
 
 <div class="add-form">
-    <form action="/eolt/add" method="post" th:object="${eoltDtoForm}">
+    <form th:action="@{/eolt/add}" method="post" th:object="${eoltDtoForm}">
         <table>
-            <th>Parameter</th>
-            <th>Value</th>
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+            </tr>
+
 
             <tr>
                 <td><label for="eoltName">eoltName</label></td>
