@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
@@ -31,6 +32,12 @@
 </div>
 
 <br>
+<!--<div sec:authorize="isAnonymous()">-->
+<div sec:authorize="isAuthenticated()">
+   <span sec:authentication="name">Bob</span>
+    <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+</div>
+
 <table id="eolt-table">
     <tr>
         <th>EoltName</th>
@@ -60,10 +67,13 @@
         <td th:text="${eoltDto.getDocumentationLink()}"></td>
 
         <td>
-            <form th:action="@{/eolt/delete}" method="post" th:object="${eoltDtoForm}">
-                <input type="hidden" name="deleteEolt" th:value="${eoltDto.getEoltName()}"/>
-                <button name="action" value="delete">Delete</button>
-            </form>
+            <div sec:authorize="hasRole('ROLE_USER')">
+                <form th:action="@{/eolt/delete}" method="post" th:object="${eoltDtoForm}">
+                    <input type="hidden" name="deleteEolt" th:value="${eoltDto.getEoltName()}"/>
+                    <button name="action" value="delete">Delete</button>
+                </form>
+            </div>
+
         </td>
         <td>
             <form th:action="@{/eolt/copy}" method="post" th:object="${eoltDtoForm}">
