@@ -84,7 +84,6 @@ public class EoltController {
         return "eolt_add";
     }
 
-
     @GetMapping("/search")
     public String showSearchEolt(Model model) {
         SearchDto searchDto = (SearchDto) model.getAttribute("searchStringAtribute");

@@ -21,6 +21,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 @Slf4j
 @EnableWebSecurity
 @EnableJpaRepositories(basePackageClasses = UserRepository.class)
+@RequiredArgsConstructor
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -45,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/", "/eolt").hasAnyRole("USER", "ADMIN","TESTER","QUALITY")
-                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/admin").hasRole("USER")
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
