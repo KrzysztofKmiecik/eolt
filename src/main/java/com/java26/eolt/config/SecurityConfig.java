@@ -45,10 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/register").permitAll()
-                .antMatchers("/", "/eolt").hasAnyRole("USER", "ADMIN","TESTER","QUALITY")
+                .antMatchers("/", "/**/eolt").hasAnyRole("USER", "ADMIN","TESTER","QUALITY")
                 .antMatchers("/admin").hasRole("USER")
                 .and()
                 .formLogin().loginPage("/login").permitAll()
+               .and()
+                .formLogin().defaultSuccessUrl("/eolt")
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
