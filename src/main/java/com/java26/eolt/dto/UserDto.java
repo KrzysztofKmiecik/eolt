@@ -1,5 +1,6 @@
 package com.java26.eolt.dto;
 
+import com.java26.eolt.myEnum.EoltRole;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -21,4 +22,6 @@ public class UserDto {
     @NotBlank(message = "{form.validation.NotBlank.message}")
     @Size(min = 6, max = 255, message = "{form.validation.Size.message}")
     private String password;
+
+    private EoltRole role;
 }
