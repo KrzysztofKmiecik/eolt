@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
@@ -74,7 +75,9 @@
                 <td><input id="documentationLink" type="text" th:field="*{documentationLink}"></td>
             </tr>
         </table>
+        <div sec:authorize="hasRole('ROLE_TESTER')">
         <input type="submit" value="Add">
+        </div>
     </form>
 </div>
 

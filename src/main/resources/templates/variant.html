@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
@@ -46,41 +47,46 @@
         <td th:text="${variantDto.getQualityEng()}">QualityEng</td>
         <td th:text="${variantDto.getVariantStatus()}">VariantStatus</td>
         <td>
-            <form th:action="@{/variant/delete}" method="post" th:object="${variantDtoForm}">
-                <input type="hidden" name="eoltName" th:value="${eoltName}"/>
-                <input type="hidden" name="deleteVariant" th:value="${variantDto.getDpn()}"/>
-                <button name="action" value="delete">Delete</button>
-            </form>
-
+            <div sec:authorize="hasRole('ROLE_TESTER')">
+                <form th:action="@{/variant/delete}" method="post" th:object="${variantDtoForm}">
+                    <input type="hidden" name="eoltName" th:value="${eoltName}"/>
+                    <input type="hidden" name="deleteVariant" th:value="${variantDto.getDpn()}"/>
+                    <button name="action" value="delete">Delete</button>
+                </form>
+            </div>
         <td>
-        <form th:action="@{/variant/copy}" method="post" th:object="${variantDtoForm}">
-            <input type="hidden" name="eoltName" th:value="${eoltName}"/>
-            <input type="hidden" name="copyVariant" th:value="${variantDto.getDpn()}"/>
-            <button name="action" value="copy">Copy</button>
-        </form>
-
+            <div sec:authorize="hasRole('ROLE_TESTER')">
+                <form th:action="@{/variant/copy}" method="post" th:object="${variantDtoForm}">
+                    <input type="hidden" name="eoltName" th:value="${eoltName}"/>
+                    <input type="hidden" name="copyVariant" th:value="${variantDto.getDpn()}"/>
+                    <button name="action" value="copy">Copy</button>
+                </form>
+            </div>
         </td>
 
         <td>
-            <form th:action="@{/variant/setOKStatus}" method="post" th:object="${variantDtoForm}">
-                <input type="hidden" name="eoltName" th:value="${eoltName}"/>
-                <input type="hidden" name="variant" th:value="${variantDto.getDpn()}"/>
-                <button name="action" value="copy">OK</button>
-            </form>
-
-        </td><td>
-            <form th:action="@{/variant/setNOKStatus}" method="post" th:object="${variantDtoForm}">
-                <input type="hidden" name="eoltName" th:value="${eoltName}"/>
-                <input type="hidden" name="variant" th:value="${variantDto.getDpn()}"/>
-                <button name="action" value="setNOKStatus">NOK</button>
-            </form>
-
+            <div sec:authorize="hasAnyRole('ROLE_TESTER','ROLE_QUALITY')">
+                <form th:action="@{/variant/setOKStatus}" method="post" th:object="${variantDtoForm}">
+                    <input type="hidden" name="eoltName" th:value="${eoltName}"/>
+                    <input type="hidden" name="variant" th:value="${variantDto.getDpn()}"/>
+                    <button name="action" value="copy">OK</button>
+                </form>
+            </div>
+        </td>
+        <td>
+            <div sec:authorize="hasAnyRole('ROLE_TESTER','ROLE_QUALITY')">
+                <form th:action="@{/variant/setNOKStatus}" method="post" th:object="${variantDtoForm}">
+                    <input type="hidden" name="eoltName" th:value="${eoltName}"/>
+                    <input type="hidden" name="variant" th:value="${variantDto.getDpn()}"/>
+                    <button name="action" value="setNOKStatus">NOK</button>
+                </form>
+            </div>
         </td>
     </tr>
 </table>
-
-<a href="#" th:href="@{/variant/addView(eoltName=${eoltName})}"> Add Variant</a>
-
+<div sec:authorize="hasRole('ROLE_TESTER')">
+    <a href="#" th:href="@{/variant/addView(eoltName=${eoltName})}"> Add Variant</a>
+</div>
 
 </body>
 </html>

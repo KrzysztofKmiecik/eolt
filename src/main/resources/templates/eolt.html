@@ -35,7 +35,7 @@
 <!--<div sec:authorize="isAnonymous()">-->
 <div sec:authorize="isAuthenticated()">
    <span sec:authentication="name">Bob</span>
-    <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+    <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_TESTER,ROLE_QUALITY]</span>
 </div>
 
 <table id="eolt-table">
@@ -67,7 +67,7 @@
         <td th:text="${eoltDto.getDocumentationLink()}"></td>
 
         <td>
-            <div sec:authorize="hasRole('ROLE_USER')">
+            <div sec:authorize="hasRole('ROLE_TESTER')">
                 <form th:action="@{/eolt/delete}" method="post" th:object="${eoltDtoForm}">
                     <input type="hidden" name="deleteEolt" th:value="${eoltDto.getEoltName()}"/>
                     <button name="action" value="delete">Delete</button>
@@ -76,15 +76,23 @@
 
         </td>
         <td>
-            <form th:action="@{/eolt/copy}" method="post" th:object="${eoltDtoForm}">
-                <input type="hidden" name="copyEolt" th:value="${eoltDto.getEoltName()}"/>
-                <button name="action" value="copy">Copy</button>
-            </form>
+            <div sec:authorize="hasRole('ROLE_TESTER')">
+                <form th:action="@{/eolt/copy}" method="post" th:object="${eoltDtoForm}">
+                    <input type="hidden" name="copyEolt" th:value="${eoltDto.getEoltName()}"/>
+                    <button name="action" value="copy">Copy</button>
+                </form>
+
+
+            </div>
+
+
         </td>
     </tr>
 </table>
+<div sec:authorize="hasRole('ROLE_TESTER')">
+    <a href="#" th:href="@{/eolt/addView}"> Add Eolt</a>
+</div>
 
-<a href="#" th:href="@{/eolt/addView}"> Add Eolt</a>
 
 <br/>
 
