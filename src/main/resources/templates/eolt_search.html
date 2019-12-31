@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <title>EOLT</title>
+    <title th:text="#{todo.app.name}">EOLT</title>
 </head>
 <body>
 <div th:fragment="content">
@@ -23,8 +23,8 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>EoltName</th>
-            <th>Location</th>
+            <th th:text="#{eolt.eoltName}">EoltName</th>
+            <th th:text="#{eolt.location}">Location</th>
         </tr>
         </thead>
         <tbody>

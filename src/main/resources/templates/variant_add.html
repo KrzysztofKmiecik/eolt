@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <title>EOLT_add</title>
+    <title th:text="#{todo.app.name}">EOLT_add</title>
 </head>
 <body>
 <div th:fragment="content">
@@ -26,8 +26,8 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                <th>Parameter</th>
-                <th>Value</th>
+                <th th:text="#{variant.parameter}">Parameter</th>
+                <th th:text="#{variant.value}">Value</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -65,7 +65,7 @@
                 </tbody>
             </table>
             <div sec:authorize="hasRole('ROLE_TESTER')">
-                <input type="submit" value="AddVariant">
+                <input type="submit" th:value="#{variant.add}">
             </div>
         </form>
     </div>

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <title>VARIANT</title>
+    <title th:text="#{todo.app.name}">VARIANT</title>
 </head>
 <body>
 <div th:fragment="content">
@@ -24,17 +24,17 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Dpn</th>
-            <th>Customer</th>
-            <th>MachineCycleTime</th>
-            <th>fixture</th>
-            <th>testEng</th>
-            <th>qualityEng</th>
-            <th>variantStatus</th>
-            <th>Delete</th>
-            <th>Copy</th>
-            <th>SetOKStatus</th>
-            <th>SetNOKStatus</th>
+            <th th:text="#{variant.dpn}">Dpn</th>
+            <th th:text="#{variant.customer}">Customer</th>
+            <th th:text="#{variant.cycleTime}">MachineCycleTime</th>
+            <th th:text="#{variant.fixture}">fixture</th>
+            <th th:text="#{variant.testEng}">testEng</th>
+            <th th:text="#{variant.qualityEng}">qualityEng</th>
+            <th th:text="#{variant.variantStatus}">variantStatus</th>
+            <th th:text="#{variant.delete}">Delete</th>
+            <th th:text="#{variant.copy}">Copy</th>
+            <th th:text="#{variant.setNokStatus}">SetOKStatus</th>
+            <th th:text="#{variant.setNokStatus}">SetNOKStatus</th>
 
 
         </tr>
@@ -55,7 +55,7 @@
                     <form th:action="@{/variant/delete}" method="post" th:object="${variantDtoForm}">
                         <input type="hidden" name="eoltName" th:value="${eoltName}"/>
                         <input type="hidden" name="deleteVariant" th:value="${variantDto.getDpn()}"/>
-                        <button name="action" value="delete">Delete</button>
+                        <button name="action" th:text="#{variant.delete}">Delete</button>
                     </form>
                 </div>
             <td>
@@ -63,7 +63,7 @@
                     <form th:action="@{/variant/copy}" method="post" th:object="${variantDtoForm}">
                         <input type="hidden" name="eoltName" th:value="${eoltName}"/>
                         <input type="hidden" name="copyVariant" th:value="${variantDto.getDpn()}"/>
-                        <button name="action" value="copy">Copy</button>
+                        <button name="action" th:text="#{variant.copy}">Copy</button>
                     </form>
                 </div>
             </td>
@@ -73,7 +73,7 @@
                     <form th:action="@{/variant/setOKStatus}" method="post" th:object="${variantDtoForm}">
                         <input type="hidden" name="eoltName" th:value="${eoltName}"/>
                         <input type="hidden" name="variant" th:value="${variantDto.getDpn()}"/>
-                        <button name="action" value="copy">OK</button>
+                        <button name="action" th:text="#{variant.setOkStatus}">OK</button>
                     </form>
                 </div>
             </td>
@@ -82,7 +82,7 @@
                     <form th:action="@{/variant/setNOKStatus}" method="post" th:object="${variantDtoForm}">
                         <input type="hidden" name="eoltName" th:value="${eoltName}"/>
                         <input type="hidden" name="variant" th:value="${variantDto.getDpn()}"/>
-                        <button name="action" value="setNOKStatus">NOK</button>
+                        <button name="action" th:text="#{variant.setNokStatus}">NOK</button>
                     </form>
                 </div>
             </td>

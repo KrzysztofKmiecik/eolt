@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">-->
-    <title>EOLT</title>
+    <title th:text="#{todo.app.name}">EOLT</title>
 </head>
 <body>
 <div th:fragment="content">
@@ -28,7 +28,7 @@
         <form th:action="@{/eolt/search}" method="post" th:object="${searchDto}">
             <label for="searchString"></label>
             <input type="text" id="searchString" name="searchString" th:field="*{searchString}">
-            <input type="submit" value="Search">
+            <input  type="submit" th:value="#{eolt.search}">
 
         </form>
     </div>
@@ -43,18 +43,18 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>EoltName</th>
-            <th>Location</th>
-            <th>Asset</th>
+            <th th:text="#{eolt.eoltName}">EoltName</th>
+            <th th:text="#{eolt.location}">Location</th>
+            <th th:text="#{eolt.asset}">Asset</th>
             <th>AR</th>
-            <th>NetName</th>
+            <th th:text="#{eolt.netName}">NetName</th>
             <th>MAC</th>
-            <th>ProdYear</th>
-            <th>Supplier</th>
-            <th>SystemVer</th>
+            <th th:text="#{eolt.prodYear}">ProdYear</th>
+            <th th:text="#{eolt.supplier}">Supplier</th>
+            <th th:text="#{eolt.systemVer}">SystemVer</th>
             <th>Doc</th>
-            <th>Delete</th>
-            <th>Copy</th>
+            <th th:text="#{eolt.delete}">Delete</th>
+            <th th:text="#{eolt.copy}">Copy</th>
         </tr>
         </thead>
         <tbody>
@@ -76,7 +76,7 @@
                 <div sec:authorize="hasRole('ROLE_TESTER')">
                     <form th:action="@{/eolt/delete}" method="post" th:object="${eoltDtoForm}">
                         <input type="hidden" name="deleteEolt" th:value="${eoltDto.getEoltName()}"/>
-                        <button name="action" value="delete">Delete</button>
+                        <button name="action" th:text="#{eolt.delete}">Delete</button>
                     </form>
                 </div>
 
@@ -85,7 +85,7 @@
                 <div sec:authorize="hasRole('ROLE_TESTER')">
                     <form th:action="@{/eolt/copy}" method="post" th:object="${eoltDtoForm}">
                         <input type="hidden" name="copyEolt" th:value="${eoltDto.getEoltName()}"/>
-                        <button name="action" value="copy">Copy</button>
+                        <button name="action" th:text="#{eolt.copy}">Copy</button>
                     </form>
 
 
@@ -97,7 +97,7 @@
         </tbody>
     </table>
     <div sec:authorize="hasRole('ROLE_TESTER')">
-        <a href="#" th:href="@{/eolt/addView}"> Add Eolt</a>
+        <a href="#" th:href="@{/eolt/addView}" th:text="#{eolt.addEolt}"> Add Eolt</a>
     </div>
 
 
