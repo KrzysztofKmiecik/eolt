@@ -1,36 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::content})}">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <title>EOLT</title>
 </head>
 <body>
-<div class="navigator">
-    <div class="nav-sec">
-        <img src="#" th:src="@{/photos/aptiv.png}" height="18" alt="aptiv"/>
+<div th:fragment="content">
+    <div class="navigator">
+        <div class="nav-sec">
+            <img src="#" th:src="@{/photos/aptiv.png}" height="18" alt="aptiv"/>
+
+        </div>
+        <div class="nav-sec">
+            <a th:align="right" th:href="@{/eolt}">EoltList</a>
+        </div>
 
     </div>
-    <div class="nav-sec">
-        <a th:align="right" th:href="@{/eolt}">EoltList</a>
-    </div>
+    <h1>SEARCH RESULTS</h1>
+    <h1 th:text="${searchStringForm.getSearchString()}"></h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>EoltName</th>
+            <th>Location</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="eoltDto:${searchStringListForm}">
+            <td th:text="${eoltDto.getEoltName()}"></td>
+            <td th:text="${eoltDto.getLocation()}"></td>
+            <td><a href="#" th:href="@{/eolt/detailed(eoltName2=${eoltDto.getEoltName()})}"
+                   th:text="${eoltDto.getEoltName()}"> Link 1</a></td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
-<h1>SEARCH RESULTS</h1>
-<h1 th:text="${searchStringForm.getSearchString()}"></h1>
-<table>
-    <tr>
-        <th>EoltName</th>
-        <th>Location</th>
-    </tr>
-    <tr th:each="eoltDto:${searchStringListForm}">
-        <td th:text="${eoltDto.getEoltName()}"></td>
-        <td th:text="${eoltDto.getLocation()}"></td>
-        <td><a href="#" th:href="@{/eolt/detailed(eoltName2=${eoltDto.getEoltName()})}"
-               th:text="${eoltDto.getEoltName()}"> Link 1</a></td>
-    </tr>
-</table>
-
 </body>
 </html>
 

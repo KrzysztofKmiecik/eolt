@@ -28,7 +28,7 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "role_Id",referencedColumnName = "user_id"))*/
 
 
-   @OneToMany(mappedBy = "myUserRole",fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "myUserRole", fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     public User() {

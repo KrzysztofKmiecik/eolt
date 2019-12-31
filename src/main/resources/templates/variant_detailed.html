@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      th:replace="~{layout :: layout(~{::content})}">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <title>Variant details</title>
 </head>
 <body>
+<div th:fragment="content">
 <div class="navigator">
     <div class="nav-sec">
         <img src="#" th:src="@{/photos/aptiv.png}" height="18" alt="aptiv"/>
@@ -24,12 +26,14 @@
 <div class="add-form">
     <form th:action="@{/variant/update(eoltName=${eoltName},updateVariant=${myChoosenVariant})}" method="post"
           th:object="${variantDtoForm}">
-        <table>
+        <table class="table table-striped">
+            <thead>
             <tr>
                 <th>Parameter</th>
                 <th>Value</th>
             </tr>
-
+            </thead>
+            <tbody>
 
             <tr>
                 <td><label for="dpn">dpn</label></td>
@@ -62,6 +66,7 @@
                 <td><label for="variantStatus">variantStatus</label></td>
                 <td><input id="variantStatus" type="text" th:field="*{variantStatus}"></td>
             </tr>
+            </tbody>
         </table>
         <div sec:authorize="hasRole('ROLE_TESTER')">
         <input type="submit" value="UpdateVariant">
@@ -71,7 +76,8 @@
 
     <h1>History</h1>
 
-    <table>
+    <table class="table table-bordered table-sm">
+        <thead>
         <tr>
             <th>Dpn</th>
             <th>Customer</th>
@@ -84,7 +90,8 @@
             <th>Reason</th>
 
         </tr>
-
+        </thead>
+        <tbody>
         <tr th:each="variantDto:${variantDtoList}">
             <td th:text="${variantDto.getDpn()}"> VariantName</td>
             <td th:text="${variantDto.getCustomer()}">Customer</td>
@@ -96,11 +103,12 @@
             <td th:text="${variantDto.getModificationDateTime()}">ModificationDate</td>
             <td th:text="${variantDto.getModificationReason()}">ModifcationReason</td>
         </tr>
+        </tbody>
     </table>
 
 
 </div>
 
-
+</div>
 </body>
 </html>
