@@ -24,6 +24,7 @@ public class VariantService {
 
     final VariantRepository variantRepository;
     final EoltRepository eoltRepository;
+    final VariantHistoryService variantHistoryService;
 
 
     public List<VariantDto> findAllVariants(String eoltName) {

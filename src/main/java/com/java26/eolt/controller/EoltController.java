@@ -2,7 +2,9 @@ package com.java26.eolt.controller;
 
 import com.java26.eolt.dto.EoltDto;
 import com.java26.eolt.dto.SearchDto;
+import com.java26.eolt.repository.VariantHistoryRepository;
 import com.java26.eolt.service.EoltService;
+import com.java26.eolt.service.VariantHistoryService;
 import com.java26.eolt.service.VariantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,7 @@ public class EoltController {
 
     private final EoltService eoltService;
     private final VariantService variantService;
+    private final VariantHistoryService variantHistoryService;
 
     @GetMapping
     public String showEolt(Model model) {
@@ -56,6 +59,7 @@ public class EoltController {
     public String deleteEolt(@RequestParam(required = false) String deleteEolt) {
         log.info("PostMapping:postEolt:delete");
         if (deleteEolt != null) {
+            variantHistoryService.deleteAllVariantsFromEoltName(deleteEolt);
             variantService.deleteAllVariantsFromEoltName(deleteEolt);
             eoltService.delete(deleteEolt);
         }
@@ -83,7 +87,6 @@ public class EoltController {
         model.addAttribute("eoltDtoForm", dtoToCopy == null ? new EoltDto() : dtoToCopy);
         return "eolt_add";
     }
-
 
     @GetMapping("/search")
     public String showSearchEolt(Model model) {

@@ -1,80 +1,92 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      th:replace="~{layout :: layout(~{::content})}">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <title>EOLT_add</title>
+    <title th:text="#{todo.app.name}">EOLT_add</title>
 </head>
 <body>
-<div class="navigator">
-    <div class="nav-sec">
-        <img src="#" th:src="@{/photos/aptiv.png}" height="18" alt="aptiv"/>
+<div th:fragment="content">
+    <div class="navigator">
+        <div class="nav-sec">
+            <img src="#" th:src="@{/photos/aptiv.png}" height="18" alt="aptiv"/>
+
+        </div>
+        <div class="nav-sec">
+            <a th:align="right" th:href="@{/eolt}">EoltList</a>
+        </div>
 
     </div>
-    <div class="nav-sec">
-        <a th:align="right" th:href="@{/eolt}">EoltList</a>
+
+    <div class="add-form">
+        <form th:action="@{/eolt/add}" method="post" th:object="${eoltDtoForm}">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th th:text="#{eolt.parameter}">Parameter</th>
+                    <th th:text="#{eolt.value}">Value</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr>
+                    <td><label for="eoltName" >eoltName</label></td>
+                    <td><input id="eoltName" type="text" th:field="*{eoltName}"></td>
+                </tr>
+                <tr>
+                    <td><label for="location">location</label></td>
+                    <td><input id="location" type="text" th:field="*{location}"></td>
+                </tr>
+                <tr>
+                    <td><label for="assetNumber">assetNumber</label></td>
+                    <td><input id="assetNumber" type="text" th:field="*{assetNumber}"></td>
+                </tr>
+
+                <tr>
+                    <td><label for="AR">AR</label></td>
+                    <td><input id="AR" type="text" th:field="*{AR}"></td>
+                </tr>
+
+                <tr>
+                    <td><label for="netName">netName</label></td>
+                    <td><input id="netName" type="text" th:field="*{netName}"></td>
+                </tr>
+
+                <tr>
+                    <td><label for="macAdress">macAdress</label></td>
+                    <td><input id="macAdress" type="text" th:field="*{macAdress}"></td>
+                </tr>
+
+                <tr>
+                    <td><label for="productionYear">productionYear</label></td>
+                    <td><input id="productionYear" type="text" th:field="*{productionYear}"></td>
+                </tr>
+
+                <tr>
+                    <td><label for="supplierName">supplierName</label></td>
+                    <td><input id="supplierName" type="text" th:field="*{supplierName}"></td>
+                </tr>
+
+                <tr>
+                    <td><label for="systemVersion">systemVersion</label></td>
+                    <td><input id="systemVersion" type="text" th:field="*{systemVersion}"></td>
+                </tr>
+
+                <tr>
+                    <td><label for="documentationLink">documentationLink</label></td>
+                    <td><input id="documentationLink" type="text" th:field="*{documentationLink}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div sec:authorize="hasRole('ROLE_TESTER')">
+                <input type="submit" th:value="#{eolt.addEolt}">
+            </div>
+        </form>
     </div>
-
 </div>
-
-<div class="add-form">
-    <form action="/eolt/add" method="post" th:object="${eoltDtoForm}">
-        <table>
-            <th>Parameter</th>
-            <th>Value</th>
-
-            <tr>
-                <td><label for="eoltName">eoltName</label></td>
-                <td><input id="eoltName" type="text" th:field="*{eoltName}"></td>
-            </tr>
-            <tr>
-                <td><label for="location">location</label></td>
-                <td><input id="location" type="text" th:field="*{location}"></td>
-            </tr>
-            <tr>
-                <td><label for="assetNumber">assetNumber</label></td>
-                <td><input id="assetNumber" type="text" th:field="*{assetNumber}"></td>
-            </tr>
-
-            <tr>
-                <td><label for="AR">AR</label></td>
-                <td><input id="AR" type="text" th:field="*{AR}"></td>
-            </tr>
-
-            <tr>
-                <td><label for="netName">netName</label></td>
-                <td><input id="netName" type="text" th:field="*{netName}"></td>
-            </tr>
-
-            <tr>
-                <td><label for="macAdress">macAdress</label></td>
-                <td><input id="macAdress" type="text" th:field="*{macAdress}"></td>
-            </tr>
-
-            <tr>
-                <td><label for="productionYear">productionYear</label></td>
-                <td><input id="productionYear" type="text" th:field="*{productionYear}"></td>
-            </tr>
-
-            <tr>
-                <td><label for="supplierName">supplierName</label></td>
-                <td><input id="supplierName" type="text" th:field="*{supplierName}"></td>
-            </tr>
-
-            <tr>
-                <td><label for="systemVersion">systemVersion</label></td>
-                <td><input id="systemVersion" type="text" th:field="*{systemVersion}"></td>
-            </tr>
-
-            <tr>
-                <td><label for="documentationLink">documentationLink</label></td>
-                <td><input id="documentationLink" type="text" th:field="*{documentationLink}"></td>
-            </tr>
-        </table>
-        <input type="submit" value="Add">
-    </form>
-</div>
-
 </body>
 </html>
 

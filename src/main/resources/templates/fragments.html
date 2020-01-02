@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{todo.app.name}">Title</title>
+</head>
+<body>
+<div class="row mt-3" th:fragment="header">
+    <div class="col">
+        <a href="?lang=en_GB" th:text="#{language.english}"></a>&nbsp;|&nbsp;
+        <a href="?lang=de_DE" th:text="#{language.german}"></a>&nbsp;|&nbsp;
+        <a href="?lang=pl_PL" th:text="#{language.polish}"></a>
+    </div>
+    <div class="col">
+        <div th:if="${#authorization.expression('isAuthenticated()')}" class="float-right">
+            <span th:text="#{user.greeting(${#authentication.principal.firstName})}"></span>
+            <a th:href="@{/account}" class="ml-2 mr-2 text-secondary"><i class="fas fa-cog"></i></a>
+            <a th:href="@{/logout}" th:text="#{user.security.logout}" class="btn btn-outline-secondary btn-sm ml-3">Logout</a>
+        </div>
+    </div>
+</div>
+<div th:fragment="footer">
+</div>
+</body>
+</html>

@@ -1,67 +1,75 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      th:replace="~{layout :: layout(~{::content})}">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <title>EOLT_add</title>
+    <title th:text="#{todo.app.name}">EOLT_add</title>
 </head>
 <body>
-<div class="navigator">
-    <div class="nav-sec">
-        <img src="#" th:src="@{/photos/aptiv.png}" height="18" alt="aptiv"/>
+<div th:fragment="content">
+    <div class="navigator">
+        <div class="nav-sec">
+            <img src="#" th:src="@{/photos/aptiv.png}" height="18" alt="aptiv"/>
+
+        </div>
+        <div class="nav-sec">
+            <a th:align="right" th:href="@{/eolt}">EoltList</a>
+        </div>
 
     </div>
-    <div class="nav-sec">
-        <a th:align="right" th:href="@{/eolt}">EoltList</a>
+
+
+    <div class="add-form">
+        <form th:action="@{/variant/add(eoltName=${eoltName})}" method="post" th:object="${variantDtoForm}">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                <th th:text="#{variant.parameter}">Parameter</th>
+                <th th:text="#{variant.value}">Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><label for="dpn">dpn</label></td>
+                    <td><input id="dpn" type="text" th:field="*{dpn}"></td>
+                </tr>
+                <tr>
+                    <td><label for="customer">customer</label></td>
+                    <td><input id="customer" type="text" th:field="*{customer}"></td>
+                </tr>
+                <tr>
+                    <td><label for="machineCycleTime">machineCycleTime</label></td>
+                    <td><input id="machineCycleTime" type="text" th:field="*{machineCycleTime}"></td>
+                </tr>
+                <tr>
+                    <td><label for="fixture"> fixture</label></td>
+                    <td><input id="fixture" type="text" th:field="*{fixture}"></td>
+                </tr>
+
+                <tr>
+                    <td><label for="testEng">testEng</label></td>
+                    <td><input id="testEng" type="text" th:field="*{testEng}"></td>
+                </tr>
+
+                <tr>
+                    <td><label for="qualityEng">qualityEng</label></td>
+                    <td><input id="qualityEng" type="text" th:field="*{qualityEng}"></td>
+                </tr>
+
+                <tr>
+                    <td><label for="variantStatus">variantStatus</label></td>
+                    <td><input id="variantStatus" type="text" th:field="*{variantStatus}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div sec:authorize="hasRole('ROLE_TESTER')">
+                <input type="submit" th:value="#{variant.add}">
+            </div>
+        </form>
     </div>
-
 </div>
-
-
-
-
-<div class="add-form">
-    <form th:action="@{/variant/add(eoltName=${eoltName})}" method="post" th:object="${variantDtoForm}">
-        <table>
-            <th>Parameter</th>
-            <th>Value</th>
-
-            <tr>
-                <td><label for="dpn">dpn</label></td>
-                <td> <input id="dpn" type="text" th:field="*{dpn}"></td>
-            </tr>
-            <tr>
-                <td><label for="customer">customer</label></td>
-                <td><input id="customer" type="text" th:field="*{customer}"></td>
-            </tr>
-            <tr>
-                <td><label for="machineCycleTime">machineCycleTime</label></td>
-                <td><input id="machineCycleTime" type="text" th:field="*{machineCycleTime}"></td>
-            </tr>
-            <tr>
-                <td><label for="fixture"> fixture</label></td>
-                <td><input id="fixture" type="text" th:field="*{fixture}"></td>
-            </tr>
-
-            <tr>
-                <td><label for="testEng">testEng</label></td>
-                <td><input id="testEng" type="text" th:field="*{testEng}"></td>
-            </tr>
-
-            <tr>
-                <td><label for="qualityEng">qualityEng</label></td>
-                <td><input id="qualityEng" type="text" th:field="*{qualityEng}"></td>
-            </tr>
-
-            <tr>
-                <td><label for="variantStatus">variantStatus</label></td>
-                <td><input id="variantStatus" type="text" th:field="*{variantStatus}"></td>
-            </tr>
-        </table>
-        <input type="submit" value="AddVariant">
-    </form>
-</div>
-
 </body>
 </html>
 

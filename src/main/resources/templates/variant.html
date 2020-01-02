@@ -1,87 +1,98 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      th:replace="~{layout :: layout(~{::content})}">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <title>VARIANT</title>
+    <title th:text="#{todo.app.name}">VARIANT</title>
 </head>
 <body>
-<div class="navigator">
-    <div class="nav-sec">
-        <img src="#" th:src="@{/photos/aptiv.png}" height="18" alt="aptiv"/>
+<div th:fragment="content">
+    <div class="navigator">
+        <div class="nav-sec">
+            <img src="#" th:src="@{/photos/aptiv.png}" height="18" alt="aptiv"/>
+
+        </div>
+        <div class="nav-sec">
+            <a th:align="right" th:href="@{/eolt}">EoltList</a>
+        </div>
 
     </div>
-    <div class="nav-sec">
-        <a th:align="right" th:href="@{/eolt}">EoltList</a>
-    </div>
+    <h1 th:text="${eoltName}">eoltName</h1>
 
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th th:text="#{variant.dpn}">Dpn</th>
+            <th th:text="#{variant.customer}">Customer</th>
+            <th th:text="#{variant.cycleTime}">MachineCycleTime</th>
+            <th th:text="#{variant.fixture}">fixture</th>
+            <th th:text="#{variant.testEng}">testEng</th>
+            <th th:text="#{variant.qualityEng}">qualityEng</th>
+            <th th:text="#{variant.variantStatus}">variantStatus</th>
+            <th th:text="#{variant.delete}">Delete</th>
+            <th th:text="#{variant.copy}">Copy</th>
+            <th th:text="#{variant.setNokStatus}">SetOKStatus</th>
+            <th th:text="#{variant.setNokStatus}">SetNOKStatus</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="variantDto:${variantDtoList}">
+            <td><a href="#" th:href="@{/variant/detailed(variantName2=${variantDto.getDpn()},eoltName=${eoltName})}"
+                   th:text="${variantDto.getDpn()}"> VariantName</a></td>
+            <td th:text="${variantDto.getCustomer()}">Customer</td>
+            <td th:text="${variantDto.getMachineCycleTime()}">MachineCycleTime</td>
+            <td th:text="${variantDto.getFixture()}">Fixture</td>
+            <td th:text="${variantDto.getTestEng()}">TestEng</td>
+            <td th:text="${variantDto.getQualityEng()}">QualityEng</td>
+            <td th:text="${variantDto.getVariantStatus()}">VariantStatus</td>
+            <td>
+                <div sec:authorize="hasRole('ROLE_TESTER')">
+                    <form th:action="@{/variant/delete}" method="post" th:object="${variantDtoForm}">
+                        <input type="hidden" name="eoltName" th:value="${eoltName}"/>
+                        <input type="hidden" name="deleteVariant" th:value="${variantDto.getDpn()}"/>
+                        <button name="action" th:text="#{variant.delete}">Delete</button>
+                    </form>
+                </div>
+            <td>
+                <div sec:authorize="hasRole('ROLE_TESTER')">
+                    <form th:action="@{/variant/copy}" method="post" th:object="${variantDtoForm}">
+                        <input type="hidden" name="eoltName" th:value="${eoltName}"/>
+                        <input type="hidden" name="copyVariant" th:value="${variantDto.getDpn()}"/>
+                        <button name="action" th:text="#{variant.copy}">Copy</button>
+                    </form>
+                </div>
+            </td>
+
+            <td>
+                <div sec:authorize="hasAnyRole('ROLE_TESTER','ROLE_QUALITY')">
+                    <form th:action="@{/variant/setOKStatus}" method="post" th:object="${variantDtoForm}">
+                        <input type="hidden" name="eoltName" th:value="${eoltName}"/>
+                        <input type="hidden" name="variant" th:value="${variantDto.getDpn()}"/>
+                        <button name="action" th:text="#{variant.setOkStatus}">OK</button>
+                    </form>
+                </div>
+            </td>
+            <td>
+                <div sec:authorize="hasAnyRole('ROLE_TESTER','ROLE_QUALITY')">
+                    <form th:action="@{/variant/setNOKStatus}" method="post" th:object="${variantDtoForm}">
+                        <input type="hidden" name="eoltName" th:value="${eoltName}"/>
+                        <input type="hidden" name="variant" th:value="${variantDto.getDpn()}"/>
+                        <button name="action" th:text="#{variant.setNokStatus}">NOK</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div sec:authorize="hasRole('ROLE_TESTER')">
+        <a href="#" th:href="@{/variant/addView(eoltName=${eoltName})}"> Add Variant</a>
+    </div>
 </div>
-<h1 th:text="${eoltName}">eoltName</h1>
-
-<table>
-    <tr>
-        <th>Dpn</th>
-        <th>Customer</th>
-        <th>MachineCycleTime</th>
-        <th>fixture</th>
-        <th>testEng</th>
-        <th>qualityEng</th>
-        <th>variantStatus</th>
-        <th>Delete</th>
-        <th>Copy</th>
-        <th>SetOKStatus</th>
-        <th>SetNOKStatus</th>
-
-
-    </tr>
-
-
-    <tr th:each="variantDto:${variantDtoList}">
-        <td><a href="#" th:href="@{/variant/detailed(variantName2=${variantDto.getDpn()},eoltName=${eoltName})}"
-               th:text="${variantDto.getDpn()}"> VariantName</a></td>
-        <td th:text="${variantDto.getCustomer()}">Customer</td>
-        <td th:text="${variantDto.getMachineCycleTime()}">MachineCycleTime</td>
-        <td th:text="${variantDto.getFixture()}">Fixture</td>
-        <td th:text="${variantDto.getTestEng()}">TestEng</td>
-        <td th:text="${variantDto.getQualityEng()}">QualityEng</td>
-        <td th:text="${variantDto.getVariantStatus()}">VariantStatus</td>
-        <td>
-            <form th:action="@{/variant/delete}" method="post" th:object="${variantDtoForm}">
-                <input type="hidden" name="eoltName" th:value="${eoltName}"/>
-                <input type="hidden" name="deleteVariant" th:value="${variantDto.getDpn()}"/>
-                <button name="action" value="delete">Delete</button>
-            </form>
-
-        <td>
-        <form th:action="@{/variant/copy}" method="post" th:object="${variantDtoForm}">
-            <input type="hidden" name="eoltName" th:value="${eoltName}"/>
-            <input type="hidden" name="copyVariant" th:value="${variantDto.getDpn()}"/>
-            <button name="action" value="copy">Copy</button>
-        </form>
-
-        </td>
-
-        <td>
-            <form th:action="@{/variant/setOKStatus}" method="post" th:object="${variantDtoForm}">
-                <input type="hidden" name="eoltName" th:value="${eoltName}"/>
-                <input type="hidden" name="variant" th:value="${variantDto.getDpn()}"/>
-                <button name="action" value="copy">OK</button>
-            </form>
-
-        </td><td>
-            <form th:action="@{/variant/setNOKStatus}" method="post" th:object="${variantDtoForm}">
-                <input type="hidden" name="eoltName" th:value="${eoltName}"/>
-                <input type="hidden" name="variant" th:value="${variantDto.getDpn()}"/>
-                <button name="action" value="setNOKStatus">NOK</button>
-            </form>
-
-        </td>
-    </tr>
-</table>
-
-<a href="#" th:href="@{/variant/addView(eoltName=${eoltName})}"> Add Variant</a>
-
-
 </body>
 </html>
 

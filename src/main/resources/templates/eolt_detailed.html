@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      th:replace="~{layout :: layout(~{::content})}">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/eolt-detailed.css}">
-    <title>EOLT detailed</title>
+    <title th:text="#{todo.app.name}">EOLT detailed</title>
 </head>
 <body>
-
+<div th:fragment="content">
 <div class="navigator">
     <div class="nav-sec">
         <img src="#" th:src="@{/photos/aptiv.png}" height="18" alt="aptiv"/>
@@ -24,77 +26,83 @@
 
 <img src="#" th:src="@{/photos/eolt.jpg}" height="100" width="100" alt="foto"/>
 <a th:href="@{/variant(eoltName=${eoltDtoForm.getEoltName()})}">Variant</a>
+<div sec:authorize="hasRole('ROLE_TESTER')">
+    <form class="eolt-form" th:action="@{/eolt/update}" method="post" th:object="${eoltDtoForm}">
+        <br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th th:text="#{eolt.parameter}">Parameter</th>
+                <th th:text="#{eolt.value}">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><label for="eoltName">eoltName</label></td>
+                <td><input id="eoltName" type="text" th:field="*{eoltName}"></td>
+            </tr>
+            <tr>
+                <td><label for="location">location</label></td>
+                <td><input id="location" type="text" th:field="*{location}"></td>
+            </tr>
+            <tr>
+                <td><label for="assetNumber">assetNumber</label></td>
+                <td><input id="assetNumber" type="text" th:field="*{assetNumber}"></td>
+            </tr>
 
-<form class="eolt-form" th:action="@{/eolt/update}" method="post" th:object="${eoltDtoForm}">
-    <br>
-    <table id="eolt-detailed">
-       <tr>
-           <th>Parameter</th>
-           <th>Value</th>
+            <tr>
+                <td><label for="AR">AR</label></td>
+                <td><input id="AR" type="text" th:field="*{AR}"></td>
+            </tr>
 
-        <tr>
-            <td><label for="eoltName">eoltName</label></td>
-            <td><input id="eoltName" type="text" th:field="*{eoltName}"></td>
-        </tr>
-        <tr>
-            <td><label for="location">location</label></td>
-            <td><input id="location" type="text" th:field="*{location}"></td>
-        </tr>
-        <tr>
-            <td><label for="assetNumber">assetNumber</label></td>
-            <td><input id="assetNumber" type="text" th:field="*{assetNumber}"></td>
-        </tr>
+            <tr>
+                <td><label for="netName">netName</label></td>
+                <td><input id="netName" type="text" th:field="*{netName}"></td>
+            </tr>
 
-        <tr>
-            <td><label for="AR">AR</label></td>
-            <td><input id="AR" type="text" th:field="*{AR}"></td>
-        </tr>
+            <tr>
+                <td><label for="macAdress">macAdress</label></td>
+                <td><input id="macAdress" type="text" th:field="*{macAdress}"></td>
+            </tr>
 
-        <tr>
-            <td><label for="netName">netName</label></td>
-            <td><input id="netName" type="text" th:field="*{netName}"></td>
-        </tr>
+            <tr>
+                <td><label for="productionYear">productionYear</label></td>
+                <td><input id="productionYear" type="text" th:field="*{productionYear}"></td>
+            </tr>
 
-        <tr>
-            <td><label for="macAdress">macAdress</label></td>
-            <td><input id="macAdress" type="text" th:field="*{macAdress}"></td>
-        </tr>
+            <tr>
+                <td><label for="supplierName">supplierName</label></td>
+                <td><input id="supplierName" type="text" th:field="*{supplierName}"></td>
+            </tr>
 
-        <tr>
-            <td><label for="productionYear">productionYear</label></td>
-            <td><input id="productionYear" type="text" th:field="*{productionYear}"></td>
-        </tr>
+            <tr>
+                <td><label for="systemVersion">systemVersion</label></td>
+                <td><input id="systemVersion" type="text" th:field="*{systemVersion}"></td>
+            </tr>
 
-        <tr>
-            <td><label for="supplierName">supplierName</label></td>
-            <td><input id="supplierName" type="text" th:field="*{supplierName}"></td>
-        </tr>
+            <tr>
+                <td><label for="documentationLink">documentationLink</label></td>
+                <td><input id="documentationLink" type="text" th:field="*{documentationLink}"></td>
+            </tr>
+            <!--   </tr>
+                <tr>
+                    <td><label for="eoltName">eoltName</label></td>
+                    <td>
+                        <input id="eoltName" type="text" th:field="*{eoltName}">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="location">location</label></td>
+                    <td>
+                        <input id="location" type="text" th:field="*{location}">
+                    </td>
+                </tr>-->
+            </tbody>
+        </table>
 
-        <tr>
-            <td><label for="systemVersion">systemVersion</label></td>
-            <td><input id="systemVersion" type="text" th:field="*{systemVersion}"></td>
-        </tr>
-
-        <tr>
-            <td><label for="documentationLink">documentationLink</label></td>
-            <td><input id="documentationLink" type="text" th:field="*{documentationLink}"></td>
-        </tr>
-    <!--   </tr>
-        <tr>
-            <td><label for="eoltName">eoltName</label></td>
-            <td>
-                <input id="eoltName" type="text" th:field="*{eoltName}">
-            </td>
-        </tr>
-        <tr>
-            <td><label for="location">location</label></td>
-            <td>
-                <input id="location" type="text" th:field="*{location}">
-            </td>
-        </tr>-->
-    </table>
-
-    <input type="submit" value="Update">
-</form>
+        <input type="submit" th:value="#{eolt.update}">
+    </form>
+</div>
+</div>
 </body>
 </html>
