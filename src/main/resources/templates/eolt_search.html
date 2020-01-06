@@ -8,16 +8,7 @@
 </head>
 <body>
 <div th:fragment="content">
-    <div class="navigator">
-        <div class="nav-sec">
-            <img src="#" th:src="@{/photos/aptiv.png}" height="18" alt="aptiv"/>
 
-        </div>
-        <div class="nav-sec">
-            <a th:align="right" th:href="@{/eolt}">EoltList</a>
-        </div>
-
-    </div>
     <h1>SEARCH RESULTS</h1>
     <h1 th:text="${searchStringForm.getSearchString()}"></h1>
     <table class="table table-striped">

@@ -1,12 +1,14 @@
 package com.java26.eolt.controller;
 
 import com.java26.eolt.dto.VariantDto;
+import com.java26.eolt.entity.User;
 import com.java26.eolt.myEnum.ModificationReason;
 import com.java26.eolt.myEnum.VariantStatus;
 import com.java26.eolt.service.VariantHistoryService;
 import com.java26.eolt.service.VariantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Slf4j
@@ -68,6 +71,9 @@ public class VariantController {
                                @RequestParam String eoltName,
                                @RequestParam String variant) {
         log.info("PostMapping:postVariant:setNOKStatus");
+
+
+
         if (variant != null) {
             VariantDto variantDto = variantService.findVariant(variant, eoltName);
             variantDto.setVariantStatus(VariantStatus.NOK);

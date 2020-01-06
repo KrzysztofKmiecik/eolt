@@ -9,17 +9,6 @@
 </head>
 <body>
 <div th:fragment="content">
-    <div class="navigator">
-        <div class="nav-sec">
-            <img src="#" th:src="@{/photos/aptiv.png}" height="18" alt="aptiv"/>
-
-        </div>
-        <div class="nav-sec">
-            <a th:align="right" th:href="@{/eolt}">EoltList</a>
-        </div>
-
-    </div>
-
 
     <div class="add-form">
         <form th:action="@{/variant/add(eoltName=${eoltName})}" method="post" th:object="${variantDtoForm}">

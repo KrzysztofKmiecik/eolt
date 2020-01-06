@@ -1,5 +1,6 @@
 package com.java26.eolt.service;
 
+import com.java26.eolt.Utils.MySecurityUtil;
 import com.java26.eolt.dto.VariantDto;
 import com.java26.eolt.entity.EoltEntity;
 import com.java26.eolt.entity.VariantEntity;
@@ -25,7 +26,7 @@ public class VariantService {
     final VariantRepository variantRepository;
     final EoltRepository eoltRepository;
     final VariantHistoryService variantHistoryService;
-
+    final MySecurityUtil mySecurityUtil;
 
     public List<VariantDto> findAllVariants(String eoltName) {
         log.info("VariantService:findAllVariants");
@@ -121,6 +122,19 @@ public class VariantService {
 
     public void update(VariantDto variantDto, String eoltName) {
         log.info("VariantService:updateVariant");
+
+
+        boolean hasTesterRole = mySecurityUtil.checkRole("ROLE_TESTER");
+        boolean hasQualityRole = mySecurityUtil.checkRole("ROLE_QUALITY");
+
+        if (hasTesterRole) {
+            variantDto.setTestEng(mySecurityUtil.getAuthenticationUserName());
+        }
+
+        if (hasQualityRole) {
+            variantDto.setQualityEng(mySecurityUtil.getAuthenticationUserName());
+        }
+
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
                 .orElseThrow(() -> new EntityNotFoundException(eoltName));
         VariantEntity variantEntity = variantRepository.findByDpnAndEolt(variantDto.getDpn(), eoltEntity)
@@ -137,4 +151,6 @@ public class VariantService {
         output.setQualityEng(input.getQualityEng());
         output.setVariantStatus(input.getVariantStatus());
     }
+
+
 }
