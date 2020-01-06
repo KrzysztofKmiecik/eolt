@@ -9,16 +9,7 @@
 </head>
 <body>
 <div th:fragment="content">
-    <div class="navigator">
-        <div class="nav-sec">
-            <img src="#" th:src="@{/photos/aptiv.png}" height="18" alt="aptiv"/>
 
-        </div>
-        <div class="nav-sec">
-            <a th:align="right" th:href="@{/eolt}">EoltList</a>
-        </div>
-
-    </div>
     <h1 th:text="${eoltName}">eoltName</h1>
 
     <table class="table table-striped">
@@ -33,7 +24,7 @@
             <th th:text="#{variant.variantStatus}">variantStatus</th>
             <th th:text="#{variant.delete}">Delete</th>
             <th th:text="#{variant.copy}">Copy</th>
-            <th th:text="#{variant.setNokStatus}">SetOKStatus</th>
+            <th th:text="#{variant.setOkStatus}">SetOKStatus</th>
             <th th:text="#{variant.setNokStatus}">SetNOKStatus</th>
 
 

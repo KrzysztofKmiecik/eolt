@@ -9,21 +9,12 @@
 </head>
 <body>
 <div th:fragment="content">
-    <div class="navigator">
-        <div class="nav-sec">
-            <img src="#" th:src="@{/photos/aptiv.png}" height="18" alt="aptiv"/>
 
-        </div>
-        <div class="nav-sec">
-            <a th:align="right" th:href="@{/eolt}">EoltList</a>
-        </div>
-
-    </div>
 
     <div class="bg">
         <br>
-
     </div>
+
     <div align="right">
         <form th:action="@{/eolt/search}" method="post" th:object="${searchDto}">
             <label for="searchString"></label>
@@ -38,6 +29,7 @@
     <div sec:authorize="isAuthenticated()">
         <span sec:authentication="name">Bob</span>
         <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_TESTER,ROLE_QUALITY]</span>
+
     </div>
 
     <table class="table table-striped">

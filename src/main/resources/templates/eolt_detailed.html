@@ -10,19 +10,12 @@
 </head>
 <body>
 <div th:fragment="content">
-<div class="navigator">
-    <div class="nav-sec">
-        <img src="#" th:src="@{/photos/aptiv.png}" height="18" alt="aptiv"/>
 
-    </div>
-    <div class="nav-sec">
-        <a th:align="right" th:href="@{/eolt}">EoltList</a>
-    </div>
-
-</div>
 
 <h1 th:text="${eoltDtoForm.getEoltName()}">EoltName</h1>
-
+    <div class="nav-sec">
+        <a th:align="right" th:href="@{/eolt/workInstruction}">WorkInstrukction</a>
+    </div>
 
 <img src="#" th:src="@{/photos/eolt.jpg}" height="100" width="100" alt="foto"/>
 <a th:href="@{/variant(eoltName=${eoltDtoForm.getEoltName()})}">Variant</a>

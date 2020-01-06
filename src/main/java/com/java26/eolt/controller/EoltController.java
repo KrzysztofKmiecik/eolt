@@ -114,6 +114,9 @@ public class EoltController {
         return new SearchDto();
     }
 
-
+    @GetMapping("/workInstruction")
+    public String showWorkInstruction() {
+        return "work_instruction";
+    }
 }
 
