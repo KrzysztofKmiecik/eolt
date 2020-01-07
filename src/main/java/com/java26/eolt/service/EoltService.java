@@ -78,6 +78,15 @@ public class EoltService {
         for (VariantEntity variantEntity : variantEntities) {
             VariantDto variantDto = new VariantDto();
             variantDto.setDpn(variantEntity.getDpn());
+            variantDto.setCustomer(variantEntity.getCustomer());
+            variantDto.setMachineCycleTime(variantEntity.getMachineCycleTime());
+            variantDto.setFixture(variantEntity.getFixture());
+            variantDto.setTestEng(variantEntity.getTestEng());
+            variantDto.setQualityEng(variantEntity.getQualityEng());
+            variantDto.setVariantStatus(variantEntity.getVariantStatus());
+            variantDto.setModificationDateTime(variantEntity.getModificationDateTime());
+            variantDto.setModificationReason(variantEntity.getModificationReason());
+
             variantDtos.add(variantDto);
         }
         return variantDtos;
