@@ -5,9 +5,14 @@
     <title>WorkInstruction</title>
 </head>
 <body>
-<div >
-    <!--	<embed src="img/VID_20181022_142440.mp4" width="100%" height="600"> -->
-    <video width="400" height="600" controls>
+<div>
+        <!--   <embed th:src="@{/movie/mypdf.pdf}"  width="100%" height="600px"></embed>-->
+</div>
+
+    <div>
+
+       <video width="400" height="600" controls>
+
         <source th:src="@{/movie/VID_20181022_142440.mp4}" type="video/mp4" />
         <source th:src="@{/movie/VID_20181022_142440.webmhd.webm}" type="video/webm" />
         Your browser does not support video playback
