@@ -2,7 +2,6 @@ package com.java26.eolt.controller;
 
 import com.java26.eolt.dto.EoltDto;
 import com.java26.eolt.dto.SearchDto;
-import com.java26.eolt.repository.VariantHistoryRepository;
 import com.java26.eolt.service.EoltService;
 import com.java26.eolt.service.VariantHistoryService;
 import com.java26.eolt.service.VariantService;
@@ -86,6 +85,12 @@ public class EoltController {
         EoltDto dtoToCopy = (EoltDto) model.getAttribute("eoltToCopy");
         model.addAttribute("eoltDtoForm", dtoToCopy == null ? new EoltDto() : dtoToCopy);
         return "eolt_add";
+    }
+
+    @GetMapping("/addManyRefs")
+    public String addManyRef(Model model) {
+
+        return "addManyRefs";
     }
 
     @GetMapping("/search")
