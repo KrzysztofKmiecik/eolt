@@ -19,7 +19,7 @@
         <form th:action="@{/eolt/searchVariant}" method="post" th:object="${searchDto}">
             <label for="searchVariantString"></label>
             <input type="text" id="searchVariantString" name="searchString" th:field="*{searchString}">
-            <input  type="submit" th:value="#{eolt.searchVariant}">
+            <input type="submit" th:value="#{eolt.searchVariant}">
 
         </form>
     </div>
@@ -28,7 +28,7 @@
         <form th:action="@{/eolt/search}" method="post" th:object="${searchDto}">
             <label for="searchString"></label>
             <input type="text" id="searchString" name="searchString" th:field="*{searchString}">
-            <input  type="submit" th:value="#{eolt.search}">
+            <input type="submit" th:value="#{eolt.search}">
 
         </form>
     </div>
@@ -101,6 +101,9 @@
         <a href="#" th:href="@{/eolt/addView}" th:text="#{eolt.addEolt}"> Add Eolt</a>
     </div>
 
+    <div sec:authorize="hasRole('ROLE_TESTER')">
+        <a href="#" th:href="@{/eolt/addManyRefs}" th:text="#{eolt.many}"> Many</a>
+    </div>
 
     <br/>
 
