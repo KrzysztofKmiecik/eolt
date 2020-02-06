@@ -87,11 +87,7 @@ public class EoltController {
         return "eolt_add";
     }
 
-    @GetMapping("/addManyRefs")
-    public String addManyRef(Model model) {
 
-        return "addManyRefs";
-    }
 
     @GetMapping("/search")
     public String showSearchEolt(Model model) {
@@ -105,6 +101,7 @@ public class EoltController {
         log.info("GetMapping: showSearchEolt {}", searchDto.getSearchString());
         return "eolt_search";
     }
+
 
 
     @PostMapping("/search")
@@ -123,5 +120,9 @@ public class EoltController {
     public String showWorkInstruction() {
         return "work_instruction";
     }
+
+
+
+
 }
 

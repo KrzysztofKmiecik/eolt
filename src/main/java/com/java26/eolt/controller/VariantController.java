@@ -1,24 +1,19 @@
 package com.java26.eolt.controller;
 
 import com.java26.eolt.dto.VariantDto;
-import com.java26.eolt.entity.User;
+import com.java26.eolt.dto.VariantDtoExtended;
 import com.java26.eolt.myEnum.ModificationReason;
 import com.java26.eolt.myEnum.VariantStatus;
 import com.java26.eolt.service.VariantHistoryService;
 import com.java26.eolt.service.VariantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.List;
 
 @Slf4j
@@ -38,18 +33,40 @@ public class VariantController {
         model.addAttribute("eoltName", eoltName);
         model.addAttribute("variantDtoList", variantDtoList);
         model.addAttribute("variantDtoForm", new VariantDto());
+        model.addAttribute("variantDtoFormExtended", new VariantDtoExtended());
         return "variant";
     }
 
     @PostMapping("/add")
-    public String createVariant(@Valid VariantDto variantDtoForm,
+    public String createVariant(@ModelAttribute("variantDtoFormExtended") VariantDtoExtended variantDtoFormExtended,
                                 @RequestParam String eoltName) {
-        if ((variantDtoForm != null)) {
+
+       /* List<String> eoltNameList = new ArrayList<>(
+                Arrays.asList("8856g","8856f"));
+        List<String> variantList = new ArrayList<>(
+                Arrays.asList("88561111", "88561112", "88561113")
+        );*/
+        VariantDto variantDtoForm = new VariantDto();
+        variantDtoForm.setCustomer(variantDtoFormExtended.getCustomer());
+        variantDtoForm.setQualityEng(variantDtoFormExtended.getQualityEng());
+        variantDtoForm.setTestEng(variantDtoFormExtended.getTestEng());
+        variantDtoForm.setFixture(variantDtoFormExtended.getFixture());
+        variantDtoForm.setMachineCycleTime(variantDtoFormExtended.getMachineCycleTime());
+
+        if ((variantDtoFormExtended != null) && (!variantDtoFormExtended.getEoltNames().isEmpty()) && (!variantDtoFormExtended.getVariants().isEmpty())) {
             log.info("PostMapping:postVariant:createVariant");
-            variantService.create(variantDtoForm, eoltName);
-            variantHistoryService.create(variantDtoForm, eoltName, ModificationReason.CREATE);
+
+            for (String myEoltName : variantDtoFormExtended.getEoltNames().split("\\r?\\n")) {
+                for (String myVariant : variantDtoFormExtended.getVariants().split("\\r?\\n")) {
+                    variantDtoForm.setDpn(myVariant);
+                    variantDtoForm.setVariantStatus(VariantStatus.NOK);
+                    variantService.create(variantDtoForm, myEoltName);
+                    variantHistoryService.create(variantDtoForm, myEoltName, ModificationReason.CREATE);
+                }
+            }
+
         }
-        return "redirect:/variant?eoltName=" + eoltName;
+        return "redirect:/eolt";
     }
 
     @PostMapping("/setOKStatus")
@@ -71,7 +88,6 @@ public class VariantController {
                                @RequestParam String eoltName,
                                @RequestParam String variant) {
         log.info("PostMapping:postVariant:setNOKStatus");
-
 
 
         if (variant != null) {
@@ -138,6 +154,7 @@ public class VariantController {
         log.info("Get:Variant:adView");
         VariantDto dtoToCopy = (VariantDto) model.getAttribute("variantToCopy");
         model.addAttribute("variantDtoForm", dtoToCopy == null ? new VariantDto() : dtoToCopy);
+        model.addAttribute("variantDtoFormExtended", new VariantDtoExtended());
         model.addAttribute("eoltName", eoltName);
         return "variant_add";
     }

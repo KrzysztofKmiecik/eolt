@@ -41,7 +41,7 @@
 
     </div>
 
-    <table class="table table-striped">
+    <table class="table table-striped table-hover table-sm">
         <thead>
         <tr>
             <th th:text="#{eolt.eoltName}">EoltName</th>
@@ -101,9 +101,7 @@
         <a href="#" th:href="@{/eolt/addView}" th:text="#{eolt.addEolt}"> Add Eolt</a>
     </div>
 
-    <div sec:authorize="hasRole('ROLE_TESTER')">
-        <a href="#" th:href="@{/eolt/addManyRefs}" th:text="#{eolt.many}"> Many</a>
-    </div>
+
 
     <br/>
 
