@@ -14,8 +14,8 @@
     <div class="bg">
         <br>
     </div>
-
-    <div align="left">
+<div class="row">
+    <div class="col-md-6" align="right">
         <form th:action="@{/eolt/searchVariant}" method="post" th:object="${searchDto}">
             <label for="searchVariantString"></label>
             <input type="text" id="searchVariantString" name="searchString" th:field="*{searchString}">
@@ -24,7 +24,7 @@
         </form>
     </div>
 
-    <div align="right">
+    <div class="col-md-6" align="left">
         <form th:action="@{/eolt/search}" method="post" th:object="${searchDto}">
             <label for="searchString"></label>
             <input type="text" id="searchString" name="searchString" th:field="*{searchString}">
@@ -32,6 +32,9 @@
 
         </form>
     </div>
+
+</div>
+
 
     <br>
     <!--<div sec:authorize="isAnonymous()">-->

@@ -14,7 +14,7 @@
         <form th:action="@{/variant/add(eoltName=${eoltName})}" method="post" th:object="${variantDtoFormExtended}">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -57,14 +57,14 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="TextAreaJakieTypy">Jakie Typy</label>
                             <textarea class="form-control" id="TextAreaJakieTypy" rows=17 th:field="*{variants}" placeholder="variants"></textarea>
                         </div>
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="TextAreaJakieTestery">Jakie Testery</label>
                             <textarea class="form-control" id="TextAreaJakieTestery" rows=17 th:field="*{eoltNames}"></textarea>
