@@ -111,6 +111,29 @@ public class EoltController {
         return "redirect:/eolt/search";
     }
 
+    @GetMapping("/searchVariant")
+    public String ShowEoltAfterFindVariant(Model model){
+
+    SearchDto searchDto= (SearchDto) model.getAttribute("searchStringAtribute");
+    if(searchDto==null){
+        searchDto=new SearchDto();
+    }
+
+    List<EoltDto> eoltDtos=eoltService.findAllEoltForVariant(searchDto.getSearchString());
+        model.addAttribute("searchStringForm", searchDto);
+        model.addAttribute("searchStringListForm", eoltDtos);
+        log.info("GetMapping: showSearchEolt {}", searchDto.getSearchString());
+        return "eolt_search";
+    }
+
+    @PostMapping("/searchVariant")
+    public String FindVariant(RedirectAttributes redirectAttributes, @ModelAttribute("searchDto") SearchDto searchDto ){
+        log.info("post_search");
+        redirectAttributes.addFlashAttribute("searchStringAtribute", searchDto == null ? new SearchDto() : searchDto);
+        return "redirect:/eolt/searchVariant";
+    }
+
+
     @ModelAttribute
     public SearchDto searchDto() {
         return new SearchDto();
