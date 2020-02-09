@@ -52,4 +52,7 @@ public class VariantHistoryEntity extends Variant {
     @Column(nullable = false)
     private ModificationReason modificationReason;
 
+    @Column(nullable = false)
+    private String descriptionOfChange;
+
 }

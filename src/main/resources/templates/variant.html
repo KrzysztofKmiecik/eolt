@@ -10,8 +10,16 @@
 <body>
 <div th:fragment="content">
 
-    <h1 th:text="${eoltName}">eoltName</h1>
 
+<div class="container">
+
+    <div  class="row">
+        <div class="col-md-6" align="left">
+            <h1 th:text="${eoltName}">eoltName</h1>
+        </div>
+
+    </div>
+</div>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -26,6 +34,7 @@
             <th th:text="#{variant.copy}">Copy</th>
             <th th:text="#{variant.setOkStatus}">SetOKStatus</th>
             <th th:text="#{variant.setNokStatus}">SetNOKStatus</th>
+
 
 
         </tr>
@@ -60,7 +69,7 @@
             </td>
 
             <td>
-                <div sec:authorize="hasAnyRole('ROLE_TESTER','ROLE_QUALITY')">
+                <div sec:authorize="hasAnyRole('ROLE_QUALITY')">
                     <form th:action="@{/variant/setOKStatus}" method="post" th:object="${variantDtoForm}">
                         <input type="hidden" name="eoltName" th:value="${eoltName}"/>
                         <input type="hidden" name="variant" th:value="${variantDto.getDpn()}"/>
@@ -74,9 +83,12 @@
                         <input type="hidden" name="eoltName" th:value="${eoltName}"/>
                         <input type="hidden" name="variant" th:value="${variantDto.getDpn()}"/>
                         <button name="action" th:text="#{variant.setNokStatus}">NOK</button>
+                        <input id="testEng" type="text" th:field="*{descriptionOfChange}">
                     </form>
                 </div>
             </td>
+
+
         </tr>
         </tbody>
     </table>

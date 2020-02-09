@@ -88,7 +88,6 @@ public class EoltController {
     }
 
 
-
     @GetMapping("/search")
     public String showSearchEolt(Model model) {
         SearchDto searchDto = (SearchDto) model.getAttribute("searchStringAtribute");
@@ -103,7 +102,6 @@ public class EoltController {
     }
 
 
-
     @PostMapping("/search")
     public String FindEolt(RedirectAttributes redirectAttributes, @ModelAttribute("searchDto") SearchDto searchDto) {
         log.info("post_search");
@@ -112,14 +110,21 @@ public class EoltController {
     }
 
     @GetMapping("/searchVariant")
-    public String ShowEoltAfterFindVariant(Model model){
+    public String ShowEoltAfterFindVariant(Model model) {
 
-    SearchDto searchDto= (SearchDto) model.getAttribute("searchStringAtribute");
-    if(searchDto==null){
-        searchDto=new SearchDto();
-    }
-
-    List<EoltDto> eoltDtos=eoltService.findAllEoltForVariant(searchDto.getSearchString());
+        SearchDto searchDto = (SearchDto) model.getAttribute("searchStringAtribute");
+        if (searchDto == null) {
+            searchDto = new SearchDto();
+        }
+        String str = searchDto.getSearchString();
+        String myDPN;
+        if (str.startsWith("F")) {
+            myDPN = new String(str.substring(10, 18));
+        } else {
+            myDPN = new String(str.substring(0, 8));
+        }
+        searchDto.setSearchString(myDPN);
+        List<EoltDto> eoltDtos = eoltService.findAllEoltForVariant(searchDto.getSearchString());
         model.addAttribute("searchStringForm", searchDto);
         model.addAttribute("searchStringListForm", eoltDtos);
         log.info("GetMapping: showSearchEolt {}", searchDto.getSearchString());
@@ -127,7 +132,7 @@ public class EoltController {
     }
 
     @PostMapping("/searchVariant")
-    public String FindVariant(RedirectAttributes redirectAttributes, @ModelAttribute("searchDto") SearchDto searchDto ){
+    public String FindVariant(RedirectAttributes redirectAttributes, @ModelAttribute("searchDto") SearchDto searchDto) {
         log.info("post_search");
         redirectAttributes.addFlashAttribute("searchStringAtribute", searchDto == null ? new SearchDto() : searchDto);
         return "redirect:/eolt/searchVariant";
@@ -143,8 +148,6 @@ public class EoltController {
     public String showWorkInstruction() {
         return "work_instruction";
     }
-
-
 
 
 }

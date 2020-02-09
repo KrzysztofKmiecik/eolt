@@ -61,7 +61,7 @@ public class VariantHistoryService {
           return variantDto;
       }*/
 
-    public void create(VariantDto variantDto, String eoltName, ModificationReason modificationReason) {
+    public void create(VariantDto variantDto, String eoltName, ModificationReason modificationReason,String nokDescription) {
         log.info("VariantService:create");
         LocalDateTime localDateTime = LocalDateTime.now();
         EoltEntity eoltEntity = eoltRepository.findByEoltName(eoltName)
@@ -70,6 +70,7 @@ public class VariantHistoryService {
         variantHistoryEntity.setEolt(eoltEntity);
         variantHistoryEntity.setModificationReason(modificationReason);
         variantHistoryEntity.setModificationDateTime(localDateTime);
+        variantHistoryEntity.setDescriptionOfChange(nokDescription);
         variantHistoryRepository.save(variantHistoryEntity);
 
     }
@@ -129,6 +130,7 @@ public class VariantHistoryService {
         output.setVariantStatus(input.getVariantStatus());
         output.setModificationDateTime(input.getModificationDateTime());
         output.setModificationReason(input.getModificationReason());
+        output.setDescriptionOfChange(input.getDescriptionOfChange());
     }
 
     public List<VariantDto> findAllModifications(String eoltName, String variantName2) {
