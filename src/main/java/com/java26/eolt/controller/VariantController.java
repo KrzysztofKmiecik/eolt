@@ -156,13 +156,16 @@ public class VariantController {
         VariantDto dtoToCopy = (VariantDto) model.getAttribute("variantToCopy");
         model.addAttribute("variantDtoForm", dtoToCopy == null ? new VariantDto() : dtoToCopy);
         VariantDtoExtended variantDtoExtended = new VariantDtoExtended();
-        variantDtoExtended.setCustomer(dtoToCopy.getCustomer());
-        variantDtoExtended.setVariantStatus(dtoToCopy.getVariantStatus());
-        variantDtoExtended.setQualityEng(dtoToCopy.getQualityEng());
-        variantDtoExtended.setTestEng(dtoToCopy.getTestEng());
-        variantDtoExtended.setMachineCycleTime(dtoToCopy.getMachineCycleTime());
-        variantDtoExtended.setFixture(dtoToCopy.getFixture());
-        model.addAttribute("variantDtoFormExtended", variantDtoExtended);
+     if(dtoToCopy!= null){
+         variantDtoExtended.setCustomer(dtoToCopy.getCustomer());
+         variantDtoExtended.setVariantStatus(dtoToCopy.getVariantStatus());
+         variantDtoExtended.setQualityEng(dtoToCopy.getQualityEng());
+         variantDtoExtended.setTestEng(dtoToCopy.getTestEng());
+         variantDtoExtended.setMachineCycleTime(dtoToCopy.getMachineCycleTime());
+         variantDtoExtended.setFixture(dtoToCopy.getFixture());
+     }
+
+        model.addAttribute("variantDtoFormExtended",dtoToCopy==null? new VariantDtoExtended(): variantDtoExtended);
         model.addAttribute("eoltName", eoltName);
         return "variant_add";
     }
