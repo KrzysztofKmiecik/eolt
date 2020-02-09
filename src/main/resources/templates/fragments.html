@@ -6,18 +6,17 @@
 </head>
 <body>
 <div class="row mt-3" th:fragment="header">
-    <div class="col">
+    <div class="col-6">
 
         <a href="https://aptiv.com" target="_blank" title="https://aptiv.com">
             <img src="#" th:src="@{/photos/delphi.png}" width="200" height="45" alt="aptiv"/>
         </a>
-
         <label>kmk 1.0</label>
         <a th:align="right" th:href="@{/eolt}">EoltList</a>
 
     </div>
 
-    <div class="col">
+    <div class="col-6">
 
         <div th:if="${#authorization.expression('isAuthenticated()')}" class="float-right">
             <span th:text="#{user.greeting(${#authentication.principal.firstName})}"></span>
@@ -38,23 +37,23 @@
 </div>
 
 <div class="row mt-3" th:fragment="header_with_Lang">
-    <div class="col">
+    <div class="col-4">
 
         <a href="https://aptiv.com" target="_blank" title="https://aptiv.com">
             <img src="#" th:src="@{/photos/delphi.png}" width="200" height="45" alt="aptiv"/>
         </a>
-        <label>kmk 1.0</label>
+        <label>kmk</label>
         <a th:align="right" th:href="@{/eolt}">EoltList</a>
 
     </div>
 
-    <div class="col">
+    <div class="col-4">
         <a href="?lang=en_GB" th:text="#{language.english}"></a>&nbsp;|&nbsp;
         <a href="?lang=de_DE" th:text="#{language.german}"></a>&nbsp;|&nbsp;
         <a href="?lang=pl_PL" th:text="#{language.polish}"></a>
 
     </div>
-    <div class="col">
+    <div class="col-4">
 
         <div th:if="${#authorization.expression('isAuthenticated()')}" class="float-right">
             <span th:text="#{user.greeting(${#authentication.principal.firstName})}"></span>
