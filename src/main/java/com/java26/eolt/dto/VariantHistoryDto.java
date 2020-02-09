@@ -16,6 +16,7 @@ public class VariantHistoryDto extends Variant {
     private String testEng;
     private String qualityEng;
     private VariantStatus variantStatus;
+    private String descriptionOfChange;
 
 
 }

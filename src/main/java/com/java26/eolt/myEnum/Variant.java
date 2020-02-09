@@ -17,5 +17,6 @@ public class Variant {
     private VariantStatus variantStatus;
     private LocalDateTime modificationDateTime;
     private ModificationReason modificationReason;
+    private String descriptionOfChange;
 
 }

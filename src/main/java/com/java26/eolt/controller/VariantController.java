@@ -61,7 +61,7 @@ public class VariantController {
                     variantDtoForm.setDpn(myVariant);
                     variantDtoForm.setVariantStatus(VariantStatus.NOK);
                     variantService.create(variantDtoForm, myEoltName);
-                    variantHistoryService.create(variantDtoForm, myEoltName, ModificationReason.CREATE);
+                    variantHistoryService.create(variantDtoForm, myEoltName, ModificationReason.CREATE, new String("Create"));
                 }
             }
 
@@ -78,7 +78,7 @@ public class VariantController {
             VariantDto variantDto = variantService.findVariant(variant, eoltName);
             variantDto.setVariantStatus(VariantStatus.OK);
             variantService.update(variantDto, eoltName);
-            variantHistoryService.create(variantDto, eoltName, ModificationReason.UPDATE);
+            variantHistoryService.create(variantDto, eoltName, ModificationReason.UPDATE, new String("OK Statu"));
         }
         return "redirect:/variant?eoltName=" + eoltName;
     }
@@ -86,7 +86,8 @@ public class VariantController {
     @PostMapping("/setNOKStatus")
     public String setNOKStatus(@Valid VariantDto variantDtoForm,
                                @RequestParam String eoltName,
-                               @RequestParam String variant) {
+                               @RequestParam String variant
+    ) {
         log.info("PostMapping:postVariant:setNOKStatus");
 
 
@@ -94,7 +95,7 @@ public class VariantController {
             VariantDto variantDto = variantService.findVariant(variant, eoltName);
             variantDto.setVariantStatus(VariantStatus.NOK);
             variantService.update(variantDto, eoltName);
-            variantHistoryService.create(variantDto, eoltName, ModificationReason.UPDATE);
+            variantHistoryService.create(variantDto, eoltName, ModificationReason.UPDATE, variantDtoForm.getDescriptionOfChange());
         }
 
         return "redirect:/variant?eoltName=" + eoltName;
@@ -118,7 +119,7 @@ public class VariantController {
         log.info("PostMapping:updateVariant");
         if (updateVariant != null) {
             variantService.update(variantDtoForm, eoltName);
-            variantHistoryService.create(variantDtoForm, eoltName, ModificationReason.UPDATE);
+            variantHistoryService.create(variantDtoForm, eoltName, ModificationReason.UPDATE, new String("Update"));
         }
         return "redirect:/variant?eoltName=" + eoltName;
     }
@@ -154,7 +155,14 @@ public class VariantController {
         log.info("Get:Variant:adView");
         VariantDto dtoToCopy = (VariantDto) model.getAttribute("variantToCopy");
         model.addAttribute("variantDtoForm", dtoToCopy == null ? new VariantDto() : dtoToCopy);
-        model.addAttribute("variantDtoFormExtended", new VariantDtoExtended());
+        VariantDtoExtended variantDtoExtended = new VariantDtoExtended();
+        variantDtoExtended.setCustomer(dtoToCopy.getCustomer());
+        variantDtoExtended.setVariantStatus(dtoToCopy.getVariantStatus());
+        variantDtoExtended.setQualityEng(dtoToCopy.getQualityEng());
+        variantDtoExtended.setTestEng(dtoToCopy.getTestEng());
+        variantDtoExtended.setMachineCycleTime(dtoToCopy.getMachineCycleTime());
+        variantDtoExtended.setFixture(dtoToCopy.getFixture());
+        model.addAttribute("variantDtoFormExtended", variantDtoExtended);
         model.addAttribute("eoltName", eoltName);
         return "variant_add";
     }
