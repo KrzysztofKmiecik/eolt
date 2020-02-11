@@ -9,21 +9,22 @@
 <body>
 <div th:fragment="content">
 
-    <h1>SEARCH RESULTS</h1>
+    <h1 th:text="#{search.results}">SEARCH RESULTS</h1>
     <h1 th:text="${searchStringForm.getSearchString()}"></h1>
     <table class="table table-striped">
         <thead>
         <tr>
             <th th:text="#{eolt.eoltName}">EoltName</th>
             <th th:text="#{eolt.location}">Location</th>
+            <th th:text="#{variant.variantStatus}">Status</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="eoltDto:${searchStringListForm}">
-            <td th:text="${eoltDto.getEoltName()}"></td>
-            <td th:text="${eoltDto.getLocation()}"></td>
             <td><a href="#" th:href="@{/eolt/detailed(eoltName2=${eoltDto.getEoltName()})}"
                    th:text="${eoltDto.getEoltName()}"> Link 1</a></td>
+            <td th:text="${eoltDto.getLocation()}"></td>
+            <td th:style="${eoltDto.getVariantStatus()=='OK' ? 'color:green;':'color:red;'} "  th:text="${eoltDto.getVariantStatus()}">Status</td>
         </tr>
         </tbody>
     </table>

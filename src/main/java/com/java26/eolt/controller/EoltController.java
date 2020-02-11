@@ -2,6 +2,8 @@ package com.java26.eolt.controller;
 
 import com.java26.eolt.dto.EoltDto;
 import com.java26.eolt.dto.SearchDto;
+import com.java26.eolt.dto.VariantDto;
+import com.java26.eolt.dto.VariantSearchDto;
 import com.java26.eolt.service.EoltService;
 import com.java26.eolt.service.VariantHistoryService;
 import com.java26.eolt.service.VariantService;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -124,11 +127,23 @@ public class EoltController {
             myDPN = new String(str.substring(0, 8));
         }
         searchDto.setSearchString(myDPN);
+
+        List<VariantSearchDto> variantSearchDtoList = new ArrayList<>();
         List<EoltDto> eoltDtos = eoltService.findAllEoltForVariant(searchDto.getSearchString());
+        for (EoltDto eoltDto : eoltDtos) {
+            VariantDto myVariant = variantService.findVariant(searchDto.getSearchString(), eoltDto.getEoltName());
+            VariantSearchDto variantSearchDto = new VariantSearchDto();
+            variantSearchDto.setEoltName(eoltDto.getEoltName());
+            variantSearchDto.setLocation(eoltDto.getLocation());
+            variantSearchDto.setVariantStatus(myVariant.getVariantStatus().toString());
+            variantSearchDtoList.add(variantSearchDto);
+        }
+
+
         model.addAttribute("searchStringForm", searchDto);
-        model.addAttribute("searchStringListForm", eoltDtos);
+        model.addAttribute("searchStringListForm", variantSearchDtoList);
         log.info("GetMapping: showSearchEolt {}", searchDto.getSearchString());
-        return "eolt_search";
+        return "variant_search";
     }
 
     @PostMapping("/searchVariant")
