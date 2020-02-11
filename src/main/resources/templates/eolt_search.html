@@ -20,10 +20,10 @@
         </thead>
         <tbody>
         <tr th:each="eoltDto:${searchStringListForm}">
-            <td th:text="${eoltDto.getEoltName()}"></td>
-            <td th:text="${eoltDto.getLocation()}"></td>
             <td><a href="#" th:href="@{/eolt/detailed(eoltName2=${eoltDto.getEoltName()})}"
                    th:text="${eoltDto.getEoltName()}"> Link 1</a></td>
+            <td th:text="${eoltDto.getLocation()}"></td>
+
         </tr>
         </tbody>
     </table>
