@@ -122,7 +122,7 @@ public class EoltController {
         String str = searchDto.getSearchString();
         String myDPN;
         if (str.startsWith("F")) {
-            myDPN = new String(str.substring(10, 18));
+            myDPN = new String(str.substring(14, 22));
         } else {
             myDPN = new String(str.substring(0, 8));
         }

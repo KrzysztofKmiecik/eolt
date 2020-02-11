@@ -49,7 +49,7 @@
             <td th:text="${variantDto.getFixture()}">Fixture</td>
             <td th:text="${variantDto.getTestEng()}">TestEng</td>
             <td th:text="${variantDto.getQualityEng()}">QualityEng</td>
-            <td th:text="${variantDto.getVariantStatus()}">VariantStatus</td>
+            <td th:text="${variantDto.getVariantStatus()}">Status</td>
             <td>
                 <div sec:authorize="hasRole('ROLE_TESTER')">
                     <form th:action="@{/variant/delete}" method="post" th:object="${variantDtoForm}">
