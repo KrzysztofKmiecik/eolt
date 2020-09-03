@@ -13,6 +13,7 @@ public class IpClient {
 
         IpClient ipClient = new IpClient();
         //   ipClient.echoIP();
+//        String str = ipClient.sendAndReceiveIPMessage("10.235.241.235", 24065, "Hello");
         String str = ipClient.sendAndReceiveIPMessage("10.235.241.235", 24065, "Hello");
         System.out.println(str);
     }
@@ -20,38 +21,32 @@ public class IpClient {
     public String sendAndReceiveIPMessage(String ipAdress, Integer ipPort, String message) {
 
         String str = "";
+
         try (
                 Socket mySocket = new Socket(ipAdress, ipPort);
-                PrintWriter printWriter = new PrintWriter(mySocket.getOutputStream());
+                PrintWriter printWriter = new PrintWriter(mySocket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
 
+           //test push
         ) {
 
             printWriter.println(message);
-            printWriter.flush();
             str = in.readLine();
 
-            in.close();
-            printWriter.close();
-            mySocket.close();
+//
+        } catch (UnknownHostException e) {
+            System.err.println(e);
 
-        } catch(UnknownHostException e)
+        } catch (Exception e) {
+            System.err.println(e);
 
-    {
-        System.err.println(e);
-
-    } catch(Exception e)
-
-    {
-        System.err.println(e);
-
-    }finally {
+        } finally {
 
         }
 
         return str;
 
-}
+    }
 
     public void echoIP() {
 
