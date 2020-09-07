@@ -12,9 +12,14 @@ public class IpClient {
 
 
         IpClient ipClient = new IpClient();
-        //   ipClient.echoIP();
-//        String str = ipClient.sendAndReceiveIPMessage("10.235.241.235", 24065, "Hello");
-        String str = ipClient.sendAndReceiveIPMessage("10.235.241.235", 24065, "Hello");
+   //       ipClient.echoIP();
+  //      String str = ipClient.sendAndReceiveIPMessage("10.235.241.235", 24065, "Hello");
+        String str = ipClient.sendAndReceiveIPMessage("10.235.241.235", 24364, "HandleGETSTATIONLIST|");
+  //      String str = ipClient.sendAndReceiveIPMessage("10.235.241.235", 24364, "Hello");
+
+
+
+//        String str = ipClient.sendAndReceiveIPMessage("10.235.241.235", 24364, "ADDVARIANT|variant=28557754|station=VIDEO_EOLT_3|status=PASS");
         System.out.println(str);
     }
 
@@ -57,10 +62,10 @@ public class IpClient {
         }*/
 
         String hostName = "10.235.241.235";//args[0];
-        int portNumber = 24065;//Integer.parseInt(args[1]);
+        int portNumber =24364; //24065;//Integer.parseInt(args[1]);
 
 
-        try (
+        try(
                 Socket echoSocket = new Socket(hostName, portNumber);
                 PrintWriter out =
                         new PrintWriter(echoSocket.getOutputStream(), true);
