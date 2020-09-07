@@ -8,20 +8,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class IpClient {
-    public static void main(String[] args) {
-
-
-        IpClient ipClient = new IpClient();
-   //       ipClient.echoIP();
-  //      String str = ipClient.sendAndReceiveIPMessage("10.235.241.235", 24065, "Hello");
-        String str = ipClient.sendAndReceiveIPMessage("10.235.241.235", 24364, "HandleGETSTATIONLIST|");
-  //      String str = ipClient.sendAndReceiveIPMessage("10.235.241.235", 24364, "Hello");
-
-
-
-//        String str = ipClient.sendAndReceiveIPMessage("10.235.241.235", 24364, "ADDVARIANT|variant=28557754|station=VIDEO_EOLT_3|status=PASS");
-        System.out.println(str);
-    }
 
     public String sendAndReceiveIPMessage(String ipAdress, Integer ipPort, String message) {
 
@@ -30,7 +16,7 @@ public class IpClient {
         try (
                 Socket mySocket = new Socket(ipAdress, ipPort);
                 PrintWriter printWriter = new PrintWriter(mySocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
+                BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()))
 
            //test push
         ) {
@@ -39,13 +25,8 @@ public class IpClient {
             str = in.readLine();
 
 //
-        } catch (UnknownHostException e) {
-            System.err.println(e);
-
-        } catch (Exception e) {
-            System.err.println(e);
-
-        } finally {
+        } catch (  Exception e) {
+            System.err.println(e.toString());
 
         }
 
