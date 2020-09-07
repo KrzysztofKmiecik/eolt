@@ -11,4 +11,4 @@ Serwis:
 dla danego testera,zmianę jego stanu przez test 
 inżyniera i jakość. Każdy będzie mógł sprawdzić status. 
 
-dodano
+dodano 222222222
