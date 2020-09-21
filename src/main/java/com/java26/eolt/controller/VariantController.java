@@ -4,6 +4,7 @@ import com.java26.eolt.dto.VariantDto;
 import com.java26.eolt.dto.VariantDtoExtended;
 import com.java26.eolt.myEnum.ModificationReason;
 import com.java26.eolt.myEnum.VariantStatus;
+import com.java26.eolt.service.FISservice;
 import com.java26.eolt.service.VariantHistoryService;
 import com.java26.eolt.service.VariantService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class VariantController {
 
     private final VariantService variantService;
     private final VariantHistoryService variantHistoryService;
+    private final FISservice fiSservice;
 
     @GetMapping
     public String showVariant(Model model,
@@ -77,6 +79,7 @@ public class VariantController {
             log.info("PostMapping:postVariant:setOKStatus");
             VariantDto variantDto = variantService.findVariant(variant, eoltName);
             variantDto.setVariantStatus(VariantStatus.OK);
+            fiSservice.sendAndReceiveIPMessage("OK");
             variantService.update(variantDto, eoltName);
             variantHistoryService.create(variantDto, eoltName, ModificationReason.UPDATE, new String("OK Statu"));
         }
@@ -94,6 +97,7 @@ public class VariantController {
         if (variant != null) {
             VariantDto variantDto = variantService.findVariant(variant, eoltName);
             variantDto.setVariantStatus(VariantStatus.NOK);
+            fiSservice.sendAndReceiveIPMessage("NOK");
             variantService.update(variantDto, eoltName);
             variantHistoryService.create(variantDto, eoltName, ModificationReason.UPDATE, variantDtoForm.getDescriptionOfChange());
         }
@@ -156,16 +160,16 @@ public class VariantController {
         VariantDto dtoToCopy = (VariantDto) model.getAttribute("variantToCopy");
         model.addAttribute("variantDtoForm", dtoToCopy == null ? new VariantDto() : dtoToCopy);
         VariantDtoExtended variantDtoExtended = new VariantDtoExtended();
-     if(dtoToCopy!= null){
-         variantDtoExtended.setCustomer(dtoToCopy.getCustomer());
-         variantDtoExtended.setVariantStatus(dtoToCopy.getVariantStatus());
-         variantDtoExtended.setQualityEng(dtoToCopy.getQualityEng());
-         variantDtoExtended.setTestEng(dtoToCopy.getTestEng());
-         variantDtoExtended.setMachineCycleTime(dtoToCopy.getMachineCycleTime());
-         variantDtoExtended.setFixture(dtoToCopy.getFixture());
-     }
+        if (dtoToCopy != null) {
+            variantDtoExtended.setCustomer(dtoToCopy.getCustomer());
+            variantDtoExtended.setVariantStatus(dtoToCopy.getVariantStatus());
+            variantDtoExtended.setQualityEng(dtoToCopy.getQualityEng());
+            variantDtoExtended.setTestEng(dtoToCopy.getTestEng());
+            variantDtoExtended.setMachineCycleTime(dtoToCopy.getMachineCycleTime());
+            variantDtoExtended.setFixture(dtoToCopy.getFixture());
+        }
 
-        model.addAttribute("variantDtoFormExtended",dtoToCopy==null? new VariantDtoExtended(): variantDtoExtended);
+        model.addAttribute("variantDtoFormExtended", dtoToCopy == null ? new VariantDtoExtended() : variantDtoExtended);
         model.addAttribute("eoltName", eoltName);
         return "variant_add";
     }
