@@ -79,9 +79,9 @@ public class VariantController {
             log.info("PostMapping:postVariant:setOKStatus");
             VariantDto variantDto = variantService.findVariant(variant, eoltName);
             variantDto.setVariantStatus(VariantStatus.OK);
-            fiSservice.sendAndReceiveIPMessage("OK");
+            fiSservice.sendAndReceiveIPMessage("ADDVARIANT|variant=28636935|station=VIDEO_EOLT_F|status=PASS");
             variantService.update(variantDto, eoltName);
-            variantHistoryService.create(variantDto, eoltName, ModificationReason.UPDATE, new String("OK Statu"));
+            variantHistoryService.create(variantDto, eoltName, ModificationReason.UPDATE, new String("OK status"));
         }
         return "redirect:/variant?eoltName=" + eoltName;
     }
@@ -97,7 +97,7 @@ public class VariantController {
         if (variant != null) {
             VariantDto variantDto = variantService.findVariant(variant, eoltName);
             variantDto.setVariantStatus(VariantStatus.NOK);
-            fiSservice.sendAndReceiveIPMessage("NOK");
+            fiSservice.sendAndReceiveIPMessage("ADDVARIANT|variant=28636935|station=VIDEO_EOLT_F|status=FAIL");
             variantService.update(variantDto, eoltName);
             variantHistoryService.create(variantDto, eoltName, ModificationReason.UPDATE, variantDtoForm.getDescriptionOfChange());
         }

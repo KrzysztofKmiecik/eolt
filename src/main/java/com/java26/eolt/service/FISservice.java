@@ -12,8 +12,13 @@ import org.springframework.stereotype.Service;
 public class FISservice {
     public void sendAndReceiveIPMessage(String msg) {
         final IpClient ipClient = new IpClient();
-        final String actual = ipClient.sendAndReceiveIPMessage("10.235.241.235", 24364, "HandleGETSTATIONLIST|");
-        log.info("my message is = " + msg + "    my sesponse is = " + actual);
+      //  final String actual = ipClient.sendAndReceiveIPMessage("10.235.241.235", 24364, "HandleGETSTATIONLIST|");
+        final String actual = ipClient.sendAndReceiveIPMessage("10.235.241.235", 24364, msg);
+        log.info("my message is = " + msg + "--->>> FIS sesponse is = " + actual);
         System.out.println(msg + actual);
     }
+
+
+
+
 }
