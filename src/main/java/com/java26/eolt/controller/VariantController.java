@@ -4,7 +4,6 @@ import com.java26.eolt.dto.VariantDto;
 import com.java26.eolt.dto.VariantDtoExtended;
 import com.java26.eolt.myEnum.ModificationReason;
 import com.java26.eolt.myEnum.VariantStatus;
-import com.java26.eolt.service.FISservice;
 import com.java26.eolt.service.VariantHistoryService;
 import com.java26.eolt.service.VariantService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,7 @@ public class VariantController {
 
     private final VariantService variantService;
     private final VariantHistoryService variantHistoryService;
-    private final FISservice fiSservice;
+
 
     @GetMapping
     public String showVariant(Model model,
@@ -75,35 +74,22 @@ public class VariantController {
     public String setOKStatus(@Valid VariantDto variantDtoForm,
                               @RequestParam String eoltName,
                               @RequestParam String variant) {
-        if ((variant != null)) {
-            log.info("PostMapping:postVariant:setOKStatus");
-            VariantDto variantDto = variantService.findVariant(variant, eoltName);
-            variantDto.setVariantStatus(VariantStatus.OK);
-            fiSservice.sendAndReceiveIPMessage("ADDVARIANT|variant=28636935|station=VIDEO_EOLT_F|status=PASS");
-            variantService.update(variantDto, eoltName);
-            variantHistoryService.create(variantDto, eoltName, ModificationReason.UPDATE, new String("OK status"));
-        }
+
+        log.info("PostMapping:postVariant:setOKStatus");
+        variantService.setVariantStatus(variantDtoForm, eoltName, variant, "PASS", "OK status");
         return "redirect:/variant?eoltName=" + eoltName;
     }
 
     @PostMapping("/setNOKStatus")
     public String setNOKStatus(@Valid VariantDto variantDtoForm,
                                @RequestParam String eoltName,
-                               @RequestParam String variant
-    ) {
+                               @RequestParam String variant) {
+
         log.info("PostMapping:postVariant:setNOKStatus");
-
-
-        if (variant != null) {
-            VariantDto variantDto = variantService.findVariant(variant, eoltName);
-            variantDto.setVariantStatus(VariantStatus.NOK);
-            fiSservice.sendAndReceiveIPMessage("ADDVARIANT|variant=28636935|station=VIDEO_EOLT_F|status=FAIL");
-            variantService.update(variantDto, eoltName);
-            variantHistoryService.create(variantDto, eoltName, ModificationReason.UPDATE, variantDtoForm.getDescriptionOfChange());
-        }
-
+        variantService.setVariantStatus(variantDtoForm, eoltName, variant, "FAIL", variantDtoForm.getDescriptionOfChange());
         return "redirect:/variant?eoltName=" + eoltName;
     }
+
 
     @PostMapping("/copy")
     public String copyVariant(RedirectAttributes redirectAttributes,

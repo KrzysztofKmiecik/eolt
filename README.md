@@ -1,4 +1,4 @@
-Serwis dla testerów końcowych EOLT
+- [x] Serwis dla testerów końcowych EOLT
 Krótki opis systemu
 Celem jest stworzenie serwisu , który będzie 
 wspierał dział   produkcji i utrzymania ruchu 
@@ -11,4 +11,5 @@ Serwis:
 dla danego testera,zmianę jego stanu przez test 
 inżyniera i jakość. Każdy będzie mógł sprawdzić status. 
 
-dodano 222222222
+- [ ] What's happen if type is in web but not in EOLT  : my message is = ADDVARIANT|variant=28112222|station=VIDEO_EOLT_F|status=PASS--->>> FIS sesponse is = FAIL Variant not exists in FIS
+     ADDVARIANT|variant=28112222|station=VIDEO_EOLT_F|status=PASSFAIL Variant not exists in FIS

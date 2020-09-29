@@ -1,9 +1,11 @@
 package com.java26.eolt.service;
 
 import com.java26.eolt.Utils.MySecurityUtil;
+import com.java26.eolt.dto.EoltDto;
 import com.java26.eolt.dto.VariantDto;
 import com.java26.eolt.entity.EoltEntity;
 import com.java26.eolt.entity.VariantEntity;
+import com.java26.eolt.myEnum.ModificationReason;
 import com.java26.eolt.myEnum.Variant;
 import com.java26.eolt.myEnum.VariantStatus;
 import com.java26.eolt.repository.EoltRepository;
@@ -27,6 +29,8 @@ public class VariantService {
     final EoltRepository eoltRepository;
     final VariantHistoryService variantHistoryService;
     final MySecurityUtil mySecurityUtil;
+    private final FISservice fiSservice;
+    private final EoltService eoltService;
 
     public List<VariantDto> findAllVariants(String eoltName) {
         log.info("VariantService:findAllVariants");
@@ -77,7 +81,6 @@ public class VariantService {
                 .isPresent()) {
             VariantEntity variantEntity = getVariantEntity(variantDto, eoltEntity);
             variantEntity.setEolt(eoltEntity);
-
             variantRepository.save(variantEntity);
         } else {
             throw new IllegalArgumentException("variant " + variantDto.getDpn() + " has already exist");
@@ -102,31 +105,23 @@ public class VariantService {
 
     public void delete(String dpn, String eoltName) {
         log.info("VariantService:delete dpn_eoltName");
-
         VariantEntity variantEntity = variantRepository.findByDpnAndEolt(dpn, eoltRepository.findByEoltName(eoltName).orElseThrow(() -> new EntityNotFoundException(eoltName)))
                 .orElseThrow(() -> new EntityNotFoundException(dpn));
-
         variantRepository.deleteById(variantEntity.getId());
-
     }
 
     public void deleteAllVariantsFromEoltName(String eoltName) {
-        log.info("VariantService:deleteALLdpn_eoltName");
+        log.info("VariantService:deleteAllVariantsFromEoltName");
         List<VariantEntity> variantEntities = variantRepository.findByEolt(
                 eoltRepository.findByEoltName(eoltName)
                         .orElseThrow(() -> new EntityNotFoundException(eoltName)));
-
         variantRepository.deleteAll(variantEntities);
-
     }
 
     public void update(VariantDto variantDto, String eoltName) {
-        log.info("VariantService:updateVariant");
-
-
+        log.info("VariantService:update");
         boolean hasTesterRole = mySecurityUtil.checkRole("ROLE_TESTER");
         boolean hasQualityRole = mySecurityUtil.checkRole("ROLE_QUALITY");
-
         if (hasTesterRole) {
             variantDto.setTestEng(mySecurityUtil.getAuthenticationUserName());
         }
@@ -141,7 +136,29 @@ public class VariantService {
                 .orElseThrow(() -> new EntityNotFoundException(variantDto.getDpn()));
         myMap(variantDto, variantEntity);
     }
+   @Transactional
+    public void setVariantStatus(VariantDto variantDtoForm, String eoltName, String variant, String status, String historyStatus) {
+        if (variant != null) {
+            log.info("VariantService:setVariantStatus");
+            VariantDto variantDto = this.findVariant(variant, eoltName);
+            EoltDto eoltDto = eoltService.findByName(eoltName);
+            String netName = eoltDto.getNetName();
 
+            switch (status) {
+                case "FAIL":
+                    variantDto.setVariantStatus(VariantStatus.NOK);
+                    break;
+                case "PASS":
+                    variantDto.setVariantStatus(VariantStatus.OK);
+                    break;
+                default:
+                    throw new IllegalArgumentException("SetVariantStatus :Variant status should be FAIL or PASS ");
+            }
+            fiSservice.sendAndReceiveIPMessage(fiSservice.createADDVARIANT(netName, variant, status));
+            this.update(variantDto, eoltName);
+            variantHistoryService.create(variantDto, eoltName, ModificationReason.UPDATE, historyStatus);
+        }
+    }
     private <T extends Variant, I extends Variant> void myMap(T input, I output) {
         output.setDpn(input.getDpn());
         output.setCustomer(input.getCustomer());
@@ -151,6 +168,4 @@ public class VariantService {
         output.setQualityEng(input.getQualityEng());
         output.setVariantStatus(input.getVariantStatus());
     }
-
-
 }
