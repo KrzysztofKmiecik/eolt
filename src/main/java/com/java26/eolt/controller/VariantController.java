@@ -65,7 +65,6 @@ public class VariantController {
                     variantHistoryService.create(variantDtoForm, myEoltName, ModificationReason.CREATE, new String("Create"));
                 }
             }
-
         }
         return "redirect:/eolt";
     }
@@ -122,7 +121,6 @@ public class VariantController {
             log.info("PostMapping:postVariant:deleteVariant");
             variantService.delete(deleteVariant, eoltName);
         }
-
         return "redirect:/variant?eoltName=" + eoltName;
     }
 
@@ -154,7 +152,6 @@ public class VariantController {
             variantDtoExtended.setMachineCycleTime(dtoToCopy.getMachineCycleTime());
             variantDtoExtended.setFixture(dtoToCopy.getFixture());
         }
-
         model.addAttribute("variantDtoFormExtended", dtoToCopy == null ? new VariantDtoExtended() : variantDtoExtended);
         model.addAttribute("eoltName", eoltName);
         return "variant_add";

@@ -23,11 +23,9 @@ public class FISservice {
         if(receiveIPMessage.contains("FAIL")){
             throw new FISVariantNotFoundExeption(receiveIPMessage);
         }
-        log.info("my message is = " + msg + "--->>> FIS sesponse is = " + receiveIPMessage);
+        log.info("my message is = " + msg + "--->>> FIS response is = " + receiveIPMessage);
         System.out.println(msg + receiveIPMessage);
     }
-
-
 
 
     /**
