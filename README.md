@@ -10,7 +10,12 @@
 - [x] As a User I would like to have automatic way of  blocking variant to protect Customer against production on not released variants.
 - [x] As a User I would like to have possibility to see on which EOLTs I can produce the variant.     
 - [x] As a User I would like to see history of my Variant's status changes  to follow changes.
-
+- [x] As a external User I would like to have access via API to data to be able prepare external software
+    - [x]  REST API   :  /api/eolt                 - list of all testers
+    - [x]  REST API   :  /api/eolt/{eoltName}      - tester's details 
+    - [x]  REST API   :  /api/{eoltName}/variants  - variants list according tester
+    - [x]  REST API   :  /api/eolts/{variant}"     - on which testers  the variant was prepared
+ 
 ### Used Technologies
 - [x] SpringBoot, SpringMVC, SpringData,SpringSecurity
 - [ ] JUnit, Selenium  
