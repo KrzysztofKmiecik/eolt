@@ -10,6 +10,11 @@ import org.springframework.stereotype.Service;
  * FIS (Factory Information System)
  * Server   IP : 10.235.241.235  Port : 24364
  *
+ * FIS Command format "ADDVARIANT|variant=28636935|station=VIDEO_EOLT_F|status=PASS"
+ * block tester       "ADDVARIANT|variant=ALL|station=VIDEO_EOLT_F|status="FAIL"
+ * unblock tester     "ADDVARIANT|variant=ALL|station=VIDEO_EOLT_F|status="PASS"
+ *
+ *
  */
 @Slf4j
 @Service
