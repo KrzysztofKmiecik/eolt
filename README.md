@@ -18,13 +18,14 @@
  
 ### Used Technologies
 - [x] SpringBoot, SpringMVC, SpringData,SpringSecurity
-- [ ] JUnit, Selenium  
+- [x] JUnit, AssertJ
 - [x] DataBase : MySQL ,Hibernate(JPA)
 - [x] Thymeleaf
 - [x] REST Api
 - [x] Locale Language
 - [x] Socket 
-
+- [ ] Implementing a Custom Spring AOP Annotation -> https://www.baeldung.com/spring-aop-annotation
+- [ ] Selenium  ->https://www.javatpoint.com/selenium-tutorial
 
 ### Issues 
 - [x] What's happen if type is in web but not in EOLT  : my message is = ADDVARIANT|variant=28112222|station=VIDEO_EOLT_F|status=PASS--->>> FIS response is = FAIL Variant not exists in FIS
