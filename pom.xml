@@ -11,7 +11,7 @@
     </parent>
     <groupId>com.java26</groupId>
     <artifactId>eolt</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>eolt</name>
     <description>Demo project for Spring Boot</description>

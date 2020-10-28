@@ -24,6 +24,8 @@
 - [x] REST Api
 - [x] Locale Language
 - [x] Socket 
+- [x] Docker Compose ( linked containers app + mysql)
+- [x] Deployed to external server
 - [ ] Implementing a Custom Spring AOP Annotation -> https://www.baeldung.com/spring-aop-annotation
 - [ ] Selenium  ->https://www.javatpoint.com/selenium-tutorial
 
@@ -31,7 +33,7 @@
 - [x] What's happen if type is in web but not in EOLT  : my message is = ADDVARIANT|variant=28112222|station=VIDEO_EOLT_F|status=PASS--->>> FIS response is = FAIL Variant not exists in FIS
      ADDVARIANT|variant=28112222|station=VIDEO_EOLT_F|status=PASSFAIL Variant not exists in FIS  
      ------> I have throw exception which was intercepted by HandlerException
-- [ ] Blocking tester 
+- [x] Blocking tester -> checked on production's enviroment 
    
      
      

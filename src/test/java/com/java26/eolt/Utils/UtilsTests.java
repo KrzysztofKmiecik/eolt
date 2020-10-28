@@ -1,10 +1,13 @@
 package com.java26.eolt.Utils;
 
+import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class UtilsTests {
+    @Disabled("Fis response was changed")
     @Test
     final void IpClientTest() {
         final IpClient ipClient = new IpClient();

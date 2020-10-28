@@ -1,0 +1,75 @@
+Docker to bardzo fajne narzedzie. Jednym z przypadków uzycia jest budowanie aplikacji w oparciu o architekture mikroserwisów. Zobacz jak chce wykorzystac dobrodziejstwa dockera w swoim projekcie.
+
+
+Docker w akcji
+Kazda aplikacji bedzie miala osobna baze danych. Obecna aplikacja korzysta MySQL, dlatego tez wlasnie na nim sie skupie. Za pomoca komendy ponizej zaciagam oficjalny obraz dockera z MySQL.
+
+1
+sudo docker pull mysql
+Chwile potrwa sciagniecie wszystkich zaleznosci.
+
+Teraz moge postawic pierwszy kontener z MySQL.
+
+Najprostsza komenda, która to zrobi to:
+
+1
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
+my-secret-pw zastepujemy oczywiscie swoim haslem dla roota
+
+Masz kontener i co teraz?
+W sumie nic, nie zrobiles mapowania portów, wiec ten serwer mysql nie bedzie widoczny ani w twoim komputerze host (komputer na którym uruchamiasz kontenery) ani w innych kontenerach. Mozesz jednak odpalic basha na kontenerze oraz podpiac jego konsole i sprawdzic, ze serwer rzeczywiscie dziala.
+
+1
+sudo docker exec -it id_kontenera /bin/bash
+Chcac stworzyc troche bardziej uzyteczny kontener, przekieruj porty z kontenera na hosta. Aby to zrobic musisz stworzyc kontener na nowo.
+
+1
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d -p 9001:3306 mysql
+dodalem -p 9001:3306 mówi to tyle, ze otwórz port 9001 na hoscie i przekieruj na porty 3306 w kontenerze (3306 to domyslny port mysql).
+
+Masz teraz kontener i przekierowane porty. Aby jednak móc podlaczyc sie do mysql z zewnatrz musisz skonfigurowac jeszcze sam serwer bazodanowy.
+
+Przejdz do konsoli dockera.
+
+1
+sudo docker exec -it id_kontenera /bin/bash
+Zainstaluj w kontenerze VIM’a, przyda sie do edycji.
+
+1
+2
+3
+apt-get update
+
+apt-get install vim
+Edytuj plik /etc/mysql/my.cnf
+
+1
+vim /etc/mysql/my.cnf
+Odkomentuj bind-address i zmien na:
+
+1
+bind-address = 0.0.0.0
+Zaloguj sie do mysql:
+
+1
+mysql -u root -p
+Zostaniesz poproszony o haslo.
+
+Musisz jeszcze dac uprawnienia dla uzytkownika root aby mógl logowac sie z dowolnego hosta. Wykonaj:
+
+1
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'password';
+To juz prawie wszystko. Musisz jeszcze zresetowac kontener.
+
+2x CRTL + D aby wyjsc z MySQL i konsoli kontenera
+
+1
+sudo docker restart id-kontenera
+Powinno juz wszystko dzialac. Jednak ja glowilem sie jeszcze przez godzine bo jednak mi nie dzialalo. Na hoscie próbowalem sie zalogowac do mysql w taki sposób:
+
+1
+mysql -u root -P 9001 -p
+Podawalem poprawne haslo i nic. Nie wiem jeszcze czemu ale zadzialo dopiero, gdy wpisalem:
+
+1
+mysql -u root -P 9001 -p -h lokalne-ip-maszyny
