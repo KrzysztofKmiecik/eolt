@@ -35,5 +35,9 @@
      ------> I have throw exception which was intercepted by HandlerException
 - [x] Blocking tester -> checked on production's enviroment 
    
+### Info 
+Add User 
+    -> na stronie logowania przez naciśniecie linku -> "nie masz jeszcze konta"?
+    ->w MySQL dopisuje ROLE_TESTER, ROLE_QUALITY,ROLE_USER
      
      
