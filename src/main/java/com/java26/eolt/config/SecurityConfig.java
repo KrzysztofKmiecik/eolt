@@ -35,9 +35,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }*/
 
     @Override
+    public void configure(AuthenticationManagerBuilder authenticationMgr) throws Exception {
+        authenticationMgr.inMemoryAuthentication()
+                .withUser("quality").password(passwordEncoder().encode("4321")).roles("QUALITY")
+                .and()
+                .withUser("tester").password(passwordEncoder().encode("1234")).roles("TESTER")
+                .and()
+                .withUser("user").password(passwordEncoder().encode("1")).roles("USER");
+    }
+
+  /*  @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
-    }
+    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
