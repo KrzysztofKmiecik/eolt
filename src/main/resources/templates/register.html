@@ -11,9 +11,10 @@
             <h1 th:text="#{user.security.register.title}"></h1>
         </div>
     </div>
+
+ <!--
     <div class="row justify-content-center">
         <div class="col-6">
-            <!--/*@thymesVar id="userForm" type="pl.sdacademy.todolist.dto.UserDto"*/-->
             <form th:action="@{/register}" method="post" th:object="${userForm}">
                 <div class="form-group">
                     <label for="firstName" th:text="#{user.firstName}"></label>
@@ -44,6 +45,8 @@
             </form>
         </div>
     </div>
+-->
+
 </div>
 </body>
 </html>

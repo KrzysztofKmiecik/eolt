@@ -17,12 +17,15 @@
     </div>
 
     <div class="col-6">
-
+<!--
         <div th:if="${#authorization.expression('isAuthenticated()')}" class="float-right">
             <span th:text="#{user.greeting(${#authentication.principal.firstName})}"></span>
-          <!--  <a th:href="@{/account}" class="ml-2 mr-2 text-secondary"><i class="fas fa-cog"></i></a> -->
+           <a th:href="@{/account}" class="ml-2 mr-2 text-secondary"><i class="fas fa-cog"></i></a>
             <a th:href="@{/logout}" th:text="#{user.security.logout}" class="btn btn-outline-secondary btn-sm ml-3">Logout</a>
-
+        </div>
+-->
+        <div  class="float-right">
+            <a th:href="@{/logout}" th:text="#{user.security.logout}" class="btn btn-outline-secondary btn-sm ml-3">Logout</a>
         </div>
     </div>
     <div class="navigator">
@@ -54,13 +57,18 @@
 
     </div>
     <div class="col-4">
-
+<!--
         <div th:if="${#authorization.expression('isAuthenticated()')}" class="float-right">
             <span th:text="#{user.greeting(${#authentication.principal.firstName})}"></span>
             <a th:href="@{/account}" class="ml-2 mr-2 text-secondary"><i class="fas fa-cog"></i></a>
             <a th:href="@{/logout}" th:text="#{user.security.logout}" class="btn btn-outline-secondary btn-sm ml-3">Logout</a>
+        </div>
+-->
+        <div  class="float-right">
+            <a th:href="@{/logout}" th:text="#{user.security.logout}" class="btn btn-outline-secondary btn-sm ml-3">Logout</a>
 
         </div>
+
     </div>
     <div class="navigator">
         <!-- <div class="nav-sec">

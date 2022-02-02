@@ -11,9 +11,12 @@
             <h1 th:text="#{account.title}"></h1>
         </div>
     </div>
+
+  <!--
+
     <div class="row justify-content-center mb-3">
         <div class="col-6">
-            <!--/*@thymesVar id="userForm" type="pl.sdacademy.todolist.dto.UserDto"*/-->
+
             <form th:action="@{/account}" method="post" th:object="${userForm}">
                 <input type="hidden" th:field="*{id}">
                 <div class="form-group">
@@ -63,6 +66,9 @@
             </form>
         </div>
     </div>
+
+ -->
+
 </div>
 </body>
 </html>
